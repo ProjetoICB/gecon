@@ -12,5 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require twitter/bootstrap
+//= require bootstrap-datepicker
 //= require turbolinks
+//= require cocoon
+//= require dataTables/jquery.dataTables
 //= require_tree .
