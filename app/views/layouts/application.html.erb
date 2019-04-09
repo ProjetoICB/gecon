@@ -8,8 +8,24 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<nav class="navbar navbar-inverse" role="navigation">
+  <h4 class="nav navbar-text"> <span id="tutulo"> Sistema Gecon </span>  </h4>
+  <ul class="nav navbar-nav">
+    <li> <%= link_to "Tipos de compras", tipos_de_compras_path %> </li>
+  </ul>
 
-<%= yield %>
+</nav>
+
+
+<% if notice.present? %>
+    <div class="alert alert-info">
+      <%= notice %>
+    </div>
+<% end %>
+
+<div class="container">
+  <%= yield %>
+</div>
 
 </body>
 </html>

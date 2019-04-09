@@ -1,0 +1,21 @@
+<%= form_for(@tipo_de_compras) do |f| %>
+  <% if @tipo_de_compras.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tipo_de_compras.errors.count, "error") %> prohibited this tipo_de_compras from being saved:</h2>
+
+      <ul>
+      <% @tipo_de_compras.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :nome %><br>
+    <%= f.text_field :nome, class: 'form-control' %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Enviar", class: 'btn btn-primary active' %>
+  </div>
+<% end %>

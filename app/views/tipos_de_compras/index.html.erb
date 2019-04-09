@@ -1,0 +1,52 @@
+<script type="text/javascript">
+    $(function() {
+        $('#tipo_compra').dataTable({
+            "iDisplayLength": 10,
+            "ordering":  false,
+            "aaSorting": [],
+            "bLengthChange":false,
+            "oLanguage":{
+                "sInfo":                "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                "sInfoFiltered":        "Filtrado de _MAX_ registros no total",
+                "sZeroRecords":         "Sem resultados",
+                "sInfoEmpty":           "",
+                "sSearch":              "Buscar",
+                "oPaginate": {
+                    "sFirst":           "Primeiro",
+                    "sPrevious":        "Anterior",
+                    "sNext":            "Próximo",
+                    "sLast":            "Ultimo"
+                }
+            }
+        });
+
+    });
+</script>
+
+<h1>Tipos De Compras</h1>
+
+<table id="tipo_compra" class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th class="text-center">Nome</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tipos_de_compras.each do |tipo_de_compras| %>
+      <tr>
+        <td><%= tipo_de_compras.nome %></td>
+        <td class="text-center"><%= link_to 'Mostrar', tipo_de_compras, class: 'btn btn-primary active' %></td>
+        <td class="text-center"><%= link_to 'Editar', edit_tipo_de_compras_path(tipo_de_compras), class: 'btn btn-default' %></td>
+        <td class="text-center"><%= link_to 'Apagar', tipo_de_compras, method: :delete, data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Novo Tipo de Compras', new_tipo_de_compras_path, class: 'btn btn-primary active' %>
