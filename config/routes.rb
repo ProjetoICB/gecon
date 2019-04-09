@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :fontes_de_recursos
   get 'home/index'
 
   resources :tipos_de_compras
