@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190409191944) do
+ActiveRecord::Schema.define(version: 20190410122551) do
+
+  create_table "centros_de_custos", force: :cascade do |t|
+    t.string   "nome",       limit: 255
+    t.boolean  "ativo"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "fontes_de_recursos", force: :cascade do |t|
     t.string   "nome",       limit: 255

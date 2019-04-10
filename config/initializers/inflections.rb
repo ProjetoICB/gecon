@@ -11,6 +11,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
 
     inflect.irregular 'tipo_de_compras', 'tipos_de_compras'
     inflect.irregular 'fonte_de_recursos','fontes_de_recursos'
+    inflect.irregular 'centro_de_custos', 'centros_de_custos'
 end
 
 # These inflection rules are supported but not enabled by default:
