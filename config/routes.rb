@@ -1,9 +1,6 @@
 Rails.application.routes.draw do
-  resources :centros_de_custos
-  resources :fontes_de_recursos
   get 'home/index'
 
-  resources :tipos_de_compras
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
