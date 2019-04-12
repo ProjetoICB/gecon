@@ -9,9 +9,9 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.irregular 'person', 'people'
 #   inflect.uncountable %w( fish sheep )
 
-    inflect.irregular 'tipo_de_compras', 'tipos_de_compras'
-    inflect.irregular 'fonte_de_recursos','fontes_de_recursos'
-    inflect.irregular 'centro_de_custos', 'centros_de_custos'
+    inflect.irregular 'tipo_de_compra', 'tipos_de_compra'
+    inflect.irregular 'fonte_de_recurso','fontes_de_recurso'
+
 end
 
 # These inflection rules are supported but not enabled by default:
