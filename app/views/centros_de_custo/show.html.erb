@@ -1,0 +1,12 @@
+<p>
+  <strong>Nome:</strong>
+  <%= @centro_de_custo.nome %>
+</p>
+
+<p>
+  <strong>Ativo:</strong>
+  <%= @centro_de_custo.ativo == true ? "Sim" : "Não" %>
+</p>
+
+<%= link_to 'Editar', edit_centro_de_custo_path(@centro_de_custo), class: 'btn btn-primary active' %> |
+<%= link_to 'Voltar', centros_de_custo_path, class: 'btn btn-default' %>
