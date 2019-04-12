@@ -10,6 +10,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.uncountable %w( fish sheep )
 
     inflect.irregular 'tipo_de_compra', 'tipos_de_compra'
+    inflect.irregular 'fonte_de_recurso','fontes_de_recurso'
 
 end
 

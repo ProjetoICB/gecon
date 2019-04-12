@@ -1,0 +1,52 @@
+<script type="text/javascript">
+    $(function() {
+        $('#fonte_recurso').dataTable({
+            "iDisplayLength": 10,
+            "ordering":  false,
+            "aaSorting": [],
+            "bLengthChange":false,
+            "oLanguage":{
+                "sInfo":                "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                "sInfoFiltered":        "Filtrado de _MAX_ registros no total",
+                "sZeroRecords":         "Sem resultados",
+                "sInfoEmpty":           "",
+                "sSearch":              "Buscar",
+                "oPaginate": {
+                    "sFirst":           "Primeiro",
+                    "sPrevious":        "Anterior",
+                    "sNext":            "Próximo",
+                    "sLast":            "Ultimo"
+                }
+            }
+        });
+
+    });
+</script>
+
+<h1>Fontes De Recurso</h1>
+
+<table id="fonte_recurso" class="table table-stripped table-bordered">
+  <thead>
+    <tr>
+      <th class="text-center">Nome</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fontes_de_recurso.each do |frec| %>
+      <tr>
+        <td><%= frec.nome %></td>
+        <td class="text-center"><%= link_to 'Mostrar', frec, class: 'btn btn-primary active' %></td>
+        <td class="text-center"><%= link_to 'Editar', edit_fonte_de_recursos_path(frec), class: 'btn btn-default' %></td>
+        <td class="text-center"><%= link_to 'Apagar', frec, method: :delete, data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active'  %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Nova Fonte de recurso', new_fonte_de_recurso_path, class: 'btn btn-primary active' %>
