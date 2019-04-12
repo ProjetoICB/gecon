@@ -1,0 +1,21 @@
+<%= form_for(@tipo_de_compra) do |f| %>
+  <% if @tipo_de_compra.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tipo_de_compra.errors.count, "erro") %> não pode ser salvo:</h2>
+
+      <ul>
+      <% @tipo_de_compra.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :nome %><br>
+    <%= f.text_field :nome, class: 'form-control' %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Enviar", class: 'btn btn-primary active' %>
+  </div>
+<% end %>
