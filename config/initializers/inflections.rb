@@ -13,6 +13,8 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
     inflect.irregular 'fonte_de_recurso','fontes_de_recurso'
     inflect.irregular 'centro_de_custo', 'centros_de_custo'
     inflect.irregular 'tipo_de_conta', 'tipos_de_conta'
+    inflect.irregular 'fornecedor', 'fornecedores'
+
 
 end
 

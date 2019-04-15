@@ -1,0 +1,7 @@
+<p>
+  <strong>Nome:</strong>
+  <%= @fornecedor.nome %>
+</p>
+
+<%= link_to 'Editar', edit_fornecedor_path(@fornecedor), class: 'btn btn-primary active' %> |
+<%= link_to 'Voltar', fornecedores_path, class: 'btn btn-default' %>

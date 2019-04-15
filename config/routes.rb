@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :fornecedores
   resources :tipos_de_conta
   resources :grupos
   resources :centros_de_custo
