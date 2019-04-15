@@ -1,0 +1,25 @@
+<%= form_for(@tipo_de_conta) do |f| %>
+  <% if @tipo_de_conta.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tipo_de_conta.errors.count, "error") %> prohibited this tipo_de_conta from being saved:</h2>
+
+      <ul>
+      <% @tipo_de_conta.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form_group">
+    <%= f.label :nome %><br>
+    <%= f.text_field :nome, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :grupo_id %><br>
+    <%= f.select :grupo_id, options_from_collection_for_select(Grupo.all,:id, :nome,   selected: f.object.grupo_id ),  {}, include_blank: true, class: 'form-control'   %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Enviar", class: 'btn btn-primary active' %>
+  </div>
+<% end %>

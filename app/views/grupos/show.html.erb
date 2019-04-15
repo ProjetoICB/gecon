@@ -1,0 +1,12 @@
+<p>
+  <strong>Nome:</strong>
+  <%= @grupo.nome %>
+</p>
+
+<p>
+  <strong>Código Digitado:</strong>
+  <%= @grupo.coddigitado %>
+</p>
+
+<%= link_to 'Editar', edit_grupo_path(@grupo), class: 'btn btn-primary active'  %> |
+<%= link_to 'Voltar', grupos_path, class: 'btn btn-default' %>

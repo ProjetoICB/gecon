@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :tipos_de_conta
+  resources :grupos
   resources :centros_de_custo
   resources :tipos_de_compra
   resources :fontes_de_recurso
