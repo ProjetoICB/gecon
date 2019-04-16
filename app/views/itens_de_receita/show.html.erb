@@ -1,0 +1,17 @@
+<p>
+  <strong>Nome Gecon:</strong>
+  <%= @item_de_receita.nomeGecon %>
+</p>
+
+<p>
+  <strong>Nome:</strong>
+  <%= @item_de_receita.nome %>
+</p>
+
+<p>
+  <strong>Código digitado:</strong>
+  <%= @item_de_receita.coddigitado %>
+</p>
+
+<%= link_to 'Editar', edit_item_de_receita_path(@item_de_receita), class: ' btn btn-primary active' %> |
+<%= link_to 'Voltar', itens_de_receita_path, class: 'btn btn-default' %>

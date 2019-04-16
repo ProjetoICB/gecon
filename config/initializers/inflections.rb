@@ -14,6 +14,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
     inflect.irregular 'centro_de_custo', 'centros_de_custo'
     inflect.irregular 'tipo_de_conta', 'tipos_de_conta'
     inflect.irregular 'fornecedor', 'fornecedores'
+    inflect.irregular 'item_de_receita', 'itens_de_receita'
 
 
 end
