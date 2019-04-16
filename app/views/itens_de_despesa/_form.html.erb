@@ -1,0 +1,29 @@
+<%= form_for(@item_de_despesa) do |f| %>
+  <% if @item_de_despesa.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@item_de_despesa.errors.count, "error") %> prohibited this item_de_despesa from being saved:</h2>
+
+      <ul>
+      <% @item_de_despesa.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :nomeGecon, "Nome Gecon" %><br>
+    <%= f.text_field :nomeGecon, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :nome, "Nome" %><br>
+    <%= f.text_field :nome, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :codigitado, "Código digitado" %><br>
+    <%= f.text_field :codigitado, class: 'form-control' %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Enviar", class: 'btn btn-primary active' %>
+  </div>
+<% end %>
