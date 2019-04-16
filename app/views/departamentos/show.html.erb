@@ -1,0 +1,12 @@
+<p>
+  <strong>Nome:</strong>
+  <%= @departamento.nome %>
+</p>
+
+<p>
+  <strong>Sigla:</strong>
+  <%= @departamento.sigla %>
+</p>
+
+<%= link_to 'Editar', edit_departamento_path(@departamento), class: 'btn btn-primary active' %> |
+<%= link_to 'Voltar', departamentos_path, class: "btn btn-default" %>
