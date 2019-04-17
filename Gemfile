@@ -69,3 +69,6 @@ gem 'jquery-ui-rails'
 # select filtrado
 gem 'chosen-rails'
 
+# criptografia
+gem 'bcrypt'
+
