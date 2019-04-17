@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :usuarios
   resources :departamentos
   resources :itens_de_despesa
   resources :itens_de_receita

@@ -1,0 +1,41 @@
+<%= form_for(@usuario) do |f| %>
+  <% if @usuario.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@usuario.errors.count, "error") %> prohibited this usuario from being saved:</h2>
+
+      <ul>
+      <% @usuario.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :nome, "Nome" %><br>
+    <%= f.text_field :nome, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :email, "E-mail" %><br>
+    <%= f.text_field :email, class:'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :tipo,"Tipo"  %><br>
+    <%= f.select :tipo, options_for_select(["Administrador", "Comum"], selected: f.object.tipo ), {}, include_blank: true, class:'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.check_box :ativo  %> <%= f.label :ativo %>
+  </div>
+  <div class="form-group">
+    <%= f.label :telefone %><br>
+    <%= f.text_field :telefone, class:'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :departamento_id, "Departamento" %><br>
+    <%= f.select :departamento_id, options_from_collection_for_select(Departamento.all, :id, :nome, selected: f.object.departamento_id), {}, include_blank: true, class: 'form-control' %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Enviar", class: 'btn btn-primary active' %>
+  </div>
+<% end %>

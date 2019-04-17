@@ -1,0 +1,32 @@
+<p>
+  <strong>Nome:</strong>
+  <%= @usuario.nome %>
+</p>
+
+<p>
+  <strong>E-mail:</strong>
+  <%= @usuario.email %>
+</p>
+
+<p>
+  <strong>Tipo:</strong>
+  <%= @usuario.tipo %>
+</p>
+
+<p>
+  <strong>Ativo:</strong>
+  <%= @usuario.ativo == true ? "Sim" : "Não" %>
+</p>
+
+<p>
+  <strong>Telefone:</strong>
+  <%= @usuario.telefone %>
+</p>
+
+<p>
+  <strong>Departamento:</strong>
+  <%= @usuario.departamento.nome %>
+</p>
+
+<%= link_to 'Editar', edit_usuario_path(@usuario), class: 'btn btn-primary active'  %> |
+<%= link_to 'Voltar', usuarios_path, class: 'btn btn-default' %>
