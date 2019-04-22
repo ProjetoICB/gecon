@@ -28,6 +28,7 @@ class CentrosDeCustoController < ApplicationController
 
     respond_to do |format|
       if @centro_de_custo.save
+        addlog('Criou novo centro de custo')
         format.html { redirect_to @centro_de_custo, notice: 'Centro de custo foi criado com sucesso.' }
         format.json { render :show, status: :created, location: @centro_de_custo }
       else

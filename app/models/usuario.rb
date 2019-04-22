@@ -10,6 +10,7 @@ class Usuario < ActiveRecord::Base
 =end
 
   belongs_to :departamento
+  has_many :logs
 
   has_secure_password
 end
