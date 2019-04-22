@@ -1,4 +1,5 @@
 class CentrosDeCustoController < ApplicationController
+  before_filter 'autenticado?'
   before_action :set_centro_de_custo, only: [:show, :edit, :update, :destroy]
 
   # GET /centros_de_custo

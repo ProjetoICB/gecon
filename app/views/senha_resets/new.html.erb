@@ -1,0 +1,13 @@
+<fieldset>
+  <legend> Esqueci minha senha</legend>
+  <%= form_tag senha_resets_path, :method => :post do %>
+      <div class="form-group">
+        <%= label_tag "Digite seu e-mail" %>
+        <%= text_field_tag :email, params[:email], class:'form-control' %>
+      </div>
+
+      <div class="actions">
+        <%= submit_tag "Enviar", class:'btn btn-primary active'  %>
+      </div>
+  <% end %>
+</fieldset>

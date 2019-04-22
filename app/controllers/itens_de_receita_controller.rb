@@ -1,4 +1,5 @@
 class ItensDeReceitaController < ApplicationController
+  before_filter 'autenticado?'
   before_action :set_item_de_receita, only: [:show, :edit, :update, :destroy]
 
   # GET /itens_de_receita

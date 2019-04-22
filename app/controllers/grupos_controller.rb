@@ -1,4 +1,5 @@
 class GruposController < ApplicationController
+  before_filter 'autenticado?'
   before_action :set_grupo, only: [:show, :edit, :update, :destroy]
 
   # GET /grupos

@@ -1,4 +1,5 @@
 class TiposDeCompraController < ApplicationController
+  before_filter 'autenticado?'
   before_action :set_tipo_de_compra, only: [:show, :edit, :update, :destroy]
 
   # GET /tipos_de_compra

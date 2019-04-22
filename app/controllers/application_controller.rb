@@ -4,5 +4,13 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   include LogsHelper
+  include SessionHelper
+
+  def autenticado?
+    if session[:usuario_id].blank?
+      redirect_to root_path, notice: "Faça o login"
+      return false
+    end
+  end
 
 end

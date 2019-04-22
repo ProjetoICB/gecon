@@ -1,4 +1,5 @@
 class FornecedoresController < ApplicationController
+  before_filter 'autenticado?'
   before_action :set_fornecedor, only: [:show, :edit, :update, :destroy]
 
   # GET /fornecedores

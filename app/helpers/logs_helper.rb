@@ -6,8 +6,8 @@ module LogsHelper
     @log  = Log.new
 
     @log.acao = acao
-    @log.usuario_id = current_user.id
-    @log.ip = request.remote_addr
+    @log.usuario_id = current_usuario.id
+    @log.ip = request.remote_ip
 
     @log.save!
   end

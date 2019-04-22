@@ -1,4 +1,5 @@
 class ItensDeDespesaController < ApplicationController
+  before_filter 'autenticado?'
   before_action :set_item_de_despesa, only: [:show, :edit, :update, :destroy]
 
   # GET /itens_de_despesa

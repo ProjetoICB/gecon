@@ -1,4 +1,5 @@
 class FontesDeRecursoController < ApplicationController
+  before_filter 'autenticado?'
   before_action :set_fonte_de_recurso, only: [:show, :edit, :update, :destroy]
 
   # GET /fontes_de_recurso

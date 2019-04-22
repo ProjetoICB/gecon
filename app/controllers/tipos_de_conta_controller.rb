@@ -1,4 +1,5 @@
 class TiposDeContaController < ApplicationController
+  before_filter 'autenticado?'
   before_action :set_tipo_de_conta, only: [:show, :edit, :update, :destroy]
 
   # GET /tipos_de_conta

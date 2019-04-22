@@ -11,28 +11,27 @@
 <nav class="navbar navbar-inverse" role="navigation">
   <h4 class="nav navbar-text"> <span id="tutulo"> Sistema Gecon </span>  </h4>
   <ul class="nav navbar-nav">
-    <li> <%= link_to "Usuários", usuarios_path %> </li>
-    <li> <%= link_to "Logs", logs_path %> </li>
-    <li> <%= link_to "Departamentos", departamentos_path %> </li>
-    <li> <%= link_to "Tipos de Compra" , tipos_de_compra_path %> </li>
-    <li> <%= link_to "Fontes de Recursos", fontes_de_recurso_path %> </li>
-    <li> <%= link_to "Centros de Custo", centros_de_custo_path %> </li>
-    <li> <%= link_to "Grupos", grupos_path %> </li>
-    <li> <%= link_to "Tipos de Contas", tipos_de_conta_path %> </li>
-    <li> <%= link_to "Fornecedores", fornecedores_path %> </li>
-    <!-- itens de despesa e de receita" -->
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Itens &nbsp; <b class="caret"></b></a>
-      <ul class="dropdown-menu" role="menu">
-        <li role="presentation"> <%= link_to "Itens de despesa", itens_de_despesa_path %>  </li>
-        <li role="presentation"> <%= link_to "Itens de receita", itens_de_receita_path %> </li>
-      </ul>
-    </li>
-
-
-
-  </ul>
-
+    <% if session[:usuario_id] != nil %>
+        <li> <%= link_to "Usuários", usuarios_path %> </li>
+        <li> <%= link_to "Logs", logs_path %> </li>
+        <li> <%= link_to "Departamentos", departamentos_path %> </li>
+        <li> <%= link_to "Tipos de Compra" , tipos_de_compra_path %> </li>
+        <li> <%= link_to "Fontes de Recursos", fontes_de_recurso_path %> </li>
+        <li> <%= link_to "Centros de Custo", centros_de_custo_path %> </li>
+        <li> <%= link_to "Grupos", grupos_path %> </li>
+        <li> <%= link_to "Tipos de Contas", tipos_de_conta_path %> </li>
+        <li> <%= link_to "Fornecedores", fornecedores_path %> </li>
+        <!-- itens de despesa e de receita" -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Itens &nbsp; <b class="caret"></b></a>
+          <ul class="dropdown-menu" role="menu">
+            <li role="presentation"> <%= link_to "Itens de despesa", itens_de_despesa_path %>  </li>
+            <li role="presentation"> <%= link_to "Itens de receita", itens_de_receita_path %> </li>
+          </ul>
+        </li>
+        <li> <%= link_to "Sair", logout_path %> </li>
+        </ul>
+    <% end %>
 </nav>
 
 

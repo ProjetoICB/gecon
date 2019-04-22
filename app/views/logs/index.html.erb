@@ -33,21 +33,22 @@
       <th class="text-center">Ip</th>
       <th class="text-center">Usuario</th>
       <th class="text-center">Data da ação</th>
-      <th class="text-center">Detalhes</th>
+      <th></th>
+
     </tr>
   </thead>
 
   <tbody>
-    <% @logs.each do |log| %>
+  <% @logs.each do |log| %>
       <tr>
         <td><%= log.acao %></td>
         <td><%= log.ip %></td>
-        <td><%= log.usuario.nomd %></td>
-        <td><%= log.created_at.strftime("%d/%m/%Y %H:%M") %>  <td>
-
-        <td><%= link_to 'Mostrar', log, class: 'btm btn-default' %></td>
+        <td><%= log.usuario.nome %></td>
+        <td><%= log.created_at.strftime("%d/%m/%Y %H:%M") %>  </td>
+        <td><%= link_to 'Mostrar', log, class: 'btn btn-default' %></td>
       </tr>
-    <% end %>
+  <% end %>
+
   </tbody>
 </table>
 
