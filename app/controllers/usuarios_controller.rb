@@ -11,6 +11,7 @@ class UsuariosController < ApplicationController
   # GET /usuarios/1
   # GET /usuarios/1.json
   def show
+    @departamento = Departamento.find(@usuario.departamento)
   end
 
   # GET /usuarios/new
@@ -21,6 +22,7 @@ class UsuariosController < ApplicationController
   # GET /usuarios/1/edit
   def edit
   end
+
 
   # POST /usuarios
   # POST /usuarios.json
@@ -42,7 +44,12 @@ class UsuariosController < ApplicationController
   # PATCH/PUT /usuarios/1.json
   def update
     respond_to do |format|
+
       if @usuario.update(usuario_params)
+        if !@usuario.departamentos.empty?
+          @usuario.tipo = "Gerente"
+          @usuario.save
+        end
         format.html { redirect_to @usuario, notice: 'Usuario atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @usuario }
       else
@@ -70,6 +77,6 @@ class UsuariosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def usuario_params
-      params.require(:usuario).permit(:nome, :email, :password, :password_confirmation, :tipo, :ativo, :telefone, :departamento_id)
+      params.require(:usuario).permit(:nome, :email, :password, :password_confirmation, :tipo, :ativo, :telefone, :departamento,  departamento_ids:[])
     end
 end

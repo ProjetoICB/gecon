@@ -25,8 +25,22 @@
 
 <p>
   <strong>Departamento:</strong>
-  <%= @usuario.departamento.nome %>
+  <%= @departamento.nome %>
 </p>
+
+<% if !@usuario.departamentos.empty? %>
+    <h3> Departamentos associados a esse gerente</h3>
+    <ul>
+    <% @usuario.departamentos.each do |dep| %>
+      <li><%= dep.nome %></li>
+    <% end %>
+    </ul>
+<% else %>
+    <p> Esse usuário não é gerente </p>
+<% end %>
+
+
+
 
 <%= link_to 'Editar', edit_usuario_path(@usuario), class: 'btn btn-primary active'  %> |
 <%= link_to 'Voltar', usuarios_path, class: 'btn btn-default' %>

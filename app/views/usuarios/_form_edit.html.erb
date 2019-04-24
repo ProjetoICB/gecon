@@ -1,3 +1,9 @@
+<script type="text/javascript">
+    $('#marca_tudo').click(function() {
+        $('input:checkbox').not(this).prop('checked', this.checked)
+    })
+</script>
+
 <%= form_for(@usuario) do |f| %>
   <% if @usuario.errors.any? %>
     <div id="error_explanation">
@@ -22,7 +28,7 @@
 
   <div class="form-group">
     <%= f.label :tipo,"Tipo"  %><br>
-    <%= f.select :tipo, options_for_select(["Administrador", "Comum"], selected: f.object.tipo ), {}, include_blank: true, class:'form-control' %>
+    <%= f.select :tipo, options_for_select(["Administrador", "Comum", "Gerente"], selected: f.object.tipo ), {}, include_blank: true, class:'form-control' %>
   </div>
   <div class="form-group">
     <%= f.check_box :ativo  %> <%= f.label :ativo %>
@@ -32,10 +38,24 @@
     <%= f.text_field :telefone, class:'form-control' %>
   </div>
   <div class="form-group">
-    <%= f.label :departamento_id, "Departamento" %><br>
-    <%= f.select :departamento_id, options_from_collection_for_select(Departamento.all, :id, :nome, selected: f.object.departamento_id), {}, include_blank: true, class: 'form-control' %>
+    <%= f.label :departamento, "Departamento" %><br>
+    <%= f.select :departamento, options_from_collection_for_select(Departamento.all, :id, :nome, selected: f.object.departamento), {}, include_blank: true, class: 'form-control' %>
   </div>
-  <div class="actions">
-    <%= f.submit "Enviar", class: 'btn btn-primary active' %>
+  <div id="forn-group">
+    <h3> Associação de gerência</h3>
+    <p> Caso o usuário seja diretor ou gerente, escolha os departamemtos que esse usuário gerencia</p>
+    <%= check_box_tag 'marca_tudo' %> <strong> Todos os departamentos </strong>
+    <%= f.collection_check_boxes :departamento_ids, Departamento.all, :id, :nome do |b| %>
+
+        <div class="collection_check_box">
+          <%= b.check_box %>
+          <%= b.label %>
+        </div>
+    <% end %>
   </div>
+
+    <div class="actions">
+      <%= f.submit "Enviar", class: 'btn btn-primary active' %>
+    </div>
+
 <% end %>
