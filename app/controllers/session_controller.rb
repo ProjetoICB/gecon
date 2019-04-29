@@ -10,8 +10,8 @@ class SessionController < ApplicationController
       log_in usuario
       redirect_to home_index_path
     else
+      flash.now[:notice] = "Tente outra vez"
       render 'new'
-      flash.now("Tente outra vez")
     end
   end
 
