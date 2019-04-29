@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190423193046) do
+ActiveRecord::Schema.define(version: 20190426184633) do
 
   create_table "centros_de_custo", force: :cascade do |t|
     t.string   "nome",       limit: 255
@@ -19,6 +19,24 @@ ActiveRecord::Schema.define(version: 20190423193046) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  create_table "contas", force: :cascade do |t|
+    t.string   "numero",              limit: 255
+    t.string   "nome",                limit: 255
+    t.text     "observacao",          limit: 65535
+    t.boolean  "ativo"
+    t.integer  "tipo_de_conta_id",    limit: 4,     null: false
+    t.integer  "usuario_id",          limit: 4,     null: false
+    t.integer  "centro_de_custo_id",  limit: 4,     null: false
+    t.integer  "fonte_de_recurso_id", limit: 4,     null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  add_index "contas", ["centro_de_custo_id"], name: "index_contas_on_centro_de_custo_id", using: :btree
+  add_index "contas", ["fonte_de_recurso_id"], name: "index_contas_on_fonte_de_recurso_id", using: :btree
+  add_index "contas", ["tipo_de_conta_id"], name: "index_contas_on_tipo_de_conta_id", using: :btree
+  add_index "contas", ["usuario_id"], name: "index_contas_on_usuario_id", using: :btree
 
   create_table "departamentos", force: :cascade do |t|
     t.string   "nome",       limit: 255
@@ -77,15 +95,15 @@ ActiveRecord::Schema.define(version: 20190423193046) do
 
   add_index "logs", ["usuario_id"], name: "index_logs_on_usuario_id", using: :btree
 
-  create_table "tipos_de_compra", force: :cascade do |t|
+  create_table "tipo_de_contas", force: :cascade do |t|
     t.string   "nome",       limit: 255
+    t.integer  "grupo_id",   limit: 4
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
 
-  create_table "tipos_de_conta", force: :cascade do |t|
+  create_table "tipos_de_compra", force: :cascade do |t|
     t.string   "nome",       limit: 255
-    t.integer  "grupo_id",   limit: 4
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end

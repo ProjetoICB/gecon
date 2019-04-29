@@ -7,6 +7,7 @@ class Usuario < ActiveRecord::Base
 
   has_and_belongs_to_many :departamentos, dependent: :destroy
   has_many :logs, dependent: :destroy
+  has_many :contas
 
   has_secure_password
 end

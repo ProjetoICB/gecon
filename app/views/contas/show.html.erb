@@ -1,0 +1,42 @@
+<p>
+  <strong>Número:</strong>
+  <%= @conta.numero %>
+</p>
+
+<p>
+  <strong>Nome:</strong>
+  <%= @conta.nome %>
+</p>
+
+<p>
+  <strong>Observação:</strong>
+  <%= @conta.observacao %>
+</p>
+
+<p>
+  <strong>Ativo:</strong>
+  <%= @conta.ativo == true ? "Sim" : "Não" %>
+</p>
+
+<p>
+  <strong>Tipo de conta:</strong>
+  <%= @conta.tipo_de_conta.nome %>
+</p>
+
+<p>
+  <strong>Usuario:</strong>
+  <%= @conta.usuario.nome %>
+</p>
+
+<p>
+  <strong>Centro de custo:</strong>
+  <%= @conta.centro_de_custo.nome %>
+</p>
+
+<p>
+  <strong>Fonte de recurso:</strong>
+  <%= @conta.fonte_de_recurso.nome %>
+</p>
+
+<%= link_to 'Editar', edit_conta_path(@conta), class: 'btn btn-primary active' %> |
+<%= link_to 'Voltar', contas_path, class: 'btn btn-default' %>

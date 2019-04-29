@@ -1,0 +1,49 @@
+<%= form_for(@conta) do |f| %>
+  <% if @conta.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@conta.errors.count, "error") %> prohibited this conta from being saved:</h2>
+
+      <ul>
+      <% @conta.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :numero, "Número" %><br>
+    <%= f.text_field :numero, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :nome %><br>
+    <%= f.text_field :nome, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :observacao, "Observação" %><br>
+    <%= f.text_area :observacao, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.check_box :ativo %>
+    <%= f.label :ativo %>
+  </div>
+  <div class="form-group">
+    <%= f.label :tipo_de_conta_id, "Tipo de conta" %><br>
+    <%= f.select :tipo_de_conta_id, options_from_collection_for_select(TipoDeConta.all, :id, :nome, selected: f.object.tipo_de_conta_id ),{}, include_blank: true, class: 'form-control'   %>
+  </div>
+  <div class="form-group">
+    <%= f.label :usuario_id, "Usuário" %><br>
+    <%= f.select :usuario_id, options_from_collection_for_select(Usuario.all, :id, :nome, selected: f.object.usuario_id), {}, include_blank: true, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :centro_de_custo_id, "Centro de Custo" %><br>
+    <%= f.select :centro_de_custo_id, options_from_collection_for_select(CentroDeCusto.all, :id, :nome, selected: f.object.centro_de_custo_id), {}, include_blank: true, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :fonte_de_recurso_id, "Fonte de Recurso" %><br>
+    <%= f.select :fonte_de_recurso_id,options_from_collection_for_select(FonteDeRecurso.all, :id, :nome, selected: f.object.fonte_de_recurso_id), {}, include_blank: true, class: 'form-control' %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Enviar", class: 'btn btn-primary active' %>
+  </div>
+<% end %>

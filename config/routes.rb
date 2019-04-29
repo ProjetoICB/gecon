@@ -4,13 +4,14 @@ Rails.application.routes.draw do
 
 
 
+  resources :contas
   resources :logs
   resources :usuarios
   resources :departamentos
   resources :itens_de_despesa
   resources :itens_de_receita
   resources :fornecedores
-  resources :tipos_de_conta
+  resources :tipos_de_conta, as: :tipo_de_contas
   resources :senha_resets
   resources :grupos
   resources :centros_de_custo
