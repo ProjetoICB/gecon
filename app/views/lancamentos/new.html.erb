@@ -1,0 +1,9 @@
+<h1>Novo Lançamento</h1>
+
+<% if params[:tipo] == "Crédito" %>
+    <%= render 'form_credito' %>
+<% else %>
+    <%= render 'form_debito' %>
+<% end %>
+
+<%= link_to 'Voltar', lancamentos_path, class: 'btn btn-default' %>

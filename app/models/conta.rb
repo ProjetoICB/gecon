@@ -3,4 +3,5 @@ class Conta < ActiveRecord::Base
   belongs_to :usuario
   belongs_to :centro_de_custo
   belongs_to :fonte_de_recurso
+  has_many :lancamentos
 end

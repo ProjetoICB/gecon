@@ -1,0 +1,82 @@
+<%= form_for(@lancamento) do |f| %>
+  <% if @lancamento.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@lancamento.errors.count, "error") %> prohibited this lancamento from being saved:</h2>
+
+      <ul>
+      <% @lancamento.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :processo %><br>
+    <%= f.number_field :processo %>
+  </div>
+  <div class="field">
+    <%= f.label :data %><br>
+    <%= f.date_select :data %>
+  </div>
+  <div class="field">
+    <%= f.label :datadocumento %><br>
+    <%= f.date_select :datadocumento %>
+  </div>
+  <div class="field">
+    <%= f.label :observacao %><br>
+    <%= f.text_field :observacao %>
+  </div>
+  <div class="field">
+    <%= f.label :debito %><br>
+    <%= f.text_field :debito %>
+  </div>
+  <div class="field">
+    <%= f.label :credito %><br>
+    <%= f.text_field :credito %>
+  </div>
+  <div class="field">
+    <%= f.label :tipo %><br>
+    <%= f.text_field :tipo %>
+  </div>
+  <div class="field">
+    <%= f.label :conta_id %><br>
+    <%= f.select :conta_id, Conta.all.map{|c| [c.nome, c.id]}, include_blank: true %>
+  </div>
+  <div class="field">
+    <%= f.label :fornecedor_id %><br>
+    <%= f.select :fornecedor_id, Fornecedor.all.map{|forn| [forn.nome, forn.id]}, include_blank: true  %>
+  </div>
+  <div class="field">
+    <%= f.label :item_de_despesa_id %><br>
+    <%= f.select :item_de_despesa_id, ItemDeDespesa.all.map{|ides| [ides.nome, ides.id]}, include_blank: true %>
+  </div>
+  <div class="field">
+    <%= f.label :item_de_receita_id %><br>
+    <%= f.select :item_de_receita_id, ItemDeReceita.all.map{|irec| [irec.nome, irec.id]}, include_blank: true %>
+  </div>
+  <div class="field">
+    <%= f.label :tipo_compra_id %><br>
+    <%= f.select  :tipo_compra_id, TipoDeCompra.all.map{|tc| [tc.nome, tc.id]}, include_blank: true %>
+  </div>
+  <div class="field">
+    <%= f.check_box :debito_cancelado %>
+    <%= f.label :debito_cancelado %>
+
+  </div>
+  <div class="field">
+    <%= f.label :retorno_debitocanc %><br>
+    <%= f.text_field :retorno_debitocanc %>
+  </div>
+  <div class="field">
+    <%= f.label :num_notafiscal %><br>
+    <%= f.number_field :num_notafiscal %>
+  </div>
+  <div class="field">
+    <%= f.label :empenho %><br>
+    <%= f.number_field :empenho %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

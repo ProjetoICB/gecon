@@ -41,7 +41,7 @@
     <%= f.label :departamento, "Departamento" %><br>
     <%= f.select :departamento, Departamento.all.map{|dep| [dep.nome, dep.id]}, {include_blank: true}, {class: 'form-control'} %>
   </div>
-  <div id="forn-group">
+  <div id="form-group">
     <h3> Associação de gerência</h3>
     <p> Caso o usuário seja diretor ou gerente, escolha os departamemtos que esse usuário gerencia</p>
     <%= check_box_tag 'marca_tudo' %> <strong> Todos os departamentos </strong>

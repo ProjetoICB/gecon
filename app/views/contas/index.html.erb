@@ -37,6 +37,9 @@
       <th class="text-center">Usuario</th>
       <th class="text-center">Centro de custo</th>
       <th class="text-center">Fonte de recurso</th>
+      <th class="text-center"> Saldo </th>
+      <th></th>
+      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -54,9 +57,12 @@
         <td><%= conta.usuario.nome %></td>
         <td><%= conta.centro_de_custo.nome %></td>
         <td><%= conta.fonte_de_recurso.nome %></td>
+        <th></th>
         <td class="text-center"><%= link_to 'Mostrar', conta, class: 'btn btn-primary active' %></td>
         <td class="text-center"><%= link_to 'Editar', edit_conta_path(conta), class: 'btn btn-default' %></td>
         <td class="text-center"><%= link_to 'Apagar', conta, method: :delete, data: { confirm: 'Tem certeza' }, class: 'btn btn-danger active' %></td>
+        <td class="text-center"><%= link_to "Novo crédito" , new_lancamento_path(:tipo => "Crédito",:id =>  conta.id), class: 'btn btn-primary active'  %></td>
+        <td class="text-center"><%= link_to "Novo débito",  new_lancamento_path(:tipo => "Débito", :id => conta.id), class: 'btn btn-danger active' %></td>
       </tr>
     <% end %>
   </tbody>

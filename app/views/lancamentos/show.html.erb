@@ -1,0 +1,104 @@
+<p>
+  <strong>Processo:</strong>
+  <%= @lancamento.processo %>
+</p>
+
+<p>
+  <strong>Conta:</strong>
+  <%= @lancamento.conta.numero %>
+</p>
+
+<p>
+  <strong>Interessado:</strong>
+  <%= @lancamento.conta.nome %>
+</p>
+
+<p>
+  <strong>Centro de custo:</strong>
+  <%= @lancamento.conta.centro_de_custo.nome %>
+</p>
+
+<p>
+  <strong>Data:</strong>
+  <%= @lancamento.data.strftime("%d/%m/%Y") %>
+</p>
+
+<p>
+  <strong>Data do documento:</strong>
+  <%= @lancamento.datadocumento.strftime("%d/%m/%Y") %>
+</p>
+
+<p>
+  <strong>Observação:</strong>
+  <%= @lancamento.observacao %>
+</p>
+
+<p>
+  <strong>Tipo:</strong>
+  <%= @lancamento.tipo %>
+</p>
+
+<% if @lancamento.tipo == "Crédito" %>
+    <p>
+      <strong>Crédito:</strong>
+      <%= number_to_currency(@lancamento.credito) %>
+    </p>
+<% else %>
+    <p>
+      <strong>Débito:</strong>
+      <%= number_to_currency(@lancamento.debito) %>
+    </p>
+<% end %>
+
+
+
+<p>
+  <strong>Fornecedor:</strong>
+  <%= @lancamento.fornecedor.nome %>
+</p>
+
+<% if @lancamento.tipo == "Crédito" %>
+    <p>
+      <strong>Item de receita:</strong>
+      <%= @lancamento.item_de_receita.nome %>
+    </p>
+<% else %>
+    <p>
+      <strong>Item de despesa:</strong>
+      <%= @lancamento.item_de_despesa.nome %>
+    </p>
+<% end %>
+
+<p>
+  <strong>Tipo de compra:</strong>
+  <%= @lancamento.tipo_de_compra.nome %>
+</p>
+
+<% if @lancamento.tipo == "Débito" %>
+    <p>
+      <strong>Débito cancelado:</strong>
+      <%= @lancamento.debito_cancelado == true ? "Sim" : "Não"  %>
+    </p>
+
+    <p>
+      <strong>Retorno de debito cancelado:</strong>
+      <%= @lancamento.retorno_debitocanc %>
+    </p>
+<% end %>
+
+<p>
+  <strong>Número da nota fiscal:</strong>
+  <%= @lancamento.num_notafiscal %>
+</p>
+
+<p>
+  <strong>Empenho:</strong>
+  <%= @lancamento.empenho %>
+</p>
+<% if @lancamento.tipo == "Crédito" %>
+    <%= link_to 'Editar', edit_lancamento_path(@lancamento, :tipo => "Crédito"), class:'btn btn-primary active' %> |
+<% else %>
+    <%= link_to 'Editar', edit_lancamento_path(@lancamento, :tipo => "Débito"), class:'btn btn-primary active' %> |
+<% end %>
+<%= link_to 'Voltar', lancamentos_path, class: 'btn btn-default' %> |
+<%= link_to 'Voltar para contas', contas_path, class: 'btn btn-info active' %>
