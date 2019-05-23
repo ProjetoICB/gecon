@@ -80,10 +80,12 @@
       <%= @lancamento.debito_cancelado == true ? "Sim" : "Não"  %>
     </p>
 
-    <p>
-      <strong>Retorno de debito cancelado:</strong>
-      <%= @lancamento.retorno_debitocanc %>
-    </p>
+    <% if @lancamento.debito_cancelado ==true %>
+        <p>
+          <strong>Retorno de debito cancelado:</strong>
+          <%= number_to_currency(@lancamento.retorno_debitocanc) %>
+        </p>
+    <% end %>
 <% end %>
 
 <p>

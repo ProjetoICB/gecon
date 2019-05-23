@@ -39,7 +39,10 @@
   </div>
   <div class="form-group">
     <%= f.label :debito, "Valor do débito" %><br>
-    <%= f.text_field :debito, class: 'form-control' %>
+    <div class="input-group">
+      <div class="input-group-addon"> R$</div>
+      <%= f.number_field :debito, class: 'form-control' %>
+    </div>
   </div>
 
 
@@ -56,20 +59,12 @@
     <%= f.label :tipo_compra_id, "Tipo de compra" %><br>
     <%= f.select  :tipo_de_compra_id, TipoDeCompra.all.map{|tc| [tc.nome, tc.id]}, {include_blank: true}, {class:'form-control'} %>
   </div>
-  <div class="form-group">
-    <%= f.check_box :debito_cancelado %>
-    <%= f.label :debito_cancelado %>
 
-  </div>
-  <div class="form-group">
-    <%= f.label :retorno_debitocanc, "Retorno de débito cancelado" %><br>
-    <%= f.text_field :retorno_debitocanc, class: 'form-control' %>
-  </div>
   <div class="form-group">
     <%= f.label :num_notafiscal, "Número da nota fiscal" %><br>
     <%= f.number_field :num_notafiscal, class: 'form-ontrol' %>
   </div>
-  <div class="form0-group">
+  <div class="form-group">
     <%= f.label :empenho, "Empenho" %><br>
     <%= f.number_field :empenho, class:'form-control' %>
   </div>

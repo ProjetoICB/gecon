@@ -1,9 +1,9 @@
-<h1>Editing Lancamento</h1>
+<h1>Editando Lancamento</h1>
 
 <% if params[:tipo] == "Crédito" %>
     <%= render 'form_credito' %>
 <% else %>
-    <%= render 'form_debito' %>
+    <%= render 'form_debito_editar'%>
 <% end %>
 
 <%= link_to 'Mostrar', @lancamento, class: 'btn btn-primary active' %> |
