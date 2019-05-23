@@ -52,13 +52,16 @@
         <td><%= lancamento.conta.nome %>
         <td><%= lancamento.conta.centro_de_custo.nome %></td>
         <td><%= lancamento.data.strftime("%d/%m/%Y") %></td>
-        <td><%= lancamento.fornecedor.nome %></td>
+        <td><%= lancamento.fornecedor.nome if !lancamento.fornecedor_id.nil?  %></td>
+
         <td>
           <% if lancamento.tipo == "Crédito" %>
-            (R) <%= lancamento.item_de_receita.nome %></td>
+            (R) <%=  lancamento.item_de_receita_id.nil? ? "Transferência" : lancamento.item_de_receita.nome %>
           <% else %>
-            (D)   <%= lancamento.item_de_despesa.nome %></td>
-          <% end  %>
+            (D) <%= lancamento.item_de_despesa_id.nil? ? "Transferência" : lancamento.item_de_despesa.nome %>
+          <% end %>
+        </td>
+
         <td><%= lancamento.observacao %></td>
         <td><%= number_to_currency(lancamento.debito) %></td>
         <td><%= number_to_currency(lancamento.credito) %></td>

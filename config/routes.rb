@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
 
 
+  resources :transferencias
   resources :lancamentos
   resources :contas
   resources :logs

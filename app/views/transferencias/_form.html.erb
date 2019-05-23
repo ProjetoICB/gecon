@@ -1,0 +1,60 @@
+<%= form_for(@transferencia) do |f| %>
+  <% if @transferencia.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@transferencia.errors.count, "error") %> prohibited this transferencia from being saved:</h2>
+
+      <ul>
+      <% @transferencia.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :debito_id, "Conta de débito" %><br>
+    <%= f.select :debito_id, Conta.all.map{|cdeb| [cdeb.nome, cdeb.id]}, {include_blank:true}, {class: 'form-control'} %>
+  </div>
+  <div class="form-group">
+    <%= f.label :credito_id, "Conta de crédito" %><br>
+    <%= f.select :credito_id, Conta.all.map{|ccred| [ccred.nome, ccred.id]}, {include_blank:true}, {class: 'form-control'} %>
+  </div>
+  <div class="form-group">
+    <%= f.label :data, "Data" %><br>
+    <%= f.date_field :data %>
+  </div>
+  <div class="form-group">
+    <%= f.label :datadocumento, "Data do documento" %><br>
+    <%= f.date_field :datadocumento %>
+  </div>
+  <div class="form-group">
+    <%= f.label :valor, "Valor a transferir" %><br>
+    <div class="input-group">
+      <div class="input-group-addon"> R$ </div>
+      <%= f.number_field :valor, class:'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :observacao %><br>
+    <%= f.text_area :observacao, class: 'form-control' %>
+  </div>
+<!--
+  <div class="field">
+    < %= f.label :fornecedor_id %><br>
+    < %= f.number_field :fornecedor_id %>
+  </div>
+  <div class="field">
+    < %= f.label :num_notafiscal %><br>
+    < %= f.number_field :num_notafiscal %>
+  </div>
+  <div class="field">
+    < %= f.label :empenho %><br>
+    < %= f.number_field :empenho %>
+  </div>
+-->
+
+
+  <div class="actions">
+    <%= f.submit "Enviar", class: 'btn btn-primary active' %>
+  </div>
+<% end %>

@@ -1,0 +1,50 @@
+<p>
+  <strong>Data:</strong>
+  <%= @transferencia.data.strftime("%d/%m/%Y") %>
+</p>
+
+<p>
+  <strong>Data do documento:</strong>
+  <%= @transferencia.datadocumento.strftime("%d/%m/%Y") %>
+</p>
+
+<p>
+  <strong>Conta de Débito:</strong>
+  <%= @deb.nome %>:
+</p>
+
+<p>
+  <strong>Conta de Crédito:</strong>
+  <%= @cred.nome %>
+</p>
+
+<p>
+  <strong>Valor:</strong>
+  <%= number_to_currency(@transferencia.valor) %>
+</p>
+
+<p>
+  <strong>Observação:</strong>
+  <%= @transferencia.observacao %>
+</p>
+
+<!--
+<p>
+  <strong>Fornecedor:</strong>
+  < %= @transferencia.fornecedor_id %>
+</p>
+
+<p>
+  <strong>Num notafiscal:</strong>
+  < %= @transferencia.num_notafiscal %>
+</p>
+
+<p>
+  <strong>Empenho:</strong>
+  < %= @transferencia.empenho %>
+</p>
+
+-->
+
+<%= link_to 'Editar', edit_transferencia_path(@transferencia), class: 'btn btn-primary active' %> |
+<%= link_to 'Voltar', transferencias_path, class: 'btn btn-default' %>

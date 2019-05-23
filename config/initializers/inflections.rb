@@ -18,6 +18,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
     inflect.irregular 'item_de_despesa', 'itens_de_despesa'
     inflect.irregular 'conta','contas'
     inflect.irregular 'lancamento', 'lancamentos'
+    inflect.irregular 'transferencia', 'transferencias'
 
 
 end
