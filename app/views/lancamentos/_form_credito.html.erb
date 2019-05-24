@@ -18,7 +18,13 @@
 
    <div class="form-group">
     <%= f.label :conta_id, "Conta" %><br>
-    <%= f.select :conta_id, Conta.all.map{|c| [c.nome, c.id]}, {include_blank: true}, {class: 'form-control'} %>
+     <% if !params[:conta_id].nil? %>
+         <% c= Conta.find(params[:conta_id]) %>
+         <%= c.nome %>
+         <%= f.hidden_field :conta_id, value: params[:conta_id] %>
+     <% else %>
+         <%= f.select  :conta_id, Conta.all.map{|c| [c.nome, c.id]}, { include_blank: true },  { class: 'form-control' } %>
+     <% end %>
    </div>
 
   <div class="form-group">
