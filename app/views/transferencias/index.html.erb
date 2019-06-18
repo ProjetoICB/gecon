@@ -51,10 +51,10 @@
       <tr>
         <td><%= transferencia.data.strftime("%d/%m/%Y") %></td>
         <td><%= transferencia.datadocumento.strftime("%d/%m/%Y") %></td>
-        <% deb = Conta.find(transferencia.debito_id) %>
-        <% cred = Conta.find(transferencia.credito_id) %>
-        <td><%= deb.nome  %></td>
-        <td><%= cred.nome %></td>
+        <% deb = Conta.find(transferencia.debito_id)  %>
+        <% cred = Conta.find(transferencia.credito_id)  %>
+        <td><%= deb.nome    %></td>
+        <td><%= cred.nome   %></td>
         <td><%= number_to_currency(transferencia.valor) %></td>
         <td><%= transferencia.observacao %></td>
 <!--
@@ -63,7 +63,13 @@
         <td>< %= transferencia.empenho %></td>
 -->
         <td><%= link_to 'Mostrar', transferencia, class: 'btn btn-primary active' %></td>
-        <td><%= link_to 'Editar', edit_transferencia_path(transferencia), class:'btn btn-default' %></td>
+        <td>
+          <% if transferencia.transf_multipla == false %>
+              <%= link_to 'Editar', edit_transferencia_path(transferencia), class:'btn btn-default' %>
+          <% else %>
+              <%= link_to 'Editar', edita_transf_multipla_path(transferencia), class:'btn btn-default' %>
+           <% end %>
+        </td>
         <td><%= link_to 'Apagar', transferencia, method: :delete, data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
       </tr>
     <% end %>
@@ -73,3 +79,5 @@
 <br>
 
 <%= link_to 'Nova Transferência', new_transferencia_path, class: 'btn btn-primary active' %>
+<%= link_to "Nova Transferência múltipla", transf_multipla_path, class: 'btn btn-success active' %>
+

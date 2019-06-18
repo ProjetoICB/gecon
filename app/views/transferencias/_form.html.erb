@@ -34,11 +34,18 @@
       <%= f.number_field :valor, class:'form-control' %>
     </div>
   </div>
+
+
   <div class="form-group">
     <%= f.label :observacao %><br>
     <%= f.text_area :observacao, class: 'form-control' %>
   </div>
 <!--
+  <div class="form-group">
+    < %= f.label :tipo %>
+    < %= f.text_field :tipo, value: "Transferência", readonly: true %>
+  </div>
+
   <div class="field">
     < %= f.label :fornecedor_id %><br>
     < %= f.number_field :fornecedor_id %>
@@ -52,6 +59,8 @@
     < %= f.number_field :empenho %>
   </div>
 -->
+
+
 
 
   <div class="actions">

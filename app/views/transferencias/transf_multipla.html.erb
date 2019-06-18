@@ -1,0 +1,120 @@
+<script type="text/javascript">
+
+/*
+
+  $('form').submit(function(e) {
+
+          /*
+           Será usado depois para prevenção de campos necessários estarem vazios
+           alert("interromido");
+           e.preventDefault(e);
+           $('#cred3').focus();
+
+
+  });
+
+
+
+  */
+
+</script>
+
+<%= form_tag(gera_transf_multipla_path, method: "get") do  %>
+    <p>
+      Data <br>
+      <%= date_field_tag :data %>
+    </p>
+    <p>
+      Data do documento <br>
+      <%= date_field_tag :datadocumento %>
+    </p>
+
+    <p>
+      Conta de débito <br>
+      <%= select_tag :debito_id, options_from_collection_for_select(Conta.all, :id, :nome), include_blank: true %>
+    </p>
+
+    <p> Valor <br>
+      <%= number_field_tag :valor %>
+    </p>
+
+    <table  class="table table-bordered">
+      <thead>
+      <tr>
+        <td class="text-center"> Conta</td>
+        <td class="text-center"> Porcentagem</td>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr>
+        <td> <%= select_tag :cred1, options_from_collection_for_select(Conta.all, :id, :nome), include_blank: true  %>   </td>
+        <td> <%= number_field_tag :porc1 %></td>
+      </tr>
+
+      <tr>
+        <td> <%= select_tag :cred2,options_from_collection_for_select(Conta.all, :id, :nome), include_blank: true %>   </td>
+        <td> <%= number_field_tag :porc2 %></td>
+      </tr>
+
+      <tr>
+        <td> <%= select_tag :cred3, options_from_collection_for_select(Conta.all, :id, :nome), include_blank: true %>   </td>
+        <td> <%= number_field_tag :porc3 %></td>
+      </tr>
+
+      <tr>
+        <td> <%= select_tag :cred4, options_from_collection_for_select(Conta.all, :id, :nome), include_blank: true %>   </td>
+        <td> <%= number_field_tag :porc4 %></td>
+      </tr>
+
+      </tbody>
+
+    </table>
+
+    <%= submit_tag "Enviar", class: 'btn btn-primary active btn-sm' %>
+    <%= link_to "Voltar", transferencias_path, class: 'btn btn-default btn sm' %>
+<% end %>
+
+<!--
+
+<hr>
+<p> Data: < %= params[:data] %> </p>
+<p> Data do documento: < %= params[:datadocumento] %> </p>
+
+<p> Conta de debito: < %= params[:debito_id] %></p>
+<p> Valor < %= number_to_currency(params[:valor].to_i) %></p>
+<table class="table table-bordered">
+  <tr>
+    <td>Conta</td>
+    <td>Porcentagem</td>
+    <td>Valor</td>
+  </tr>
+
+  < % a = params[:valor].to_i %>
+  <tr>
+    <td>< %= params[:cred1] %> </td>
+    <td>< %= params[:porc1] %> </td>
+    <td>< %=number_to_currency((a / 100) * params[:porc1].to_i) if !params[:porc1].nil? %> </td>
+  </tr>
+
+  <tr>
+    <td>< %= params[:cred2] %> </td>
+    <td>< %= params[:porc2] %> </td>
+    <td>< %= number_to_currency((a / 100) * params[:porc2].to_i)  if !params[:porc2].nil?%> </td>
+  </tr>
+
+
+  <tr>
+    <td>< %= params[:cred3] %> </td>
+    <td>< %= params[:porc3] %> </td>
+    <td>< %= number_to_currency((a / 100) * params[:porc3].to_i) if !params[:porc3].nil? %> </td>
+  </tr>
+
+  <tr>
+    <td>< %= params[:cred4] %> </td>
+    <td>< %= params[:porc4] %> </td>
+    <td>< %= number_to_currency((a / 100) * params[:porc4].to_i) if !params[:porc4].nil? %> </td>
+  </tr>
+
+</table>
+-->

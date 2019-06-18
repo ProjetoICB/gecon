@@ -2,8 +2,6 @@ Rails.application.routes.draw do
 
 
 
-
-
   resources :transferencias
   resources :lancamentos
   resources :contas
@@ -24,6 +22,11 @@ Rails.application.routes.draw do
   post 'login' => 'session#create'
   get 'logout' => 'session#destroy', as: 'logout'
   get 'home/index'
+
+  get 'transf_multipla' => 'transferencias#transf_multipla', as: 'transf_multipla'
+  get 'gera_transf_multipla' => 'transferencias#gera_transf_multipla', as: 'gera_transf_multipla'
+  get 'edita_transf_multipla/:id' => 'transferencias#edita_transf_multipla', as: 'edita_transf_multipla'
+  get 'atualiza_transf_multipla' => 'transferencias#atualiza_transf_multipla', as: 'atualiza_transf_multipla'
 
 
 

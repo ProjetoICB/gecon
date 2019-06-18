@@ -28,6 +28,7 @@
 <table id="lancamento" class="table table-striped table-bordered">
   <thead>
     <tr>
+      <th> trasf_id</th>
       <th class="text-center">Processo</th>
       <th class="text-center">Conta</th>
       <th class="text-center"> Interessado </th>
@@ -47,6 +48,7 @@
   <tbody>
     <% @lancamentos.each do |lancamento| %>
       <tr>
+        <td><%= lancamento.transferencia_id %></td>
         <td><%= lancamento.processo %></td>
         <td><%= lancamento.conta.numero %></td>
         <td><%= lancamento.conta.nome %>
