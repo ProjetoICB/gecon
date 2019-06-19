@@ -19,6 +19,7 @@ class LancamentosController < ApplicationController
 
   # GET /lancamentos/1/edit
   def edit
+    set_lancamento
   end
 
   # POST /lancamentos
