@@ -1,85 +1,88 @@
+<p>
+  <strong>Tipo:</strong>
+  <%= @lancamento.tipo %>
+</p>
+
+
+<p>
+  <strong>Conta:</strong>
+  <%= @lancamento.conta.numero %> - <%= @lancamento.conta.nome %>
+</p>
+
+<p>
+  <strong>Processo:</strong>
+  <%= @lancamento.processo %>
+</p>
+
+<p>
+  <strong>Data:</strong>
+  <%= @lancamento.data.strftime("%d/%m/%Y") %>
+</p>
+
+<p>
+  <strong>Data do documento:</strong>
+  <%= @lancamento.datadocumento.strftime("%d/%m/%Y") %>
+</p>
+
+<p>
+  <strong>Observação:</strong>
+  <%= @lancamento.observacao %>
+</p>
+
+<p>
+  <strong>Débito:</strong>
+  <%= number_to_currency(@lancamento.debito) %>
+</p>
+
+<p>
+  <strong>Fornecedor:</strong>
+  <%= @lancamento.fornecedor.nome if !@lancamento.fornecedor_id.nil? %>
+</p>
+
+<p>
+  <strong>Item de despesa:</strong>
+  <%= @lancamento.item_de_despesa_id.nil? ? "Transferência" : @lancamento.item_de_despesa.nome %>
+</p>
+
+<p>
+  <strong>Tipo de compra:</strong>
+  <%= @lancamento.tipo_de_compra.nome if !@lancamento.tipo_de_compra_id.nil? %>
+</p>
+
+<p>
+  <strong>Número da nota fiscal:</strong>
+  <%= @lancamento.num_notafiscal %>
+</p>
+
+<p>
+  <strong>Empenho:</strong>
+  <%= @lancamento.empenho %>
+</p>
 <%= form_for(@lancamento) do |f| %>
-  <% if @lancamento.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@lancamento.errors.count, "error") %> prohibited this lancamento from being saved:</h2>
+    <% if @lancamento.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@lancamento.errors.count, "error") %> prohibited this lancamento from being saved:</h2>
+          <ul>
+            <% @lancamento.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
 
-      <ul>
-      <% @lancamento.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <div class="form-group">
+      <%= f.check_box :debito_cancelado %>
+      <%= f.label :debito_cancelado %>
     </div>
-  <% end %>
-
-  <div class="form-group">
-    <%= f.label :tipo, "Tipo" %><br>
-    <%= f.text_field :tipo,  value: params[:tipo], readonly: true, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :conta_id, "Conta" %><br>
-    <%= f.select :conta_id, Conta.all.map{|c| [c.nome, c.id]}, {include_blank: true}, {class: 'form-control'} %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :processo, "Processo" %><br>
-    <%= f.number_field :processo, class: 'form-control' %>
-  </div>
-  <div class="form-group">
-    <%= f.label :data, "Data" %><br>
-    <%= f.date_field :data %>
-  </div>
-  <div class="form-group">
-    <%= f.label :datadocumento, "Data do documento"  %><br>
-    <%= f.date_field :datadocumento %>
-  </div>
-  <div class="form-group">
-    <%= f.label :observacao, "Observação" %><br>
-    <%= f.text_area :observacao, class: 'form-control' %>
-  </div>
-  <div class="form-group">
-    <%= f.label :debito, "Valor do débito" %><br>
-    <div class="input-group">
-      <div class="input-group-addon"> R$</div>
-      <%= f.number_field :debito, class: 'form-control' %>
+    <div class="form-group">
+      <%= f.label :retorno_debitocanc, "Retorno de débito cancelado" %><br>
+      <div class="input-group">
+        <div class="input-group-addon"> R$</div>
+        <%= f.number_field :retorno_debitocanc, class: 'form-control' %>
+      </div>
     </div>
-  </div>
 
 
-  <div class="form-group">
-    <%= f.label :fornecedor_id, "Fornecedor" %><br>
-    <%= f.select :fornecedor_id, Fornecedor.all.map{|forn| [forn.nome, forn.id]}, {include_blank: true}, {class: 'form-control'}  %>
-  </div>
-  <div class="form-group">
-    <%= f.label :item_de_despesa_id, "Item de despesa" %><br>
-    <%= f.select :item_de_despesa_id, ItemDeDespesa.all.map{|ides| [ides.nome, ides.id]}, {include_blank: true}, {class: 'form-control'} %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :tipo_compra_id, "Tipo de compra" %><br>
-    <%= f.select  :tipo_de_compra_id, TipoDeCompra.all.map{|tc| [tc.nome, tc.id]}, {include_blank: true}, {class:'form-control'} %>
-  </div>
-  <div class="form-group">
-    <%= f.check_box :debito_cancelado %>
-    <%= f.label :debito_cancelado %>
-
-  </div>
-  <div class="form-group">
-    <%= f.label :retorno_debitocanc, "Retorno de débito cancelado" %><br>
-    <div class="input-group">
-      <div class="input-group-addon"> R$</div>
-      <%= f.number_field :retorno_debitocanc, class: 'form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :num_notafiscal, "Número da nota fiscal" %><br>
-    <%= f.number_field :num_notafiscal, class: 'form-ontrol' %>
-  </div>
-  <div class="form0-group">
-    <%= f.label :empenho, "Empenho" %><br>
-    <%= f.number_field :empenho, class:'form-control' %>
-  </div>
-    <br>
   <div class="actions">
     <%= f.submit "Enviar", class: 'btn btn-primary active' %>
   </div>
