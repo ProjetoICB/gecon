@@ -10,8 +10,6 @@
 </script>
 
 
-
-
 <%= form_for(@transferencia) do |f| %>
   <% if @transferencia.errors.any? %>
     <div id="error_explanation">
@@ -27,12 +25,11 @@
 
   <div class="form-group">
     <%= f.label :debito_id, "Conta de débito" %><br>
-    <%= f.select :debito_id, Conta.all.map{|cdeb| ["#{cdeb.numero} - #{cdeb.nome}", cdeb.id]}, {include_blank: true}, {class: 'chosen-select'} %>
+    <%= f.select :debito_id, Conta.all.map{|cdeb| ["#{cdeb.numero} - #{cdeb.nome}", cdeb.id]}, {include_blank: true}, {class: 'chosen-rais'} %>
   </div>
   <div class="form-group">
     <%= f.label :credito_id, "Conta de crédito" %><br>
-    <!--< %= f.select :credito_id, Conta.all.map{|ccred| [ccred.nome, ccred.id]}, {include_blank:true}, {class: 'form-control'} %> -->
-    <%= f.select :credito_id, Conta.all.map{|ccred| ["#{ccred.numero} - #{ccred.nome}", ccred.id]}, {include_blank: true}, {class: 'chosen-select'} %>
+    <%= f.select :credito_id, Conta.all.map{|ccred| ["#{ccred.numero} - #{ccred.nome}", ccred.id]}, {include_blank: true}, {class: 'chosen-rails'} %>
   </div>
   <div class="form-group">
     <%= f.label :data, "Data" %><br>
@@ -42,13 +39,24 @@
     <%= f.label :datadocumento, "Data do documento" %><br>
     <%= f.date_field :datadocumento %>
   </div>
-  <div class="form-group">
-    <%= f.label :valor, "Valor a transferir" %><br>
-    <div class="input-group">
-      <div class="input-group-addon"> R$ </div>
-      <%= f.number_field :valor, class:'form-control' %>
-    </div>
-  </div>
+
+    <% if @transferencia.transf_multipla == false %>
+        <div class="form-group">
+          <%= f.label :valor, "Valor a transferir" %><br>
+          <div class="input-group">
+            <div class="input-group-addon"> R$ </div>
+            <%= f.number_field :valor, class:'form-control' %>
+          </div>
+        </div>
+     <% else %>
+        <div class="form-group">
+          <%= f.label :porcentagem, "Porcentagem" %>
+          <div class="input-group">
+            <%= f.number_field :porcentagem, class: 'form-control' %>
+            <div class="input-group-addon"> % </div>
+          </div>
+        </div>
+     <% end %>
 
 
   <div class="form-group">
