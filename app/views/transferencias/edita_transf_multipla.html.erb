@@ -1,4 +1,17 @@
-  <h1> Editar transferências multiplas </h1>
+<script type="text/javascript">
+
+    $('.chosen-select').chosen({
+        no_results_text: "Nada encontrado:",
+        placeholder_text_single: "Selecione ou digite uma opção",
+        search_contains: true,
+        width: '450px'
+    });
+
+</script>
+
+
+
+<h1> Editar transferências multiplas </h1>
 
 
   <% deb = Conta.find(@transferencia.debito_id)  %>
@@ -9,10 +22,10 @@
 
 
   <%= form_tag(atualiza_transf_multipla_path, method: :get) do %>
-    <p> Conta de crédito:  <%= select_tag :cred, options_from_collection_for_select(Conta.all, :id, :nome,  cred.id) %>  </p>
+    <p> Conta de crédito: <%= select_tag :cred, options_for_select(Conta.all.map{|ccred| ["#{ccred.numero} - #{ccred.nome}",ccred.id]}),{include_blank: true , class: 'chosen-select'}  %>
     <p> Porcentagem: <%= number_field_tag :porc, @porc %>
      <%= hidden_field_tag :id, @transferencia.id %>
-    <%= submit_tag "Enviar", class: 'btn btn-primary active' %>
+     <%= submit_tag "Enviar", class: 'btn btn-primary active' %>
   <% end %>
 
 
