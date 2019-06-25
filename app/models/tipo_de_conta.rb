@@ -6,4 +6,5 @@ class TipoDeConta < ActiveRecord::Base
 
 
   validates_presence_of :nome
+  validates_presence_of :grupo_id
 end

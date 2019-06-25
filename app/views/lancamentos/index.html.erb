@@ -31,7 +31,6 @@
       <th> trasf_id</th>
       <th class="text-center">Processo</th>
       <th class="text-center">Conta</th>
-      <th class="text-center"> Interessado </th>
       <th class="text-center"> Centro de Custo </th>
       <th class="text-center">Data</th>
       <th class="text-center">Fornecedor</th>
@@ -50,8 +49,7 @@
       <tr>
         <td><%= lancamento.transferencia_id %></td>
         <td><%= lancamento.processo %></td>
-        <td><%= lancamento.conta.numero %></td>
-        <td><%= lancamento.conta.nome %>
+        <td><%= lancamento.conta.numero %> - <%= lancamento.conta.nome %> </td>
         <td><%= lancamento.conta.centro_de_custo.nome %></td>
         <td><%= lancamento.data.strftime("%d/%m/%Y") %></td>
         <td><%= lancamento.fornecedor.nome if !lancamento.fornecedor_id.nil?  %></td>
