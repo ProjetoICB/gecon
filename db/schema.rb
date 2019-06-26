@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190611175708) do
+ActiveRecord::Schema.define(version: 20190626131913) do
 
   create_table "centros_de_custo", force: :cascade do |t|
     t.string   "nome",       limit: 255
@@ -133,18 +133,19 @@ ActiveRecord::Schema.define(version: 20190611175708) do
   create_table "transferencias", force: :cascade do |t|
     t.date     "data"
     t.date     "datadocumento"
-    t.integer  "debito_id",       limit: 4
-    t.integer  "credito_id",      limit: 4
-    t.float    "valor",           limit: 24
-    t.text     "observacao",      limit: 65535
-    t.integer  "fornecedor_id",   limit: 4
-    t.integer  "num_notafiscal",  limit: 4
-    t.integer  "empenho",         limit: 4
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
-    t.integer  "porcentagem",     limit: 4
-    t.boolean  "transf_multipla",               default: false
-    t.float    "valor_deb_orig",  limit: 24
+    t.integer  "debito_id",          limit: 4
+    t.integer  "credito_id",         limit: 4
+    t.float    "valor",              limit: 24
+    t.text     "observacao",         limit: 65535
+    t.integer  "fornecedor_id",      limit: 4
+    t.integer  "num_notafiscal",     limit: 4
+    t.integer  "empenho",            limit: 4
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.integer  "porcentagem",        limit: 4
+    t.boolean  "transf_multipla",                  default: false
+    t.float    "valor_deb_orig",     limit: 24
+    t.integer  "transf_multipla_id", limit: 4
   end
 
   create_table "usuarios", force: :cascade do |t|

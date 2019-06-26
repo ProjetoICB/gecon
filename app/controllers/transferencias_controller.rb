@@ -38,6 +38,16 @@ class TransferenciasController < ApplicationController
     data = params[:data]
     datadocumento = params[:datadocumento]
 
+    # identificador de transferencia multipla
+    t=Transferencia.where(transf_multipla: true).order("id desc").take
+    tmult_id = t.transf_multipla_id
+    if tmult_id.nil?
+      tmult_id = 1
+    else
+      tmult_id += 1
+    end
+
+
     if (debito_id != cred1) and (debito_id != cred2) and (debito_id != cred3) and (debito_id != cred4)
      if (cred1 == cred2) or (cred1 == cred3) or (cred1 == cred4) or (cred2 == cred3) or (cred2 == cred4) or (cred3 == cred4)
         redirect_to transferencias_path, notice: "Impossivel fazer crédito em duas contas iguais"
@@ -50,7 +60,6 @@ class TransferenciasController < ApplicationController
           @lancamento.datadocumento = datadocumento
           @lancamento.conta_id = debito_id
           @lancamento.debito = valor
-          #@lancamento.transferencia_id = tm.id
           @lancamento.save
 
 
@@ -64,6 +73,7 @@ class TransferenciasController < ApplicationController
             tm.porcentagem = params[:porc1]
             tm.transf_multipla = true
             tm.valor = (valor / 100) * params[:porc1].to_i
+            tm.transf_multipla_id = tmult_id
             tm.save
             @lancamento = Lancamento.new
             @lancamento.tipo = "Crédito"
@@ -84,6 +94,7 @@ class TransferenciasController < ApplicationController
             tm.porcentagem = params[:porc2]
             tm.transf_multipla = true
             tm.valor = (valor / 100) * params[:porc2].to_i
+            tm.transf_multipla_id = tmult_id
             tm.save
             @lancamento = Lancamento.new
             @lancamento.tipo = "Crédito"
@@ -104,6 +115,7 @@ class TransferenciasController < ApplicationController
             tm.porcentagem = params[:porc3]
             tm.transf_multipla = true
             tm.valor = (valor / 100) * params[:porc3].to_i
+            tm.transf_multipla_id = tmult_id
             tm.save
             @lancamento = Lancamento.new
             @lancamento.tipo = "Crédito"
@@ -124,6 +136,7 @@ class TransferenciasController < ApplicationController
             tm.porcentagem = params[:porc4]
             tm.transf_multipla = true
             tm.valor = (valor / 100) * params[:porc4].to_i
+            tm.transf_multipla_id = tmult_id
             tm.save
             @lancamento = Lancamento.new
             @lancamento.tipo = "Crédito"
@@ -316,6 +329,6 @@ class TransferenciasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def transferencia_params
-      params.require(:transferencia).permit(:data, :datadocumento, :debito_id, :credito_id, :valor, :observacao, :fornecedor_id, :num_notafiscal, :empenho, :porcentagem, :transf_multipla, :valor_deb_orig)
+      params.require(:transferencia).permit(:data, :datadocumento, :debito_id, :credito_id, :valor, :observacao, :fornecedor_id, :num_notafiscal, :empenho, :porcentagem, :transf_multipla, :valor_deb_orig, :transf_multipla_id)
     end
 end
