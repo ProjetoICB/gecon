@@ -26,11 +26,11 @@
 
   <div class="form-group">
     <%= f.label :debito_id, "Conta de débito" %><br>
-    <%= f.select :debito_id, Conta.all.map{|cdeb| ["#{cdeb.numero} - #{cdeb.nome}", cdeb.id]}, {include_blank: true}, {class: 'chosen-rais'} %>
+    <%= f.select :debito_id, Conta.where(ativo: true).map {|cdeb| ["#{cdeb.numero} - #{cdeb.nome}", cdeb.id]}, {include_blank: true}, {class: 'chosen-rais'} %>
   </div>
   <div class="form-group">
     <%= f.label :credito_id, "Conta de crédito" %><br>
-    <%= f.select :credito_id, Conta.all.map{|ccred| ["#{ccred.numero} - #{ccred.nome}", ccred.id]}, {include_blank: true}, {class: 'chosen-rails'} %>
+    <%= f.select :credito_id, Conta.where(ativo: true).map{|ccred| ["#{ccred.numero} - #{ccred.nome}", ccred.id]}, {include_blank: true}, {class: 'chosen-rails'} %>
   </div>
   <div class="form-group">
     <%= f.label :data, "Data" %><br>

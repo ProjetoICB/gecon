@@ -32,7 +32,6 @@
       <th class="text-center">Numero</th>
       <th class="text-center">Nome</th>
       <th class="text-center">Observacao</th>
-      <th class="text-center">Ativo</th>
       <th class="text-center">Tipo de conta</th>
       <th class="text-center">Usuario</th>
       <th class="text-center">Centro de custo</th>
@@ -52,7 +51,6 @@
         <td><%= conta.numero %></td>
         <td><%= conta.nome %></td>
         <td><%= conta.observacao %></td>
-        <td><%= conta.ativo == true ? "Sim" : "Não"   %></td>
         <td><%= conta.tipo_de_conta.nome %></td>
         <td><%= conta.usuario.nome %></td>
         <td><%= conta.centro_de_custo.nome %></td>
@@ -60,7 +58,8 @@
         <th></th>
         <td class="text-center"><%= link_to 'Mostrar', conta, class: 'btn btn-primary active' %></td>
         <td class="text-center"><%= link_to 'Editar', edit_conta_path(conta), class: 'btn btn-default' %></td>
-        <td class="text-center"><%= link_to 'Apagar', conta, method: :delete, data: { confirm: 'Tem certeza' }, class: 'btn btn-danger active' %></td>
+        <!-- <td class="text-center">< %= link_to 'Apagar', conta, method: :delete, data: { confirm: 'Tem certeza' }, class: 'btn btn-danger active' %></td> -->
+        <td class="text-center"><%= link_to 'Desativar', desativar_path(conta), data: { confirm: 'Tem certeza?' },  class: 'btn btn-danger active'  %> </td>
         <td class="text-center"><%= link_to "Novo crédito" , new_lancamento_path(:tipo => "Crédito",:conta_id =>  conta.id), class: 'btn btn-primary active'  %></td>
         <td class="text-center"><%= link_to "Novo débito",  new_lancamento_path(:tipo => "Débito", :conta_id => conta.id), class: 'btn btn-danger active' %></td>
       </tr>

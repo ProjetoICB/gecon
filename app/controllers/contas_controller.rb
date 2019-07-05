@@ -1,10 +1,10 @@
 class ContasController < ApplicationController
-  before_action :set_conta, only: [:show, :edit, :update, :destroy]
+  before_action :set_conta, only: [:show, :edit, :update, :destroy, :desativa]
 
   # GET /contas
   # GET /contas.json
   def index
-    @contas = Conta.all
+    @contas = Conta.where(ativo: true)
   end
 
   # GET /contas/1
@@ -60,6 +60,17 @@ class ContasController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def desativa
+    @conta.ativo = false
+    @conta.save
+    respond_to do |format|
+      format.html {redirect_to contas_path, notice: 'Conta desativada com sucesso' }
+      format.json { head :no-content }
+     end
+
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
