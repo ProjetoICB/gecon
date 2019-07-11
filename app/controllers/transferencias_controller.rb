@@ -38,6 +38,15 @@ class TransferenciasController < ApplicationController
     data = params[:data]
     datadocumento = params[:datadocumento]
 
+    # identificador de transferencia multipla
+    t=Transferencia.where(transf_multipla: true).order("id desc").take
+    if t.nil?
+      tmult = 1
+    else
+      tmult = t.transf_multipla_id
+      tmult += 1
+    end
+
     if (debito_id != cred1) and (debito_id != cred2) and (debito_id != cred3) and (debito_id != cred4)
      if (cred1 == cred2) or (cred1 == cred3) or (cred1 == cred4) or (cred2 == cred3) or (cred2 == cred4) or (cred3 == cred4)
         redirect_to transferencias_path, notice: "Impossivel fazer crédito em duas contas iguais"
@@ -50,21 +59,25 @@ class TransferenciasController < ApplicationController
           @lancamento.datadocumento = datadocumento
           @lancamento.conta_id = debito_id
           @lancamento.debito = valor
-          #@lancamento.transferencia_id = tm.id
+          @lancamento.transf_multipla_id = tmult
           @lancamento.save
 
 
           if !params[:cred1].empty?
+
+            total = Transferencia.where(transf_multipla: true).count
             tm = Transferencia.new
             tm.data = data
             tm.datadocumento = datadocumento
             tm.debito_id = params[:debito_id]
-            tm.valor_deb_orig = params[:valor]
             tm.credito_id = params[:cred1]
+            tm.valor_deb_orig = params[:valor]
             tm.porcentagem = params[:porc1]
+            tm.valor = (valor / 100) * params[:porc1].to_f
             tm.transf_multipla = true
-            tm.valor = (valor / 100) * params[:porc1].to_i
+            tm.transf_multipla_id = tmult
             tm.save
+
             @lancamento = Lancamento.new
             @lancamento.tipo = "Crédito"
             @lancamento.data = data
@@ -72,9 +85,12 @@ class TransferenciasController < ApplicationController
             @lancamento.conta_id = tm.credito_id
             @lancamento.credito = tm.valor
             @lancamento.transferencia_id = tm.id
+            @lancamento.transf_multipla_id = tmult
             @lancamento.save
           end
+
           if !params[:cred2].empty?
+            # fazer o mesmo if que está no cred1
             tm = Transferencia.new
             tm.data = data
             tm.datadocumento = datadocumento
@@ -83,8 +99,10 @@ class TransferenciasController < ApplicationController
             tm.valor_deb_orig = params[:valor]
             tm.porcentagem = params[:porc2]
             tm.transf_multipla = true
-            tm.valor = (valor / 100) * params[:porc2].to_i
+            tm.valor = (valor / 100) * params[:porc2].to_f
+            tm.transf_multipla_id = tmult
             tm.save
+
             @lancamento = Lancamento.new
             @lancamento.tipo = "Crédito"
             @lancamento.data = data
@@ -92,9 +110,11 @@ class TransferenciasController < ApplicationController
             @lancamento.conta_id = tm.credito_id
             @lancamento.credito = tm.valor
             @lancamento.transferencia_id = tm.id
+            @lancamento.transf_multipla_id = tmult
             @lancamento.save
           end
           if !params[:cred3].empty?
+            # fazer o mesmo if que está no cred1
             tm = Transferencia.new
             tm.data = data
             tm.datadocumento = datadocumento
@@ -103,8 +123,10 @@ class TransferenciasController < ApplicationController
             tm.credito_id = params[:cred3]
             tm.porcentagem = params[:porc3]
             tm.transf_multipla = true
-            tm.valor = (valor / 100) * params[:porc3].to_i
+            tm.valor = (valor / 100) * params[:porc3].to_f
+            tm.transf_multipla_id = tmult
             tm.save
+
             @lancamento = Lancamento.new
             @lancamento.tipo = "Crédito"
             @lancamento.data = data
@@ -112,9 +134,11 @@ class TransferenciasController < ApplicationController
             @lancamento.conta_id = tm.credito_id
             @lancamento.credito = tm.valor
             @lancamento.transferencia_id = tm.id
+            @lancamento.transf_multipla_id = tmult
             @lancamento.save
           end
           if !params[:cred4].empty?
+            # fazer o mesmo if que está no cred1
             tm = Transferencia.new
             tm.data = data
             tm.datadocumento = datadocumento
@@ -123,8 +147,10 @@ class TransferenciasController < ApplicationController
             tm.credito_id = params[:cred4]
             tm.porcentagem = params[:porc4]
             tm.transf_multipla = true
-            tm.valor = (valor / 100) * params[:porc4].to_i
+            tm.valor = (valor / 100) * params[:porc4].to_f
+            tm.transf_multipla_id = tmult
             tm.save
+
             @lancamento = Lancamento.new
             @lancamento.tipo = "Crédito"
             @lancamento.data = data
@@ -132,6 +158,7 @@ class TransferenciasController < ApplicationController
             @lancamento.conta_id = tm.credito_id
             @lancamento.credito = tm.valor
             @lancamento.transferencia_id = tm.id
+            @lancamento.transf_multipla_id = tmult
             @lancamento.save
           end
           redirect_to transferencias_path, notice: "Transferências realizadas com sucesso"
@@ -144,37 +171,6 @@ class TransferenciasController < ApplicationController
     end
   end
 
-  def edita_transf_multipla
-    set_transferencia
-    @porc =  @transferencia.porcentagem
-  end
-
-  def atualiza_transf_multipla
-    cred = params[:cred]
-    porc = params[:porc]
-    id = params[:id]
-    puts cred.to_s + " / " + porc.to_s + " / " + id.to_s
-
-    if !params[:porc].empty?
-      tm = Transferencia.find(params[:id])
-      totalporc = Transferencia.where(created_at: tm.created_at, transf_multipla: true).sum(:porcentagem)
-      puts totalporc
-      if totalporc >= 100
-        redirect_to transferencias_path, notice: "Transferencias não realizadas! Porcentagens maiores que 100%"
-      else
-        tm.credito_id = cred
-        tm.porcentagem = porc
-        tm.valor = (tm.valor_deb_orig / 100) * porc.to_i
-        tm.save
-        @lancamento = Lancamento.find_by(transferencia_id: id)
-        @lancamento.conta_id  = tm.credito_id
-        @lancamento.credito = tm.valor
-        @lancamento.transferencia_id = tm.id
-        @lancamento.save
-        redirect_to transferencias_path, notice: "Transferência alterada com sucesso"
-      end
-    end
-  end
 
   def cria_debito
     @transferencia = Transferencia.last
@@ -301,9 +297,26 @@ class TransferenciasController < ApplicationController
   # DELETE /transferencias/1
   # DELETE /transferencias/1.json
   def destroy
-    @transferencia.destroy
+    if @transferencia.transf_multipla == true
+      tm_id = @transferencia.transf_multipla_id
+      transfs = Transferencia.where(transf_multipla_id: tm_id)
+      transfs.each do |tr|
+        tr.destroy
+      end
+      lancs = Lancamento.where(transf_multipla_id: tm_id)
+      lancs.each do |lan|
+        lan.destroy
+      end
+    else
+      @transferencia.destroy
+    end
+
     respond_to do |format|
-      format.html { redirect_to transferencias_url, notice: 'Transferência apagada com sucesso.' }
+      if @transferencia.transf_multipla == true
+        format.html { redirect_to transferencias_url, notice: 'Transferências apagadas com sucesso.' }
+      else
+        format.html { redirect_to transferencias_url, notice: 'Transferência apagada com sucesso.' }
+      end
       format.json { head :no_content }
     end
   end
@@ -316,6 +329,6 @@ class TransferenciasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def transferencia_params
-      params.require(:transferencia).permit(:data, :datadocumento, :debito_id, :credito_id, :valor, :observacao, :fornecedor_id, :num_notafiscal, :empenho, :porcentagem, :transf_multipla, :valor_deb_orig)
+      params.require(:transferencia).permit(:data, :datadocumento, :debito_id, :credito_id, :valor, :observacao, :fornecedor_id, :num_notafiscal, :empenho, :porcentagem, :transf_multipla, :valor_deb_orig, :transf_multipla_id)
     end
 end

@@ -25,8 +25,10 @@ Rails.application.routes.draw do
 
   get 'transf_multipla' => 'transferencias#transf_multipla', as: 'transf_multipla'
   get 'gera_transf_multipla' => 'transferencias#gera_transf_multipla', as: 'gera_transf_multipla'
-  get 'edita_transf_multipla/:id' => 'transferencias#edita_transf_multipla', as: 'edita_transf_multipla'
-  get 'atualiza_transf_multipla' => 'transferencias#atualiza_transf_multipla', as: 'atualiza_transf_multipla'
+
+  get 'desativa/:id' => 'contas#desativa', as: 'desativar'
+
+
 
 
 

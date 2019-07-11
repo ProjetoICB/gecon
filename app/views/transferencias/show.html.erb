@@ -47,6 +47,7 @@
 </p>
 
 -->
-
-<%= link_to 'Editar', edit_transferencia_path(@transferencia), class: 'btn btn-primary active' %> |
+<% if @transferencia.transf_multipla == false  %>
+    <%= link_to 'Editar', edit_transferencia_path(@transferencia), class: 'btn btn-primary active' %> |
+<% end %>
 <%= link_to 'Voltar', transferencias_path, class: 'btn btn-default' %>

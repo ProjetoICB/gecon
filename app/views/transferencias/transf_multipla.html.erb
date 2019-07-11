@@ -1,23 +1,47 @@
 <script type="text/javascript">
 
-/*
 
   $('form').submit(function(e) {
 
-          /*
-           Será usado depois para prevenção de campos necessários estarem vazios
-           alert("interromido");
-           e.preventDefault(e);
-           $('#cred3').focus();
+      if ($('#data').val() == "")  {
+          alert("Coloque uma data");
+          e.preventDefault(e);
+          $('#data').focus();
+      } else if ($('#datadocumento').val() == "") {
+          alert("Coloque a data do documento");
+          e.preventDefault(e)
+          $('#datadocumento').focus();
+      } else if ($('#debito_id').val() == "") {
+          alert("Escolha uma conta para débito");
+          e.preventDefault(e);
+          $('#conta_deb').css({"font-weight": "Bold"});
+      } else if ($('#valor').val() == "") {
+          alert("Digite o valor");
+          e.preventDefault(e);
+          $('#valor').focus();
+      } else if ($('#cred1').val() == "") {
+          alert("Escolha a partir da primeira linha para credito");
+          e.preventDefault(e);
+          $('#cred1_tit').css({"font-weight" : "Bold"});
+      } else if ($('#porc1').val() == "") {
+          alert("Digite a porcentagem do valor que quer transferir para essa conta");
+          e.preventDefault(e);
+          $('#porc1').focus();
 
-
+      }
   });
 
-
-
-  */
+    $('.chosen-select').chosen({
+        no_results_text: "Nada encontrado:",
+        placeholder_text_single: "Selecione ou digite uma opção",
+        search_contains: true,
+        width: '450px'
+    });
 
 </script>
+
+
+<h1> Transferência múltipla </h1>
 
 <%= form_tag(gera_transf_multipla_path, method: "get") do  %>
     <p>
@@ -29,9 +53,9 @@
       <%= date_field_tag :datadocumento %>
     </p>
 
-    <p>
+    <p id="conta_deb">
       Conta de débito <br>
-      <%= select_tag :debito_id, options_from_collection_for_select(Conta.all, :id, :nome), include_blank: true %>
+      <%= select_tag :debito_id, options_for_select(Conta.where(ativo: true).map{|cdeb| ["#{cdeb.numero} - #{cdeb.nome}", cdeb.id]}), {include_blank: true , class: 'chosen-select'} %>
     </p>
 
     <p> Valor <br>
@@ -48,22 +72,22 @@
 
       <tbody>
       <tr>
-        <td> <%= select_tag :cred1, options_from_collection_for_select(Conta.all, :id, :nome), include_blank: true  %>   </td>
+        <td id="cred1_tit"> <%= select_tag :cred1,options_for_select(Conta.where(ativo: true).map{|ccred| ["#{ccred.numero} - #{ccred.nome}",ccred.id]}),{include_blank: true , class: 'chosen-select'}  %>   </td>
         <td> <%= number_field_tag :porc1 %></td>
       </tr>
 
       <tr>
-        <td> <%= select_tag :cred2,options_from_collection_for_select(Conta.all, :id, :nome), include_blank: true %>   </td>
+        <td> <%= select_tag :cred2,options_for_select(Conta.where(ativo: true).map{|ccred| ["#{ccred.numero} - #{ccred.nome}",ccred.id]}),{include_blank: true , class: 'chosen-select'} %>  </td>
         <td> <%= number_field_tag :porc2 %></td>
       </tr>
 
       <tr>
-        <td> <%= select_tag :cred3, options_from_collection_for_select(Conta.all, :id, :nome), include_blank: true %>   </td>
+        <td> <%= select_tag :cred3, options_for_select(Conta.where(ativo: true).map{|ccred| ["#{ccred.numero} - #{ccred.nome}",ccred.id]}),{include_blank: true , class: 'chosen-select'} %>  </td>
         <td> <%= number_field_tag :porc3 %></td>
       </tr>
 
       <tr>
-        <td> <%= select_tag :cred4, options_from_collection_for_select(Conta.all, :id, :nome), include_blank: true %>   </td>
+        <td> <%= select_tag :cred4, options_for_select(Conta.where(ativo: true).map{|ccred| ["#{ccred.numero} - #{ccred.nome}",ccred.id]}),{include_blank: true , class: 'chosen-select'}  %>   </td>
         <td> <%= number_field_tag :porc4 %></td>
       </tr>
 
@@ -74,6 +98,31 @@
     <%= submit_tag "Enviar", class: 'btn btn-primary active btn-sm' %>
     <%= link_to "Voltar", transferencias_path, class: 'btn btn-default btn sm' %>
 <% end %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!--
 
