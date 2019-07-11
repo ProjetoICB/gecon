@@ -68,7 +68,9 @@
               <%= link_to 'Editar', edit_transferencia_path(transferencia), class:'btn btn-default' %>
           <% end %>
         </td>
-        <td><%= link_to 'Apagar', transferencia, method: :delete, data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+        <td>
+          <%= link_to 'Apagar', transferencia, method: :delete, data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %>
+        </td>
       </tr>
     <% end %>
   </tbody>

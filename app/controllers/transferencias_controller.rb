@@ -59,6 +59,7 @@ class TransferenciasController < ApplicationController
           @lancamento.datadocumento = datadocumento
           @lancamento.conta_id = debito_id
           @lancamento.debito = valor
+          @lancamento.transf_multipla_id = tmult
           @lancamento.save
 
 
@@ -84,6 +85,7 @@ class TransferenciasController < ApplicationController
             @lancamento.conta_id = tm.credito_id
             @lancamento.credito = tm.valor
             @lancamento.transferencia_id = tm.id
+            @lancamento.transf_multipla_id = tmult
             @lancamento.save
           end
 
@@ -108,6 +110,7 @@ class TransferenciasController < ApplicationController
             @lancamento.conta_id = tm.credito_id
             @lancamento.credito = tm.valor
             @lancamento.transferencia_id = tm.id
+            @lancamento.transf_multipla_id = tmult
             @lancamento.save
           end
           if !params[:cred3].empty?
@@ -131,6 +134,7 @@ class TransferenciasController < ApplicationController
             @lancamento.conta_id = tm.credito_id
             @lancamento.credito = tm.valor
             @lancamento.transferencia_id = tm.id
+            @lancamento.transf_multipla_id = tmult
             @lancamento.save
           end
           if !params[:cred4].empty?
@@ -154,6 +158,7 @@ class TransferenciasController < ApplicationController
             @lancamento.conta_id = tm.credito_id
             @lancamento.credito = tm.valor
             @lancamento.transferencia_id = tm.id
+            @lancamento.transf_multipla_id = tmult
             @lancamento.save
           end
           redirect_to transferencias_path, notice: "Transferências realizadas com sucesso"
@@ -292,9 +297,26 @@ class TransferenciasController < ApplicationController
   # DELETE /transferencias/1
   # DELETE /transferencias/1.json
   def destroy
-    @transferencia.destroy
+    if @transferencia.transf_multipla == true
+      tm_id = @transferencia.transf_multipla_id
+      transfs = Transferencia.where(transf_multipla_id: tm_id)
+      transfs.each do |tr|
+        tr.destroy
+      end
+      lancs = Lancamento.where(transf_multipla_id: tm_id)
+      lancs.each do |lan|
+        lan.destroy
+      end
+    else
+      @transferencia.destroy
+    end
+
     respond_to do |format|
-      format.html { redirect_to transferencias_url, notice: 'Transferência apagada com sucesso.' }
+      if @transferencia.transf_multipla == true
+        format.html { redirect_to transferencias_url, notice: 'Transferências apagadas com sucesso.' }
+      else
+        format.html { redirect_to transferencias_url, notice: 'Transferência apagada com sucesso.' }
+      end
       format.json { head :no_content }
     end
   end
