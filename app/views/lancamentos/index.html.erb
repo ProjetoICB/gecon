@@ -34,7 +34,9 @@
       <th class="text-center">Processo</th>
       <th class="text-center">Conta</th>
       <th class="text-center"> Centro de Custo </th>
+      <th class="text-center"> Tipo de Compra</th>
       <th class="text-center">Data</th>
+      <th class="text-center"> Fornecedor</th>
       <th class="text-center">Item de  receita/despesa</th>
       <th class="text-center">Debito</th>
       <th class="text-center">Credito</th>
@@ -50,7 +52,9 @@
         <td><%= lancamento.processo %></td>
         <td><%= lancamento.conta.numero %> - <%= lancamento.conta.nome %> </td>
         <td><%= lancamento.conta.centro_de_custo.nome %></td>
+        <td><%= lancamento.tipo_de_compra.nome if !lancamento.tipo_de_compra.nil? %> </td>
         <td><%= lancamento.data.strftime("%d/%m/%Y") %></td>
+        <td><%= lancamento.fornecedor.nome if !lancamento.fornecedor.nil? %> </td>
         <td>
           <% if lancamento.tipo == "Crédito" %>
             (R) <%=  lancamento.item_de_receita_id.nil? ? "Transferência" : lancamento.item_de_receita.nome %>

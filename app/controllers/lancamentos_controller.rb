@@ -1,6 +1,64 @@
 class LancamentosController < ApplicationController
   before_action :set_lancamento, only: [:show, :edit, :update, :destroy]
 
+  def busca
+  end
+
+  def result
+
+    busca = ""
+
+    if params[:processo] != ""
+      busca = "processo = " + params[:processo].to_s
+    end
+
+
+    if params[:fornecedor_id] != ""
+      if busca != ""
+        busca += " and "
+      end
+      busca += "fornecedor_id = " + params[:fornecedor_id].to_s
+    end
+
+    if params[:conta_id] != ""
+      if busca != ""
+        busca += " and "
+      end
+      busca += "conta_id = " + params[:conta_id].to_s
+    end
+
+    if params[:item_de_despesa_id] != ""
+      if busca != ""
+        busca += " and "
+      end
+      busca += "item_de_despesa_id = " + params[:item_de_despesa_id].to_s
+    end
+
+    if params[:tipo_de_compra_id] != ""
+      if busca != ""
+        busca += " and "
+      end
+      busca += "tipo_de_compra_id = " + params[:tipo_de_compra_id].to_s
+    end
+
+    if params[:inicio] != "" and params[:fim] != ""
+      if busca != ""
+        busca += " and "
+      end
+      busca +=  "data between '" + params[:inicio] + "' and '" + params[:fim] + "'"
+    end
+
+
+    if busca != ""
+      @lancamentos = Lancamento.where(busca).order("id desc")
+    else
+      @lancamentos =  Lancamento.all.order("id desc")
+    end
+
+ end
+
+
+
   # GET /lancamentos
   # GET /lancamentos.json
   def index

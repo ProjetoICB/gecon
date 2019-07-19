@@ -45,13 +45,12 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Lançamentos &nbsp; <b class="caret"></b> </a>
           <ul class="dropdown-menu" role="menu">
+            <li role="presentation">  <%= link_to "Busca", busca_path %> </li>
             <li role="presentation">  <%= link_to "Tabela de Lançamentos", lancamentos_path %>  </li>
             <li role="presentation">  <%= link_to "Novo crédito" , new_lancamento_path(:tipo => "Crédito")  %> </li>
             <li class="presentation"> <%= link_to "Novo débito",  new_lancamento_path(:tipo => "Débito") %> </li>
-
           </ul>
         </li>
-
 
         <li> <%= link_to "Sair", logout_path %> </li>
         </ul>

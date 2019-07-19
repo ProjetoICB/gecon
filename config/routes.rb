@@ -28,7 +28,8 @@ Rails.application.routes.draw do
 
   get 'desativa/:id' => 'contas#desativa', as: 'desativar'
 
-
+  get 'busca' => 'lancamentos#busca', as: 'busca'
+  get 'result' => 'lancamentos#result', as: 'result'
 
 
 

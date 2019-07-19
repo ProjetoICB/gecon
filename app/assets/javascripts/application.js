@@ -19,3 +19,5 @@
 //= require cocoon
 //= require dataTables/jquery.dataTables
 //= require_tree .
+
+$(document).on('turbolinks:load',function(){chosen_init()});

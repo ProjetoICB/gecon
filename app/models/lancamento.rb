@@ -11,5 +11,4 @@ class Lancamento < ActiveRecord::Base
   validates_presence_of :datadocumento
   validates_presence_of :conta_id
 
-
 end
