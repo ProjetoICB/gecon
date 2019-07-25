@@ -11,7 +11,7 @@ class UsuariosController < ApplicationController
   # GET /usuarios/1
   # GET /usuarios/1.json
   def show
-    @departamento = Departamento.find(@usuario.departamento)
+    @departamento = Departamento.find(@usuario.departamento_id)
   end
 
   # GET /usuarios/new
@@ -44,8 +44,8 @@ class UsuariosController < ApplicationController
   # PATCH/PUT /usuarios/1.json
   def update
     respond_to do |format|
-
       if @usuario.update(usuario_params)
+
         if !@usuario.departamentos.empty?
           @usuario.tipo = "Gerente"
           @usuario.save
@@ -77,6 +77,6 @@ class UsuariosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def usuario_params
-      params.require(:usuario).permit(:nome, :email, :password, :password_confirmation, :tipo, :ativo, :telefone, :departamento,  departamento_ids:[])
+      params.require(:usuario).permit(:nome, :email, :password, :password_confirmation, :tipo, :ativo, :telefone, :departamento_id,  departamento_ids:[])
     end
 end

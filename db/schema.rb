@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190711120005) do
+ActiveRecord::Schema.define(version: 20190719192730) do
 
   create_table "centros_de_custo", force: :cascade do |t|
     t.string   "nome",       limit: 255
@@ -156,7 +156,7 @@ ActiveRecord::Schema.define(version: 20190711120005) do
     t.string   "tipo",                limit: 255
     t.boolean  "ativo"
     t.string   "telefone",            limit: 255
-    t.integer  "departamento",        limit: 4
+    t.integer  "departamento_id",     limit: 4
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.string   "auth_token",          limit: 255

@@ -49,7 +49,7 @@
         <tD><%= usuario.tipo %> </tD>
         <td><%= usuario.telefone %></td>
         <td>
-          <% @departamento = Departamento.where(id: usuario.departamento) %>
+          <% @departamento = Departamento.where(id: usuario.departamento_id) %>
           <% @departamento.each do |dep| %>
             <%= dep.nome %>
           <% end %>

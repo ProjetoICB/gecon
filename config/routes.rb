@@ -31,6 +31,10 @@ Rails.application.routes.draw do
   get 'busca' => 'lancamentos#busca', as: 'busca'
   get 'result' => 'lancamentos#result', as: 'result'
 
+  get 'busca_conta' => 'contas#busca_conta' , as: 'busca_conta'
+  get 'result_conta' => 'contas#result_conta' , as: 'result_conta'
+
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.

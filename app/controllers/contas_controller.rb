@@ -3,6 +3,73 @@ class ContasController < ApplicationController
 
   # GET /contas
   # GET /contas.json
+
+  def busca_conta
+
+  end
+
+
+  def result_conta
+
+    busca = ""
+
+    puts "Nova busca a partir daqui"
+    puts "Busca = " + busca.to_s
+
+
+    if params[:conta_id] != ""
+      busca = "contas.id = " + params[:conta_id].to_s
+    end
+
+    if params[:departamento_id] != ""
+      if busca != ""
+        busca += " and "
+      end
+      busca += "`usuarios`.departamento_id = " + params[:departamento_id].to_s
+      puts "Busca por departamento junto com usuario esta saindo assim: " + busca.to_s
+    end
+
+    if params[:usuario_id] != ""
+      if busca != ""
+        busca += " and "
+      end
+      busca += "usuario_id = " + params[:usuario_id].to_s
+    end
+
+    if params[:centro_de_custo_id] != ""
+      if busca != ""
+        busca += " and "
+      end
+      busca += "centro_de_custo_id = " + params[:centro_de_custo_id].to_s
+    end
+
+    if params[:fonte_de_recurso_id] != ""
+      if busca != ""
+        busca += " and "
+      end
+      busca += "fonte_de_recurso_id = " + params[:fonte_de_recurso_id].to_s
+    end
+
+    if params[:tipo_de_conta_id] != ""
+      if busca != ""
+        busca += " and "
+      end
+      busca += "tipo_de_conta_id = " + params[:tipo_de_conta_id].to_s
+    end
+
+
+    if params[:departamento_id] != ""
+      @contas = Conta.joins(:usuario).where(busca).where(ativo: true)
+    else
+      @contas = Conta.where(busca).where(ativo: true)
+
+    end
+
+
+
+  end
+
+
   def index
     @contas = Conta.where(ativo: true)
   end

@@ -1,0 +1,54 @@
+<script type="text/javascript">
+
+    $('.chosen-select').chosen({
+        no_results_text: "Nada encontrado:",
+        placeholder_text_single: "Selecione ou digite uma opção",
+        search_contains: true,
+        width: '450px'
+    });
+
+    $(function() {
+        $('#conta').dataTable({
+            "iDisplayLength": 10,
+            "ordering":  false,
+            "aaSorting": [],
+            "bLengthChange":false,
+            "oLanguage":{
+                "sInfo":                "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                "sInfoFiltered":        "Filtrado de _MAX_ registros no total",
+                "sZeroRecords":         "Sem resultados",
+                "sInfoEmpty":           "",
+                "sSearch":              "Buscar",
+                "oPaginate": {
+                    "sFirst":           "Primeiro",
+                    "sPrevious":        "Anterior",
+                    "sNext":            "Próximo",
+                    "sLast":            "Ultimo"
+                }
+            }
+        });
+    });
+
+
+</script>
+
+<h3> Busca de Contas </h3>
+
+<%= form_tag result_conta_path, method: :get  do %>
+
+    <table class="table">
+      <tr>
+        <td>Conta:  <%= select_tag :conta_id,options_for_select(Conta.where(ativo: true).map{|cdeb| ["#{cdeb.numero} - #{cdeb.nome}", cdeb.id]}), include_blank: true , class: 'chosen-select' %></td>
+        <td>Departamento: <%= select_tag :departamento_id, options_for_select(Departamento.all.map{|d| [d.nome, d.id]}) ,  include_blank: true, class: 'chosen-select'  %> </td>
+        <td>Usuário/Docente: <%= select_tag :usuario_id, options_for_select(Usuario.all.map{|u| [u.nome, u.id]}) ,  include_blank: true, class: 'chosen-select' %></td>
+      </tr>
+      <tr>
+        <td>Centro de Custo: <%= select_tag :centro_de_custo_id, options_for_select(CentroDeCusto.all.map{|cc| [cc.nome, cc.id]}) ,  include_blank: true, class: 'chosen-select' %> </td>
+        <td>Fonte de recurso: <%= select_tag :fonte_de_recurso_id, options_for_select(FonteDeRecurso.all.map{|fr| [fr.nome, fr.id]}) ,  include_blank: true, class: 'chosen-select' %></td>
+        <td>Tipo de Conta: <%= select_tag :tipo_de_conta_id, options_for_select(TipoDeConta.all.map{|tc| [tc.nome, tc.id]}) ,  include_blank: true, class: 'chosen-select' %></td>
+      </tr>
+    </table>
+
+    <%= submit_tag "Enviar", class:'btn btn-primary active' %>
+
+<% end %>
