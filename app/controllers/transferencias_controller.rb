@@ -173,7 +173,7 @@ class TransferenciasController < ApplicationController
 
 
   def cria_debito
-    @transferencia = Transferencia.last
+    @transferencia = Transferencia.find(@transferencia.id)
     @lancamento = Lancamento.new
     @lancamento.tipo = "Débito"
     @lancamento.data = @transferencia.data
@@ -183,11 +183,14 @@ class TransferenciasController < ApplicationController
     @lancamento.conta_id = @transferencia.debito_id
     @lancamento.transferencia_id = @transferencia.id
     @lancamento.save!
+    # A novidade está aqui: acima, além de procurar a transferencia criada, ele cria apenas os lançamentos.
+    # Nesse caso, depois de salvar o lançamento, ele guarda o valor do id do lançamento criado no campo debito_id da TRANSFERENCIA
+    @transferencia.debito_id = @lancamento.id
+    @transferencia.save
   end
 
-
   def cria_credito
-    @transferencia = Transferencia.last
+    @transferencia =  Transferencia.find(@transferencia.id)
     @lancamento = Lancamento.new
     @lancamento.tipo = "Crédito"
     @lancamento.data = @transferencia.data
@@ -197,8 +200,10 @@ class TransferenciasController < ApplicationController
     @lancamento.conta_id = @transferencia.credito_id
     @lancamento.transferencia_id = @transferencia.id
     @lancamento.save!
+    # A mesma coisa aqui, só que agora em relação ao credito
+    @transferencia.credito_id = @lancamento.id
+    @transferencia.save
   end
-
 
   def editadebito
     set_transferencia
@@ -208,7 +213,9 @@ class TransferenciasController < ApplicationController
     @lancamento.observacao = @transferencia.observacao
     @lancamento.debito = @transferencia.valor
     @lancamento.conta_id = @transferencia.debito_id
-    @lancamento.save!
+    @lancamento.save
+    @transferencia.debito_id = @lancamento.id
+    @transferencia.save
   end
 
   def editacredito
@@ -219,7 +226,9 @@ class TransferenciasController < ApplicationController
     @lancamento.observacao = @transferencia.observacao
     @lancamento.credito = @transferencia.valor
     @lancamento.conta_id = @transferencia.credito_id
-    @lancamento.save!
+    @lancamento.save
+    @transferencia.credito_id = @lancamento.id
+    @transferencia.save
   end
 
 
@@ -232,8 +241,10 @@ class TransferenciasController < ApplicationController
   # GET /transferencias/1.json
   def show
     set_transferencia
-    @deb = Conta.find(@transferencia.debito_id)
-    @cred = Conta.find(@transferencia.credito_id)
+    @transferencia.lancamentos.each do |c|
+      @deb = c.conta.nome if c.tipo == "Débito"
+      @cred = c.conta.nome if c.tipo == "Crédito"
+    end
   end
 
 
@@ -245,11 +256,20 @@ class TransferenciasController < ApplicationController
 
   # GET /transferencias/1/edit
   def edit
+    @cred = Conta.joins(:lancamentos).where("transferencia_id = ? and tipo = ?  and ativo= ?", @transferencia.id, "Crédito", true).take
+    @deb = Conta.joins(:lancamentos).where("transferencia_id = ? and tipo = ?  and ativo= ?", @transferencia.id, 'Débito', true).take
   end
 
 
   # POST /transferencias
   # POST /transferencias.json
+
+
+  # PATCH/PUT /transferencias/1
+  # PATCH/PUT /transferencias/1.json
+
+
+
   def create
     @transferencia = Transferencia.new(transferencia_params)
 
@@ -261,6 +281,7 @@ class TransferenciasController < ApplicationController
         else
           cria_credito
           cria_debito
+
           format.html { redirect_to @transferencia, notice: 'Transferência criada com sucesso .' }
           format.json { render :show, status: :created, location: @transferencia }
         end
@@ -270,9 +291,6 @@ class TransferenciasController < ApplicationController
       end
     end
   end
-
-  # PATCH/PUT /transferencias/1
-  # PATCH/PUT /transferencias/1.json
 
 
 

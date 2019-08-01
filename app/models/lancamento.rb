@@ -7,6 +7,7 @@ class Lancamento < ActiveRecord::Base
   belongs_to :tipo_de_compra
   belongs_to :transferencia
 
+
   validates_presence_of :data
   validates_presence_of :datadocumento
   validates_presence_of :conta_id
