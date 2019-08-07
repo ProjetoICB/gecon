@@ -62,10 +62,7 @@ class TransferenciasController < ApplicationController
           @lancamento.transf_multipla_id = tmult
           @lancamento.save
 
-
           if !params[:cred1].empty?
-
-            total = Transferencia.where(transf_multipla: true).count
             tm = Transferencia.new
             tm.data = data
             tm.datadocumento = datadocumento
@@ -87,6 +84,8 @@ class TransferenciasController < ApplicationController
             @lancamento.transferencia_id = tm.id
             @lancamento.transf_multipla_id = tmult
             @lancamento.save
+            tm.credito_id = @lancamento.id
+            tm.save
           end
 
           if !params[:cred2].empty?
@@ -112,7 +111,10 @@ class TransferenciasController < ApplicationController
             @lancamento.transferencia_id = tm.id
             @lancamento.transf_multipla_id = tmult
             @lancamento.save
+            tm.credito_id = @lancamento.id
+            tm.save
           end
+
           if !params[:cred3].empty?
             # fazer o mesmo if que está no cred1
             tm = Transferencia.new
@@ -136,7 +138,10 @@ class TransferenciasController < ApplicationController
             @lancamento.transferencia_id = tm.id
             @lancamento.transf_multipla_id = tmult
             @lancamento.save
+            tm.credito_id = @lancamento.id
+            tm.save
           end
+
           if !params[:cred4].empty?
             # fazer o mesmo if que está no cred1
             tm = Transferencia.new
@@ -160,6 +165,14 @@ class TransferenciasController < ApplicationController
             @lancamento.transferencia_id = tm.id
             @lancamento.transf_multipla_id = tmult
             @lancamento.save
+            tm.credito_id = @lancamento.id
+            tm.save
+          end
+          @lancamento = Lancamento.where("tipo = ? and transf_multipla_id = ?", "Débito", tmult).take
+          @transferencia = Transferencia.where("transf_multipla_id = ?", @lancamento.transf_multipla_id)
+          @transferencia.each do |t|
+            t.debito_id = @lancamento.id
+            t.save
           end
           redirect_to transferencias_path, notice: "Transferências realizadas com sucesso"
         else
@@ -241,10 +254,23 @@ class TransferenciasController < ApplicationController
   # GET /transferencias/1.json
   def show
     set_transferencia
-    @transferencia.lancamentos.each do |c|
-      @deb = c.conta.nome if c.tipo == "Débito"
-      @cred = c.conta.nome if c.tipo == "Crédito"
+    if @transferencia.transf_multipla == false
+      @transferencia.lancamentos.each do |c|
+        @deb = c.conta.nome if c.tipo == "Débito"
+        @cred = c.conta.nome if c.tipo == "Crédito"
+      end
+    else
+      @lancamento=Lancamento.where(transferencia_id: nil)
+      @lancamento.each do |l|
+        if l.transf_multipla_id == @transferencia.transf_multipla_id
+          @deb = l.conta.nome
+          @transferencia.lancamentos.order("id desc").each do |tl|
+            @cred = tl.conta.nome
+          end
+        end
+      end
     end
+
   end
 
 

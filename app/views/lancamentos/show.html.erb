@@ -92,10 +92,12 @@
   <strong>Empenho:</strong>
   <%= @lancamento.empenho %>
 </p>
-<% if @lancamento.tipo == "Crédito" %>
-    <%= link_to 'Editar', edit_lancamento_path(@lancamento, :tipo => "Crédito"), class:'btn btn-primary active' %> |
-<% else %>
-    <%= link_to 'Editar', edit_lancamento_path(@lancamento, :tipo => "Débito"), class:'btn btn-primary active' %> |
+<% if @lancamento.transf_multipla_id.nil? %>
+    <% if @lancamento.tipo == "Crédito" %>
+        <%= link_to 'Editar', edit_lancamento_path(@lancamento, :tipo => "Crédito"), class:'btn btn-primary active' %> |
+    <% else %>
+        <%= link_to 'Editar', edit_lancamento_path(@lancamento, :tipo => "Débito"), class:'btn btn-primary active' %> |
+    <% end %>
 <% end %>
 <%= link_to 'Voltar', lancamentos_path, class: 'btn btn-default' %> |
 <%= link_to 'Voltar para contas', contas_path, class: 'btn btn-info active' %>
