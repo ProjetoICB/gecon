@@ -47,6 +47,11 @@
         <td>Fonte de recurso: <%= select_tag :fonte_de_recurso_id, options_for_select(FonteDeRecurso.all.map{|fr| [fr.nome, fr.id]}) ,  include_blank: true, class: 'chosen-select' %></td>
         <td>Tipo de Conta: <%= select_tag :tipo_de_conta_id, options_for_select(TipoDeConta.all.map{|tc| [tc.nome, tc.id]}) ,  include_blank: true, class: 'chosen-select' %></td>
       </tr>
+      <tr>
+        <td></td>
+        <td> <%= check_box_tag :tudo, "Sim" %> <%= label_tag(:tudo, "Incluir contas inativas") %>  </td>
+        <td></td>
+      </tr>
     </table>
 
     <%= submit_tag "Enviar", class:'btn btn-primary active' %>

@@ -13,10 +13,6 @@ class ContasController < ApplicationController
 
     busca = ""
 
-    puts "Nova busca a partir daqui"
-    puts "Busca = " + busca.to_s
-
-
     if params[:conta_id] != ""
       busca = "contas.id = " + params[:conta_id].to_s
     end
@@ -58,15 +54,19 @@ class ContasController < ApplicationController
     end
 
 
-    if params[:departamento_id] != ""
-      @contas = Conta.joins(:usuario).where(busca).where(ativo: true)
+    if params[:tudo] == "Sim"
+      if params[:departamento_id] != ""
+        @contas = Conta.joins(:usuario).where(busca).order('id')
+      else
+        @contas = Conta.where(busca).order('id')
+      end
     else
-      @contas = Conta.where(busca).where(ativo: true)
-
+      if params[:departamento_id] != ""
+        @contas = Conta.joins(:usuario).where(busca).where(ativo: true).order('id')
+      else
+        @contas = Conta.where(busca).where(ativo: true).order('id')
+      end
     end
-
-
-
   end
 
 
