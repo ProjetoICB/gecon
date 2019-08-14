@@ -77,6 +77,9 @@ class ContasController < ApplicationController
   # GET /contas/1
   # GET /contas/1.json
   def show
+    cred_conta = Lancamento.where("credito != ?" , nil?).where(conta_id: @conta.id).sum(:credito)
+    deb_conta = Lancamento.where("debito != ?" , nil?).where(conta_id: @conta.id).sum(:debito)
+    @saldo = cred_conta - deb_conta
   end
 
   # GET /contas/new

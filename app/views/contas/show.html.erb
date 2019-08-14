@@ -33,5 +33,11 @@
   <%= @conta.fonte_de_recurso.nome %>
 </p>
 
+<p>
+  <strong> Saldo:</strong>
+  <%= number_to_currency(@saldo) %>
+</p>
+
+
 <%= link_to 'Editar', edit_conta_path(@conta), class: 'btn btn-primary active' %> |
 <%= link_to 'Voltar', contas_path, class: 'btn btn-default' %>
