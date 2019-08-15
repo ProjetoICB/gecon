@@ -79,7 +79,13 @@ class ContasController < ApplicationController
   def show
     cred_conta = Lancamento.where("credito != ?" , nil?).where(conta_id: @conta.id).sum(:credito)
     deb_conta = Lancamento.where("debito != ?" , nil?).where(conta_id: @conta.id).sum(:debito)
-    @saldo = cred_conta - deb_conta
+    debito_cancelado = Lancamento.where(debito_cancelado: true).where(conta_id: @conta.id).take
+    retorno_deb_canc = Lancamento.where("retorno_debitocanc != ?", nil?).where(conta_id: @conta.id).sum(:retorno_debitocanc)
+    if !debito_cancelado.nil?
+      @saldo = cred_conta - deb_conta + retorno_deb_canc
+    else
+      @saldo = cred_conta - deb_conta
+    end
   end
 
   # GET /contas/new

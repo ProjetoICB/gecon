@@ -48,6 +48,7 @@
     <tr>
       <td>Item de despesa: <%= select_tag :item_de_despesa_id,options_for_select(ItemDeDespesa.all.map{|ides| [ides.nome, ides.id]}), include_blank: true, class: 'chosen-select' %></td>
       <td>Tipo de Compra <%= select_tag :tipo_de_compra_id, options_for_select(TipoDeCompra.all.map{|tc| [tc.nome, tc.id]}), include_blank: true, class: 'chosen-select' %> </td>
+      <td> <%= check_box_tag :debito_canc, "Sim" %> <%= label_tag(:tudo, "Apenas débitos cancelados") %>  </td>
     </tr>
     <tr>
       <td> A partir de: <%= date_field_tag :inicio %> </td>

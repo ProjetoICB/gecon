@@ -17,7 +17,6 @@
 
 <h1> Contas</h1>
 
-<h3> <%= params[:tudo]  %>  </h3>
 
 <table id="conta" class="table table-striped table-bordered">
   <thead>
@@ -44,7 +43,20 @@
         <td><%= conta.usuario.nome %></td>
         <td><%= conta.centro_de_custo.nome %></td>
         <td><%= conta.fonte_de_recurso.nome %></td>
-        <td></td>
+        <% cred_conta = Lancamento.where("credito != ?", nil?).where(conta_id: conta.id).sum(:credito) %>
+        <% deb_conta = Lancamento.where("debito != ?", nil?).where(conta_id: conta.id).sum(:debito) %>
+        <% debito_cancelado = Lancamento.where(debito_cancelado: true).where(conta_id: conta.id) %>
+        <% retorno_deb_canc = Lancamento.where("retorno_debitocanc != ?", nil?).where(conta_id: conta.id).sum(:retorno_debitocanc) %>
+        <% if !debito_cancelado.nil? %>
+            <% @saldo = cred_conta - deb_conta + retorno_deb_canc %>
+        <% else %>
+            <% @saldo = cred_conta - deb_conta %>
+        <% end %>
+        <% if @saldo < 0 %>
+            <td style="color: red"> <%= number_to_currency(@saldo) %> </td>
+        <% else %>
+            <td> <%= number_to_currency(@saldo) %> </td>
+        <% end %>
         <td class="text-center"><%= link_to 'Editar', edit_conta_path(conta), class: 'btn btn-default' %></td>
 
       </tr>

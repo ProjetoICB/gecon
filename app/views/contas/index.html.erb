@@ -63,7 +63,13 @@
         <td><%= conta.fonte_de_recurso.nome %></td>
         <% cred_conta = Lancamento.where("credito != ?", nil?).where(conta_id: conta.id).sum(:credito) %>
         <% deb_conta = Lancamento.where("debito != ?", nil?).where(conta_id: conta.id).sum(:debito) %>
-        <% @saldo = cred_conta - deb_conta %>
+        <% debito_cancelado = Lancamento.where(debito_cancelado: true).where(conta_id: conta.id) %>
+        <% retorno_deb_canc = Lancamento.where("retorno_debitocanc != ?", nil?).where(conta_id: conta.id).sum(:retorno_debitocanc) %>
+        <% if !debito_cancelado.nil? %>
+            <% @saldo = cred_conta - deb_conta + retorno_deb_canc %>
+         <% else %>
+            <% @saldo = cred_conta - deb_conta %>
+         <% end %>
         <% if @saldo < 0 %>
             <td style="color: red"> <%= number_to_currency(@saldo) %> </td>
         <% else %>

@@ -26,8 +26,10 @@
     <th class="text-center">Data</th>
     <th class="text-center">Fornecedor</th>
     <th class="text-center">Item de  receita/despesa</th>
-    <th class="text-center">Debito</th>
     <th class="text-center">Credito</th>
+    <th class="text-center">Debito</th>
+    <th class="text-center">Débito cancelado</th>
+
 
   </tr>
   </thead>
@@ -47,8 +49,10 @@
               (D) <%= lancamento.item_de_despesa_id.nil? ? "Transferência" : lancamento.item_de_despesa.nome %>
           <% end %>
         </td>
-        <td><%= number_to_currency(lancamento.debito) %></td>
         <td><%= number_to_currency(lancamento.credito) %></td>
+        <td><%= number_to_currency(lancamento.debito) %></td>
+        <td class="text-center align-middle"><%= lancamento.debito_cancelado == true ? "Sim" : "Não"  if !lancamento.debito.nil? %>   </td>
+
       </tr>
   <% end %>
   </tbody>

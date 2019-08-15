@@ -48,9 +48,21 @@ class LancamentosController < ApplicationController
       busca +=  "data between '" + params[:inicio] + "' and '" + params[:fim] + "'"
     end
 
+    if params[:debito_canc] == "Sim"
+      if busca != ""
+        busca += " and "
+      end
+      busca += "debito_cancelado is true"
+    end
+
+
 
     if busca != ""
-      @lancamentos = Lancamento.where(busca).order("id desc")
+      #if params[:debito_canc] == "Sim"
+      #  @lancamentos = Lancamento.where(debito_cancelado: true).where(busca).order("id desc")
+      #else
+        @lancamentos = Lancamento.where(busca).order("id desc")
+      #end
     else
       @lancamentos =  Lancamento.all.order("id desc")
     end
