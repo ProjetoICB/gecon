@@ -46,7 +46,7 @@
     <%= f.label :valor, "Valor a transferir" %><br>
     <div class="input-group">
       <div class="input-group-addon"> R$ </div>
-      <%= f.number_field :valor, class:'form-control' %>
+      <%= f.number_field :valor,step: :any,  class:'form-control' %>
     </div>
   </div>
 

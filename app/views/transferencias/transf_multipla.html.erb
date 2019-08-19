@@ -59,7 +59,10 @@
     </p>
 
     <p> Valor <br>
-      <%= number_field_tag :valor %>
+    <div class="input-group">
+      <div class="input-group-addon"> R$ </div>
+      <%= number_field_tag :valor, nil, step: :any,  class:'form-control' %>
+    </div>
     </p>
 
     <table  class="table table-bordered">
@@ -73,22 +76,22 @@
       <tbody>
       <tr>
         <td id="cred1_tit"> <%= select_tag :cred1,options_for_select(Conta.where(ativo: true).map{|ccred| ["#{ccred.numero} - #{ccred.nome}",ccred.id]}),{include_blank: true , class: 'chosen-select'}  %>   </td>
-        <td> <%= number_field_tag :porc1 %></td>
+        <td> <%= number_field_tag :porc1, step: :any %></td>
       </tr>
 
       <tr>
         <td> <%= select_tag :cred2,options_for_select(Conta.where(ativo: true).map{|ccred| ["#{ccred.numero} - #{ccred.nome}",ccred.id]}),{include_blank: true , class: 'chosen-select'} %>  </td>
-        <td> <%= number_field_tag :porc2 %></td>
+        <td> <%= number_field_tag :porc2, step: :any %></td>
       </tr>
 
       <tr>
         <td> <%= select_tag :cred3, options_for_select(Conta.where(ativo: true).map{|ccred| ["#{ccred.numero} - #{ccred.nome}",ccred.id]}),{include_blank: true , class: 'chosen-select'} %>  </td>
-        <td> <%= number_field_tag :porc3 %></td>
+        <td> <%= number_field_tag :porc3, step: :any %></td>
       </tr>
 
       <tr>
         <td> <%= select_tag :cred4, options_for_select(Conta.where(ativo: true).map{|ccred| ["#{ccred.numero} - #{ccred.nome}",ccred.id]}),{include_blank: true , class: 'chosen-select'}  %>   </td>
-        <td> <%= number_field_tag :porc4 %></td>
+        <td> <%= number_field_tag :porc4, step: :any %></td>
       </tr>
 
       </tbody>

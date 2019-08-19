@@ -34,7 +34,7 @@ class TransferenciasController < ApplicationController
       cred4 = -3
     end
 
-    valor = params[:valor].to_i
+    valor = params[:valor].to_f
     data = params[:data]
     datadocumento = params[:datadocumento]
 
