@@ -1,5 +1,17 @@
 <script type="text/javascript">
 
+
+
+    $('form').submit(function(e) {
+        debito = $('#transferencia_debito_id').val();
+        credito = $('#transferencia_credito_id').val();
+        if (debito == credito) {
+            alert("Você não pode fazer transferencias para duas contas iguais");
+            e.preventDefault(e);
+        }
+    });
+
+
     $('.chosen-select').chosen({
         no_results_text: "Nada encontrado:",
         placeholder_text_single: "Selecione ou digite uma opção",
@@ -27,12 +39,15 @@
 
     <div class="form-group">
       <%= f.label :debito_id, "Conta de débito" %><br>
-      <%= f.select :debito_id, options_from_collection_for_select(Conta.where(ativo:true), :id, :full_name, selected: @deb.id),{},  include_blank: true, class: 'chosen-select' %> </td>
+      <!-- < %= f.select :debito_id, options_from_collection_for_select(Conta.where(ativo:true), :id, :full_name, selected: @con_deb.id),{},  include_blank: true, class: 'chosen-select' %> -->
+      <%= f.select :debito_id, options_from_collection_for_select(Conta.where(ativo:true), :id, :full_name, selected: @con_deb.id),{},  include_blank: true, class: 'chosen-select' %>
+
+
 
     </div>
     <div class="form-group">
       <%= f.label :credito_id, "Conta de crédito" %><br>
-      <%= f.select :credito_id, options_from_collection_for_select(Conta.where(ativo:true), :id, :full_name, selected: @cred.id),{},  include_blank: true, class: 'chosen-select' %> </td>
+      <%= f.select :credito_id, options_from_collection_for_select(Conta.where(ativo:true), :id, :full_name, selected: @con_cred.id),{},  include_blank: true, class: 'chosen-select' %>
     </div>
 
   <div class="form-group">

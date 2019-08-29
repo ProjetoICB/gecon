@@ -1,5 +1,17 @@
 <script type="text/javascript">
 
+
+
+    $('form').submit(function(e) {
+        debito = $('#transferencia_debito_id').val();
+        credito = $('#transferencia_credito_id').val();
+        if (debito == credito) {
+            alert("Você não pode fazer transferencias para duas contas iguais");
+            e.preventDefault(e);
+        }
+    });
+
+
     $('.chosen-select').chosen({
         no_results_text: "Nada encontrado:",
         placeholder_text_single: "Selecione ou digite uma opção",

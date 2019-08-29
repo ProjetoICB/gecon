@@ -218,32 +218,32 @@ class TransferenciasController < ApplicationController
     @transferencia.save
   end
 
-  def editadebito
-    set_transferencia
-    @lancamento = Lancamento.find_by("transferencia_id = ?  and tipo = ?", @transferencia.id, "Débito")
+  def editadebito(contadebito)
+    t=Transferencia.find(params[:id])
+    debito_id_orig = t.debito_id
+    puts "Debito id orig = " + debito_id_orig.to_s
+    @lancamento = Lancamento.find(debito_id_orig)
     @lancamento.data = @transferencia.data
     @lancamento.datadocumento = @transferencia.datadocumento
     @lancamento.observacao = @transferencia.observacao
     @lancamento.debito = @transferencia.valor
-    @lancamento.conta_id = @transferencia.debito_id
+    @lancamento.conta_id = contadebito
     @lancamento.save
-    @transferencia.debito_id = @lancamento.id
-    @transferencia.save
   end
 
-  def editacredito
-    set_transferencia
-    @lancamento = Lancamento.find_by("transferencia_id = ?  and tipo = ?", @transferencia.id, "Crédito")
+  def editacredito(contacredito)
+    t=Transferencia.find(params[:id])
+    credito_id_orig = t.credito_id
+    puts "Credito_id_orig = " + credito_id_orig.to_s
+    @lancamento = Lancamento.find(credito_id_orig)
     @lancamento.data = @transferencia.data
     @lancamento.datadocumento = @transferencia.datadocumento
     @lancamento.observacao = @transferencia.observacao
     @lancamento.credito = @transferencia.valor
-    @lancamento.conta_id = @transferencia.credito_id
+    @lancamento.conta_id = contacredito
     @lancamento.save
-    @transferencia.credito_id = @lancamento.id
-    @transferencia.save
-  end
 
+  end
 
 
   def index
@@ -252,26 +252,17 @@ class TransferenciasController < ApplicationController
 
   # GET /transferencias/1
   # GET /transferencias/1.json
+
+
   def show
     set_transferencia
-    if @transferencia.transf_multipla == false
-      @transferencia.lancamentos.each do |c|
-        @deb = c.conta.nome if c.tipo == "Débito"
-        @cred = c.conta.nome if c.tipo == "Crédito"
-      end
-    else
-      @lancamento=Lancamento.where(transferencia_id: nil)
-      @lancamento.each do |l|
-        if l.transf_multipla_id == @transferencia.transf_multipla_id
-          @deb = l.conta.nome
-          @transferencia.lancamentos.order("id desc").each do |tl|
-            @cred = tl.conta.nome
-          end
-        end
-      end
-    end
-
+    ldeb = Lancamento.find(@transferencia.debito_id)
+    @debito = ldeb.conta.nome
+    lcred = Lancamento.find(@transferencia.credito_id)
+    @credito = lcred.conta.nome
   end
+
+
 
 
 
@@ -282,8 +273,13 @@ class TransferenciasController < ApplicationController
 
   # GET /transferencias/1/edit
   def edit
-    @cred = Conta.joins(:lancamentos).where("transferencia_id = ? and tipo = ?  and ativo= ?", @transferencia.id, "Crédito", true).take
-    @deb = Conta.joins(:lancamentos).where("transferencia_id = ? and tipo = ?  and ativo= ?", @transferencia.id, 'Débito', true).take
+    #@cred = Conta.joins(:lancamentos).where("transferencia_id = ? and tipo = ?  and ativo= ?", @transferencia.id, "Crédito", true).take
+    #@deb = Conta.joins(:lancamentos).where("transferencia_id = ? and tipo = ?  and ativo= ?", @transferencia.id, 'Débito', true).take
+    set_transferencia
+    deb = Lancamento.find(@transferencia.debito_id)
+    cred = Lancamento.find(@transferencia.credito_id)
+    @con_deb = Conta.find(deb.conta_id)
+    @con_cred = Conta.find(cred.conta_id)
   end
 
 
@@ -305,8 +301,9 @@ class TransferenciasController < ApplicationController
           @transferencia.destroy
           format.html { redirect_to transferencias_path, notice: "Você não pode fazer transferencias para duas contas iguais" }
         else
-          cria_credito
           cria_debito
+          cria_credito
+
 
           format.html { redirect_to @transferencia, notice: 'Transferência criada com sucesso .' }
           format.json { render :show, status: :created, location: @transferencia }
@@ -322,25 +319,31 @@ class TransferenciasController < ApplicationController
 
   def update
     respond_to do |format|
-      if @transferencia.update(transferencia_params)
-        if @transferencia.credito_id == @transferencia.debito_id
-          format.html { redirect_to edit_transferencia_path(transferencia_params), notice: "Você não pode fazer transferencias para duas contas iguais" }
-        else
-          editacredito
-          editadebito
+
+      debito_id_orig = @transferencia.debito_id
+      credito_id_orig = @transferencia.credito_id
+
+      if @transferencia.update_attributes(transferencia_params)
+          contadebito = @transferencia.debito_id
+          contacredito = @transferencia.credito_id
+          @transferencia.debito_id = debito_id_orig
+          @transferencia.credito_id = credito_id_orig
+          @transferencia.save
+          editadebito(contadebito)
+          editacredito(contacredito)
           format.html { redirect_to @transferencia, notice: 'Transferência atualizada com sucesso.' }
           format.json { render :show, status: :ok, location: @transferencia }
-        end
       else
         format.html { render :edit }
         format.json { render json: @transferencia.errors, status: :unprocessable_entity }
-      end
+     end
     end
   end
 
   # DELETE /transferencias/1
   # DELETE /transferencias/1.json
   def destroy
+
     if @transferencia.transf_multipla == true
       tm_id = @transferencia.transf_multipla_id
       transfs = Transferencia.where(transf_multipla_id: tm_id)
@@ -373,6 +376,6 @@ class TransferenciasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def transferencia_params
-      params.require(:transferencia).permit(:data, :datadocumento, :debito_id, :credito_id, :valor, :observacao, :fornecedor_id, :num_notafiscal, :empenho, :porcentagem, :transf_multipla, :valor_deb_orig, :transf_multipla_id)
+      params.require(:transferencia).permit(:data, :datadocumento, :debito_id, :credito_id, :valor, :observacao, :fornecedor_id, :num_notafiscal, :empenho, :porcentagem,  :transf_multipla, :valor_deb_orig, :transf_multipla_id)
     end
 end

@@ -28,7 +28,7 @@
 <table id="transferencia" class="table table-striped table-bordered">
   <thead>
     <tr>
-     <!-- <th class="text-center"> ID </th> -->
+      <th class="text-center"> ID </th>
       <th class="text-center">Data</th>
       <th class="text-center">Data do documento</th>
       <th class="text-center">Debito</th>
@@ -44,27 +44,13 @@
   <tbody>
     <% @transferencias.each do |transferencia| %>
         <tr>
-            <!--<td> < %= transferencia.id %> </td> -->
+            <td> <%= transferencia.id %> </td>
             <td><%= transferencia.data.strftime("%d/%m/%Y") %></td>
             <td><%= transferencia.datadocumento.strftime("%d/%m/%Y") %></td>
-
-            <% if transferencia.transf_multipla == false %>
-              <% transferencia.lancamentos.order("id desc").each do |l| %>
-                  <td> <%=l.conta.nome  %> </td>
-               <% end %>
-              <% else %>
-              <% l = Lancamento.where(transferencia_id: nil) %>
-              <% l.each do |l| %>
-                      <% if l.transf_multipla_id == transferencia.transf_multipla_id %>
-                        <td> <%= l.conta.nome %> </td>
-                        <td>
-                          <% transferencia.lancamentos.order("id desc").each do |tl| %>
-                            <%= tl.conta.nome %>
-                          <% end %>
-                        </td>
-                      <% end %>
-              <% end %>
-             <% end %>
+            <% l= Lancamento.where(id: [transferencia.debito_id, transferencia.credito_id]) %>
+            <% l.each do |l| %>
+                <td> <%= l.conta.nome %> </td>
+            <% end %>
             <td><%= number_to_currency(transferencia.valor) %></td>
             <td><%= transferencia.observacao %></td>
             <td><%= link_to 'Mostrar', transferencia, class: 'btn btn-primary active' %></td>
@@ -86,3 +72,4 @@
 <%= link_to 'Nova Transferência', new_transferencia_path, class: 'btn btn-primary active' %>
 <%= link_to "Nova Transferência múltipla", transf_multipla_path, class: 'btn btn-success active' %>
 
+l=L
