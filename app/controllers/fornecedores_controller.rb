@@ -5,7 +5,7 @@ class FornecedoresController < ApplicationController
   # GET /fornecedores
   # GET /fornecedores.json
   def index
-    @fornecedores = Fornecedor.all
+    @fornecedores = Fornecedor.all.order("nome")
   end
 
   # GET /fornecedores/1

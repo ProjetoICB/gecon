@@ -40,12 +40,12 @@
       <tr>
         <td>Conta:  <%= select_tag :conta_id,options_for_select(Conta.where(ativo: true).map{|cdeb| ["#{cdeb.numero} - #{cdeb.nome}", cdeb.id]}), include_blank: true , class: 'chosen-select' %></td>
         <td>Departamento: <%= select_tag :departamento_id, options_for_select(Departamento.all.map{|d| [d.nome, d.id]}) ,  include_blank: true, class: 'chosen-select'  %> </td>
-        <td>Usuário/Docente: <%= select_tag :usuario_id, options_for_select(Usuario.all.map{|u| [u.nome, u.id]}) ,  include_blank: true, class: 'chosen-select' %></td>
+        <td>Usuário/Docente: <%= select_tag :usuario_id, options_for_select(Usuario.all.order("nome").map{|u| [u.nome, u.id]}) ,  include_blank: true, class: 'chosen-select' %></td>
       </tr>
       <tr>
-        <td>Centro de Custo: <%= select_tag :centro_de_custo_id, options_for_select(CentroDeCusto.all.map{|cc| [cc.nome, cc.id]}) ,  include_blank: true, class: 'chosen-select' %> </td>
-        <td>Fonte de recurso: <%= select_tag :fonte_de_recurso_id, options_for_select(FonteDeRecurso.all.map{|fr| [fr.nome, fr.id]}) ,  include_blank: true, class: 'chosen-select' %></td>
-        <td>Tipo de Conta: <%= select_tag :tipo_de_conta_id, options_for_select(TipoDeConta.all.map{|tc| [tc.nome, tc.id]}) ,  include_blank: true, class: 'chosen-select' %></td>
+        <td>Centro de Custo: <%= select_tag :centro_de_custo_id, options_for_select(CentroDeCusto.all.order("nome").map{|cc| [cc.nome, cc.id]}) ,  include_blank: true, class: 'chosen-select' %> </td>
+        <td>Fonte de recurso: <%= select_tag :fonte_de_recurso_id, options_for_select(FonteDeRecurso.all.order("nome").map{|fr| [fr.nome, fr.id]}) ,  include_blank: true, class: 'chosen-select' %></td>
+        <td>Tipo de Conta: <%= select_tag :tipo_de_conta_id, options_for_select(TipoDeConta.all.order("nome").map{|tc| [tc.nome, tc.id]}) ,  include_blank: true, class: 'chosen-select' %></td>
       </tr>
       <tr>
         <td></td>

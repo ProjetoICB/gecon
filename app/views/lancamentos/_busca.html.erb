@@ -41,13 +41,13 @@
     <table class="table">
     <tr>
       <td>Numero do processo:  <%= text_field_tag :processo %></td>
-      <td>Fornecedor:  <%= select_tag :fornecedor_id, options_for_select(Fornecedor.all.map{|forn| [forn.nome, forn.id]}), include_blank: true , class: 'chosen-select' %></td>
+      <td>Fornecedor:  <%= select_tag :fornecedor_id, options_for_select(Fornecedor.all.order("nome").map{|forn| [forn.nome, forn.id]}), include_blank: true , class: 'chosen-select' %></td>
       <td>Conta:  <%= select_tag :conta_id,options_for_select(Conta.where(ativo: true).map{|cdeb| ["#{cdeb.numero} - #{cdeb.nome}", cdeb.id]}), include_blank: true , class: 'chosen-select' %></td>
     </tr>
 
     <tr>
-      <td>Item de despesa: <%= select_tag :item_de_despesa_id,options_for_select(ItemDeDespesa.all.map{|ides| [ides.nome, ides.id]}), include_blank: true, class: 'chosen-select' %></td>
-      <td>Tipo de Compra <%= select_tag :tipo_de_compra_id, options_for_select(TipoDeCompra.all.map{|tc| [tc.nome, tc.id]}), include_blank: true, class: 'chosen-select' %> </td>
+      <td>Item de despesa: <%= select_tag :item_de_despesa_id,options_for_select(ItemDeDespesa.all.order("nome").map{|ides| [ides.nome, ides.id]}), include_blank: true, class: 'chosen-select' %></td>
+      <td>Tipo de Compra <%= select_tag :tipo_de_compra_id, options_for_select(TipoDeCompra.all.order("nome").map{|tc| [tc.nome, tc.id]}), include_blank: true, class: 'chosen-select' %> </td>
       <td> <%= check_box_tag :debito_canc, "Sim" %> <%= label_tag(:tudo, "Apenas débitos cancelados") %>  </td>
     </tr>
     <tr>
