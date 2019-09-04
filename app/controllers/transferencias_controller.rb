@@ -37,6 +37,7 @@ class TransferenciasController < ApplicationController
     valor = params[:valor].to_f
     data = params[:data]
     datadocumento = params[:datadocumento]
+    observacao = params[:observacao]
 
     # identificador de transferencia multipla
     t=Transferencia.where(transf_multipla: true).order("id desc").take
@@ -57,6 +58,7 @@ class TransferenciasController < ApplicationController
           @lancamento.tipo = "Débito"
           @lancamento.data = data
           @lancamento.datadocumento = datadocumento
+          @lancamento.observacao = "Débito de transferência múltipla"
           @lancamento.conta_id = debito_id
           @lancamento.debito = valor
           @lancamento.transf_multipla_id = tmult
@@ -66,6 +68,7 @@ class TransferenciasController < ApplicationController
             tm = Transferencia.new
             tm.data = data
             tm.datadocumento = datadocumento
+            tm.observacao = observacao
             tm.debito_id = params[:debito_id]
             tm.credito_id = params[:cred1]
             tm.valor_deb_orig = params[:valor]
@@ -79,6 +82,7 @@ class TransferenciasController < ApplicationController
             @lancamento.tipo = "Crédito"
             @lancamento.data = data
             @lancamento.datadocumento = datadocumento
+            @lancamento.observacao = tm.observacao
             @lancamento.conta_id = tm.credito_id
             @lancamento.credito = tm.valor
             @lancamento.transferencia_id = tm.id
@@ -93,6 +97,7 @@ class TransferenciasController < ApplicationController
             tm = Transferencia.new
             tm.data = data
             tm.datadocumento = datadocumento
+            tm.observacao = observacao
             tm.debito_id = params[:debito_id]
             tm.credito_id = params[:cred2]
             tm.valor_deb_orig = params[:valor]
@@ -106,6 +111,7 @@ class TransferenciasController < ApplicationController
             @lancamento.tipo = "Crédito"
             @lancamento.data = data
             @lancamento.datadocumento = datadocumento
+            @lancamento.observacao = tm.observacao
             @lancamento.conta_id = tm.credito_id
             @lancamento.credito = tm.valor
             @lancamento.transferencia_id = tm.id
@@ -120,6 +126,7 @@ class TransferenciasController < ApplicationController
             tm = Transferencia.new
             tm.data = data
             tm.datadocumento = datadocumento
+            tm.observacao = observacao
             tm.debito_id = params[:debito_id]
             tm.valor_deb_orig = params[:valor]
             tm.credito_id = params[:cred3]
@@ -133,6 +140,7 @@ class TransferenciasController < ApplicationController
             @lancamento.tipo = "Crédito"
             @lancamento.data = data
             @lancamento.datadocumento = datadocumento
+            @lancamento.observacao = tm.observacao
             @lancamento.conta_id = tm.credito_id
             @lancamento.credito = tm.valor
             @lancamento.transferencia_id = tm.id
@@ -147,6 +155,7 @@ class TransferenciasController < ApplicationController
             tm = Transferencia.new
             tm.data = data
             tm.datadocumento = datadocumento
+            tm.observacao = observacao
             tm.debito_id = params[:debito_id]
             tm.valor_deb_orig = params[:valor]
             tm.credito_id = params[:cred4]
@@ -160,6 +169,7 @@ class TransferenciasController < ApplicationController
             @lancamento.tipo = "Crédito"
             @lancamento.data = data
             @lancamento.datadocumento = datadocumento
+            @lancamento.observacao = tm.observacao
             @lancamento.conta_id = tm.credito_id
             @lancamento.credito = tm.valor
             @lancamento.transferencia_id = tm.id
