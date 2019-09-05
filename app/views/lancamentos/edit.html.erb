@@ -1,0 +1,11 @@
+<h1>Editando Lancamento</h1>
+
+<% if params[:tipo] == "Crédito" %>
+    <%= render 'form_credito' %>
+<% else %>
+    <%= render 'form_debito_editar'%>
+<% end %>
+
+<%= link_to 'Mostrar', @lancamento, class: 'btn btn-primary active' %> |
+<%= link_to "Registros atuais", lancamentos_path(:atual => "Sim"), class: 'btn btn-default' %> |
+<%= link_to 'Registros antigos', lancamentos_path(:atual => "Nao"), class: 'btn btn-default' %>
