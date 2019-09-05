@@ -6,6 +6,8 @@
             "aaSorting": [],
             "bLengthChange":false,
             "oLanguage":{
+                "decimal" :             ",",
+                "thousands":            ".",
                 "sInfo":                "Mostrando de _START_ até _END_ de _TOTAL_ registros",
                 "sInfoFiltered":        "Filtrado de _MAX_ registros no total",
                 "sZeroRecords":         "Sem resultados",
@@ -24,6 +26,9 @@
 </script>
 
 <h1>Lançamentos</h1>
+
+
+
 <%= link_to 'Novo Crédito', new_lancamento_path(:tipo => "Crédito"), class:'btn btn-primary active' %>
 <%= link_to 'Novo Débito', new_lancamento_path(:tipo => "Débito"), class:'btn  btn-danger active' %>
 
@@ -53,7 +58,7 @@
         <td><%= lancamento.conta.centro_de_custo.nome %></td>
         <td><%= lancamento.tipo_de_compra.nome if !lancamento.tipo_de_compra.nil? %> </td>
         <td><%= lancamento.data.strftime("%d/%m/%Y") %></td>
-        <td><%= lancamento.observacao %> </td>
+        <td style="width: 60%"><%= lancamento.observacao %> </td>
         <td><%= lancamento.fornecedor.nome if !lancamento.fornecedor.nil? %> </td>
         <td>
           <% if lancamento.tipo == "Crédito" %>

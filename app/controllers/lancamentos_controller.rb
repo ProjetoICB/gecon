@@ -74,7 +74,12 @@ class LancamentosController < ApplicationController
   # GET /lancamentos
   # GET /lancamentos.json
   def index
-    @lancamentos = Lancamento.all.order("id desc")
+    at = params[:atual]
+    if at == "Sim"
+      @lancamentos = Lancamento.where("year(created_at) = ?", Date.today.year).order("id desc")
+    else
+      @lancamentos = Lancamento.all.order("id desc")
+    end
   end
 
   # GET /lancamentos/1
@@ -140,6 +145,6 @@ class LancamentosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def lancamento_params
-      params.require(:lancamento).permit(:processo, :data, :datadocumento, :observacao, :debito, :credito, :tipo, :conta_id, :fornecedor_id, :item_de_despesa_id, :item_de_receita_id, :tipo_de_compra_id, :debito_cancelado, :retorno_debitocanc, :num_notafiscal, :empenho)
+      params.require(:lancamento).permit(:processo, :data, :datadocumento, :observacao, :debito, :credito, :tipo, :conta_id, :fornecedor_id, :item_de_despesa_id, :item_de_receita_id, :tipo_de_compra_id, :debito_cancelado, :retorno_debitocanc, :num_notafiscal, :empenho, :atual)
     end
 end
