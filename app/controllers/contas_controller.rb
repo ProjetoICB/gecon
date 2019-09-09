@@ -1,5 +1,5 @@
 class ContasController < ApplicationController
-  before_action :set_conta, only: [:show, :edit, :update, :destroy, :desativa]
+  before_action :set_conta, only: [:show, :edit, :update, :destroy, :desativa_conta]
 
   # GET /contas
   # GET /contas.json
@@ -137,7 +137,7 @@ class ContasController < ApplicationController
     end
   end
 
-  def desativa
+  def desativa_conta
     @conta.ativo = false
     @conta.save
     respond_to do |format|

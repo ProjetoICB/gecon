@@ -1,11 +1,11 @@
 class FornecedoresController < ApplicationController
   before_filter 'autenticado?'
-  before_action :set_fornecedor, only: [:show, :edit, :update, :destroy]
+  before_action :set_fornecedor, only: [:show, :edit, :update, :destroy,:desativa_fornecedor]
 
   # GET /fornecedores
   # GET /fornecedores.json
   def index
-    @fornecedores = Fornecedor.all.order("nome")
+    @fornecedores = Fornecedor.where(ativo: true).order("nome")
   end
 
   # GET /fornecedores/1
@@ -61,6 +61,18 @@ class FornecedoresController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def desativa_fornecedor
+    @fornecedor.ativo = false
+    @fornecedor.save
+    respond_to do  |format|
+      format.html { redirect_to fornecedores_path, notice: "Fornecedor desativado com sucesso"  }
+      format.json { head :no_content  }
+    end
+  end
+
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -1,11 +1,11 @@
 class GruposController < ApplicationController
   before_filter 'autenticado?'
-  before_action :set_grupo, only: [:show, :edit, :update, :destroy]
+  before_action :set_grupo, only: [:show, :edit, :update, :destroy, :desativa_grupo]
 
   # GET /grupos
   # GET /grupos.json
   def index
-    @grupos = Grupo.all
+    @grupos = Grupo.where(ativo: true)
   end
 
   # GET /grupos/1
@@ -58,6 +58,16 @@ class GruposController < ApplicationController
     @grupo.destroy
     respond_to do |format|
       format.html { redirect_to grupos_url, notice: 'Grupo foi apagado com sucesso.' }
+      format.json { head :no_content }
+    end
+  end
+
+
+  def desativa_grupo
+    @grupo.ativo = false
+    @grupo.save
+    respond_to do |format|
+      format.html { redirect_to grupos_path, notice: "Grupo desativado com sucesso" }
       format.json { head :no_content }
     end
   end

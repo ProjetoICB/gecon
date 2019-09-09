@@ -46,7 +46,7 @@
   </div>
   <div class="form-group">
     <%= f.label :departamento, "Departamento" %><br>
-    <%= f.select :departamento_id, Departamento.all.map{|dep| [dep.nome, dep.id]}, {include_blank: true}, {class: 'chosen-select'} %>
+    <%= f.select :departamento_id, Departamento.where(ativo: true).map{|dep| [dep.nome, dep.id]}, {include_blank: true}, {class: 'chosen-select'} %>
   </div>
   <div id="form-group">
     <h3> Associação de gerência</h3>

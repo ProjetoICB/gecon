@@ -1,11 +1,11 @@
 class UsuariosController < ApplicationController
   before_filter 'autenticado?'
-  before_action :set_usuario, only: [:show, :edit, :update, :destroy]
+  before_action :set_usuario, only: [:show, :edit, :update, :destroy, :desativa_usuario]
 
   # GET /usuarios
   # GET /usuarios.json
   def index
-    @usuarios = Usuario.all
+    @usuarios = Usuario.where(ativo: true)
   end
 
   # GET /usuarios/1
@@ -66,6 +66,16 @@ class UsuariosController < ApplicationController
     respond_to do |format|
       format.html { redirect_to usuarios_url, notice: 'Usuario apagado com sucesso.' }
       format.json { head :no_content }
+    end
+  end
+
+
+  def desativa_usuario
+    @usuario.ativo = false
+    @usuario.save
+    respond_to do |format|
+      format.html { redirect_to usuarios_path, notice: "Usuário desativado com sucesso" }
+      format.json { head :no-content }
     end
   end
 

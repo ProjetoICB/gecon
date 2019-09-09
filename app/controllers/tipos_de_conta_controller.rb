@@ -1,11 +1,11 @@
 class TiposDeContaController < ApplicationController
   before_filter 'autenticado?'
-  before_action :set_tipo_de_conta, only: [:show, :edit, :update, :destroy]
+  before_action :set_tipo_de_conta, only: [:show, :edit, :update, :destroy, :desativa_tipo_conta]
 
   # GET /tipos_de_conta
   # GET /tipos_de_conta.json
   def index
-    @tipos_de_conta = TipoDeConta.all
+    @tipos_de_conta = TipoDeConta.where(ativo:  true)
   end
 
   # GET /tipos_de_conta/1
@@ -61,6 +61,16 @@ class TiposDeContaController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def desativa_tipo_conta
+    @tipo_de_conta.ativo = false
+    @tipo_de_conta.save
+    respond_to do |format|
+      format.html { redirect_to tipo_de_contas_path, notice:  "Tipo de conta desativado com sucesso" }
+      format.json { head :no_content }
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

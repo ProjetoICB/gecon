@@ -26,13 +26,28 @@ Rails.application.routes.draw do
   get 'transf_multipla' => 'transferencias#transf_multipla', as: 'transf_multipla'
   get 'gera_transf_multipla' => 'transferencias#gera_transf_multipla', as: 'gera_transf_multipla'
 
-  get 'desativa/:id' => 'contas#desativa', as: 'desativar'
+
 
   get 'busca' => 'lancamentos#busca', as: 'busca'
   get 'result' => 'lancamentos#result', as: 'result'
 
   get 'busca_conta' => 'contas#busca_conta' , as: 'busca_conta'
   get 'result_conta' => 'contas#result_conta' , as: 'result_conta'
+
+  #desativações
+  get 'desativa_conta/:id' => 'contas#desativa_conta', as: 'desativar_conta'
+  get 'desativa_usuario/:id' => 'usuarios#desativa_usuario', as: 'desativar_usuario'
+  get 'desativa_departamento/:id' => 'deparntamentos#desativa_departamento', as: 'desativar_departamento'
+  get 'desativa_tipodecompra/:id' => 'tipos_de_compra#desativa_tipodecompra', as: 'desativa_tipodecompra'
+  get 'desativa_fontederecurso/:id' => 'fontes_de_recurso#desativa_fontederecurso', as: 'desativa_fontederecurso'
+  get 'desativa_centrodecusto/:id' => 'centros_de_custo#desativa_centrodecusto', as: 'desativa_centrodecusto'
+  get 'desativa_grupo/:id' => 'grupos#desativa_grupo', as: 'desativa_grupo'
+  get 'desativa_tipo_conta/:id' => 'tipos_de_conta#desativa_tipo_conta', as: 'desativa_tipo_conta'
+  get 'desativa_fornecedor/:id' => 'fornecedores#desativa_fornecedor' , as: 'deativa_fornecedor'
+  get 'deativa_item_despesa/:id' => 'itens_de_despesa#desativa_item_despesa', as: 'desativa_item_despesa'
+  get 'deativa_item_receita/:id' => 'itens_de_receita#desativa_item_receita', as: 'desativa_item_receita'
+
+
 
 
 

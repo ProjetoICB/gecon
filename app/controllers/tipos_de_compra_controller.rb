@@ -1,11 +1,11 @@
 class TiposDeCompraController < ApplicationController
   before_filter 'autenticado?'
-  before_action :set_tipo_de_compra, only: [:show, :edit, :update, :destroy]
+  before_action :set_tipo_de_compra, only: [:show, :edit, :update, :destroy, :desativa_tipodecompra]
 
   # GET /tipos_de_compra
   # GET /tipos_de_compra.json
   def index
-    @tipos_de_compra = TipoDeCompra.all
+    @tipos_de_compra = TipoDeCompra.where(ativo: true)
   end
 
   # GET /tipos_de_compra/1
@@ -29,7 +29,7 @@ class TiposDeCompraController < ApplicationController
 
     respond_to do |format|
       if @tipo_de_compra.save
-        format.html { redirect_to @tipo_de_compra, notice: 'Tipo de compra criado com sucesso.' }
+        format.html { redirect_to @tipos_de_compra, notice: 'Tipo de compra criado com sucesso.' }
         format.json { render :show, status: :created, location: @tipo_de_compra }
       else
         format.html { render :new }
@@ -61,6 +61,16 @@ class TiposDeCompraController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def desativa_tipodecompra
+    @tipo_de_compra.ativo = false
+    @tipo_de_compra.save
+    respond_to do |format|
+      format.html { redirect_to tipos_de_compra_path, notice: "Tipo de compra desativada com sucesso" }
+      format.json { head :no_content }
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

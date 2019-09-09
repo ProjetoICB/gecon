@@ -41,7 +41,7 @@
         <td><%= fornecedor.nome %></td>
         <td class="text-center"><%= link_to 'Mostrar', fornecedor, class: 'btn btn-primary active' %></td>
         <td class="text-center"><%= link_to 'Editar', edit_fornecedor_path(fornecedor), class: 'btn btn-default' %></td>
-        <td class="text-center"><%= link_to 'Apagar', fornecedor, method: :delete, data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+        <td class="text-center"><%= link_to 'Desativar', deativa_fornecedor_path(fornecedor), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
       </tr>
     <% end %>
   </tbody>

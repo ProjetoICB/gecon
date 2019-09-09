@@ -1,11 +1,11 @@
 class DepartamentosController < ApplicationController
   before_filter 'autenticado?'
-  before_action :set_departamento, only: [:show, :edit, :update, :destroy]
+  before_action :set_departamento, only: [:show, :edit, :update, :destroy, :desativa_departamento]
 
   # GET /departamentos
   # GET /departamentos.json
   def index
-    @departamentos = Departamento.all
+    @departamentos = Departamento.where(ativo: true)
   end
 
   # GET /departamentos/1
@@ -61,6 +61,17 @@ class DepartamentosController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def desativa_departamento
+    @departamento.ativo =  false
+    @departamento.save
+    respond_to do |format|
+      format.html { redirect_to departamentos_path, notice: "Departamento desativado com sucesso"  }
+      format.json { head :no_content }
+    end
+  end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -6,4 +6,6 @@
     <%= render 'form_debito' %>
 <% end %>
 
-<%= link_to 'Voltar', lancamentos_path, class: 'btn btn-default' %>
+<%= link_to "Registros atuais", lancamentos_path(:atual => "Sim"), class: 'btn btn-default' %> |
+<%= link_to 'Registros antigos', lancamentos_path(:atual => "Nao"), class: 'btn btn-default' %> |
+<%= link_to 'Voltar para contas', contas_path, class: 'btn btn-info active' %>

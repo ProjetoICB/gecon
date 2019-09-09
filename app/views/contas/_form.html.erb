@@ -43,19 +43,19 @@
   </div>
   <div class="form-group">
     <%= f.label :tipo_de_conta_id, "Tipo de conta" %><br>
-    <%= f.select :tipo_de_conta_id, TipoDeConta.all.map{ |tc| [tc.nome,tc.id]}, {include_blank: true} , {class: 'chosen-select'} %>
+    <%= f.select :tipo_de_conta_id, TipoDeConta.where(ativo: true).map{ |tc| [tc.nome,tc.id]}, {include_blank: true} , {class: 'chosen-select'} %>
   </div>
   <div class="form-group">
     <%= f.label :usuario_id, "Usuário" %><br>
-    <%= f.select :usuario_id, Usuario.all.map{|u| [u.nome,u.id]},  {include_blank: true}, {class: 'chosen-select'} %>
+    <%= f.select :usuario_id, Usuario.where(ativo: true).map{|u| [u.nome,u.id]},  {include_blank: true}, {class: 'chosen-select'} %>
   </div>
   <div class="form-group">
     <%= f.label :centro_de_custo_id, "Centro de Custo" %><br>
-    <%= f.select :centro_de_custo_id, CentroDeCusto.all.map{|cc| [cc.nome, cc.id]}, {include_blank: true}, {class: 'chosen-select'} %>
+    <%= f.select :centro_de_custo_id, CentroDeCusto.where(ativo: true).map{|cc| [cc.nome, cc.id]}, {include_blank: true}, {class: 'chosen-select'} %>
   </div>
   <div class="form-group">
     <%= f.label :fonte_de_recurso_id, "Fonte de Recurso" %><br>
-    <%= f.select :fonte_de_recurso_id,FonteDeRecurso.all.map{|fr| [fr.nome, fr.id]}, {include_blank: true} , {class: 'chosen-select'} %>
+    <%= f.select :fonte_de_recurso_id,FonteDeRecurso.where(ativo: true).map{|fr| [fr.nome, fr.id]}, {include_blank: true} , {class: 'chosen-select'} %>
   </div>
   <div class="actions">
     <%= f.submit "Enviar", class: 'btn btn-primary active' %>

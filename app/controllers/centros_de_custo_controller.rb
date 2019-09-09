@@ -1,11 +1,11 @@
 class CentrosDeCustoController < ApplicationController
   before_filter 'autenticado?'
-  before_action :set_centro_de_custo, only: [:show, :edit, :update, :destroy]
+  before_action :set_centro_de_custo, only: [:show, :edit, :update, :destroy, :desativa_centrodecusto]
 
   # GET /centros_de_custo
   # GET /centros_de_custo.json
   def index
-    @centros_de_custo = CentroDeCusto.all
+    @centros_de_custo = CentroDeCusto.where(ativo: true)
   end
 
   # GET /centros_de_custo/1
@@ -62,6 +62,16 @@ class CentrosDeCustoController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def desativa_centrodecusto
+    @centro_de_custo.ativo = false
+    @centro_de_custo.save
+    respond_to do |format|
+      format.html { redirect_to centros_de_custo_path, notice:  "Centro de custo desativado com sucesso"}
+      format.json { head :no_content }
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

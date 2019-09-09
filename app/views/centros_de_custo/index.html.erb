@@ -43,7 +43,7 @@
         <td class="text-center"><%= ccusto.ativo == true ? "Sim" : "Não" %></td>
         <td class="text-center"><%= link_to 'Mostrar', ccusto, class: 'btn btn-primary active' %></td>
         <td class="text-center"><%= link_to 'Editar', edit_centro_de_custo_path(ccusto), class:'btn btn-default' %></td>
-        <td class="text-center"><%= link_to 'Apagar', ccusto, method: :delete, data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+        <td class="text-center"><%= link_to 'Desativar',  desativa_centrodecusto_path(ccusto), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
       </tr>
     <% end %>
   </tbody>

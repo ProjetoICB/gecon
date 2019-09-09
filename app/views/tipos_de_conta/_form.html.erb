@@ -27,7 +27,7 @@
   </div>
   <div class="form-group">
     <%= f.label :grupo_id %><br>
-    <%= f.select :grupo_id, Grupo.all.map{|g| [g.nome, g.id]},  {include_blank: true} , {class: 'chosen-select'}   %>
+    <%= f.select :grupo_id, Grupo.where(ativo: true).map{|g| [g.nome, g.id]},  {include_blank: true} , {class: 'chosen-select'}   %>
   </div>
   <div class="actions">
     <%= f.submit "Enviar", class: 'btn btn-primary active' %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190719192730) do
+ActiveRecord::Schema.define(version: 20190905193941) do
 
   create_table "centros_de_custo", force: :cascade do |t|
     t.string   "nome",       limit: 255
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20190719192730) do
     t.string   "nome",                limit: 255
     t.text     "observacao",          limit: 65535
     t.boolean  "ativo"
-    t.integer  "tipo_de_conta_id",    limit: 4,     null: false
+    t.integer  "tipo_de_conta_id",    limit: 4
     t.integer  "usuario_id",          limit: 4,     null: false
     t.integer  "centro_de_custo_id",  limit: 4,     null: false
     t.integer  "fonte_de_recurso_id", limit: 4,     null: false
@@ -41,8 +41,9 @@ ActiveRecord::Schema.define(version: 20190719192730) do
   create_table "departamentos", force: :cascade do |t|
     t.string   "nome",       limit: 255
     t.string   "sigla",      limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.boolean  "ativo",                  default: true
   end
 
   create_table "departamentos_usuarios", force: :cascade do |t|
@@ -52,37 +53,42 @@ ActiveRecord::Schema.define(version: 20190719192730) do
 
   create_table "fontes_de_recurso", force: :cascade do |t|
     t.string   "nome",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.boolean  "ativo",                  default: true
   end
 
   create_table "fornecedores", force: :cascade do |t|
     t.string   "nome",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.boolean  "ativo",                  default: true
   end
 
   create_table "grupos", force: :cascade do |t|
     t.string   "nome",        limit: 255
     t.integer  "coddigitado", limit: 4
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.boolean  "ativo",                   default: true
   end
 
   create_table "itens_de_despesa", force: :cascade do |t|
     t.string   "nomeGecon",  limit: 255
     t.string   "nome",       limit: 255
     t.string   "codigitado", limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.boolean  "ativo",                  default: true
   end
 
   create_table "itens_de_receita", force: :cascade do |t|
     t.string   "nomeGecon",   limit: 255
     t.string   "nome",        limit: 255
     t.string   "coddigitado", limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.boolean  "ativo",                   default: true
   end
 
   create_table "lancamentos", force: :cascade do |t|
@@ -106,6 +112,7 @@ ActiveRecord::Schema.define(version: 20190719192730) do
     t.datetime "updated_at",                     null: false
     t.integer  "transferencia_id",   limit: 4
     t.integer  "transf_multipla_id", limit: 4
+    t.string   "fornecedor",         limit: 255
   end
 
   create_table "logs", force: :cascade do |t|
@@ -121,14 +128,16 @@ ActiveRecord::Schema.define(version: 20190719192730) do
   create_table "tipo_de_contas", force: :cascade do |t|
     t.string   "nome",       limit: 255
     t.integer  "grupo_id",   limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.boolean  "ativo",                  default: true
   end
 
   create_table "tipos_de_compra", force: :cascade do |t|
     t.string   "nome",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.boolean  "ativo",                  default: true
   end
 
   create_table "transferencias", force: :cascade do |t|

@@ -43,7 +43,7 @@
         <td><%= grupo.coddigitado %></td>
         <td class="text-center"><%= link_to 'Mostrar', grupo, class: 'btn btn-primary active'  %></td>
         <td class="text-center"><%= link_to 'Editar', edit_grupo_path(grupo), class: 'btn btn-default' %></td>
-        <td class="text-center"><%= link_to 'Apagar', grupo, method: :delete, data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+        <td class="text-center"><%= link_to 'Desativar',  desativa_grupo_path(grupo), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
       </tr>
     <% end %>
   </tbody>

@@ -77,7 +77,7 @@
         <% end %>
         <td class="text-center"><%= link_to 'Mostrar', conta, class: 'btn btn-primary active' %></td>
         <td class="text-center"><%= link_to 'Editar', edit_conta_path(conta), class: 'btn btn-default' %></td>
-        <td class="text-center"> <%= link_to 'Desativar', desativar_path(conta), data: { confirm: 'Tem certeza?' },  class: 'btn btn-danger active'  %> </td>
+        <td class="text-center"> <%= link_to 'Desativar', desativar_conta_path(conta), data: { confirm: 'Tem certeza?' },  class: 'btn btn-danger active'  %> </td>
         <td class="text-center"><%= link_to "Novo crédito" , new_lancamento_path(:tipo => "Crédito",:conta_id =>  conta.id), class: 'btn btn-primary active'  %></td>
         <td class="text-center"><%= link_to "Novo débito",  new_lancamento_path(:tipo => "Débito", :conta_id => conta.id), class: 'btn btn-danger active' %></td>
       </tr>

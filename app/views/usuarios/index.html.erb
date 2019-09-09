@@ -56,7 +56,7 @@
         </td>
         <td class="text-center"><%= link_to 'Mostrar', usuario, class: 'btn btn-primary active' %></td>
         <td class="text-center"><%= link_to 'Editar', edit_usuario_path(usuario), class: 'btn btn-default' %></td>
-        <td class="text-center"><%= link_to 'Apagar', usuario, method: :delete, data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+        <td class="text-center"><%= link_to 'Desativar',desativar_usuario_path(usuario), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
       </tr>
     <% end %>
   </tbody>

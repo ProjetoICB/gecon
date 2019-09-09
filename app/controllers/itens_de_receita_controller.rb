@@ -1,11 +1,11 @@
 class ItensDeReceitaController < ApplicationController
   before_filter 'autenticado?'
-  before_action :set_item_de_receita, only: [:show, :edit, :update, :destroy]
+  before_action :set_item_de_receita, only: [:show, :edit, :update, :destroy, :desativa_item_receita]
 
   # GET /itens_de_receita
   # GET /itens_de_receita.json
   def index
-    @itens_de_receita = ItemDeReceita.all
+    @itens_de_receita = ItemDeReceita.where(ativo: true)
   end
 
   # GET /itens_de_receita/1
@@ -58,6 +58,15 @@ class ItensDeReceitaController < ApplicationController
     @item_de_receita.destroy
     respond_to do |format|
       format.html { redirect_to itens_de_receita_url, notice: 'Item de receita apagado com sucesso.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def desativa_item_receita
+    @item_de_receita.ativo = false
+    @item_de_receita.save
+    respond_to do |format|
+      format.html { redirect_to itens_de_despesa_path, notice: 'Item de receita desativado com sucesso'  }
       format.json { head :no_content }
     end
   end

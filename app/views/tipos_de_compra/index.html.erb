@@ -41,7 +41,7 @@
         <td><%= tcomp.nome %></td>
         <td class="text-center"><%= link_to 'Mostrar', tcomp, class: 'btn btn-primary active' %></td>
         <td class="text-center"><%= link_to 'Editar', edit_tipo_de_compra_path(tcomp), class: 'btn btn-default' %></td>
-        <td class="text-center"><%= link_to 'Apagar', tcomp, method: :delete, data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+        <td class="text-center"><%= link_to 'Desativar', desativa_tipodecompra_path(tcomp), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
       </tr>
     <% end %>
   </tbody>

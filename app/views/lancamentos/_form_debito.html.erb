@@ -64,16 +64,16 @@
 
   <div class="form-group">
     <%= f.label :fornecedor_id, "Fornecedor" %><br>
-    <%= f.select :fornecedor_id, Fornecedor.all.order("nome").map{|forn| [forn.nome, forn.id]}, {include_blank: true}, {class: 'chosen-select'}  %>
+    <%= f.select :fornecedor_id, Fornecedor.where(ativo: true).order("nome").map{|forn| [forn.nome, forn.id]}, {include_blank: true}, {class: 'chosen-select'}  %>
   </div>
   <div class="form-group">
     <%= f.label :item_de_despesa_id, "Item de despesa" %><br>
-    <%= f.select :item_de_despesa_id, ItemDeDespesa.all.order("nome").map{|ides| [ides.nome, ides.id]}, {include_blank: true}, {class: 'chosen-select'} %>
+    <%= f.select :item_de_despesa_id, ItemDeDespesa.where(ativo: true).order("nome").map{|ides| [ides.nome, ides.id]}, {include_blank: true}, {class: 'chosen-select'} %>
   </div>
 
   <div class="form-group">
     <%= f.label :tipo_compra_id, "Tipo de compra" %><br>
-    <%= f.select  :tipo_de_compra_id, TipoDeCompra.all.order("nome").map{|tc| [tc.nome, tc.id]}, {include_blank: true}, {class:'chosen-select'} %>
+    <%= f.select  :tipo_de_compra_id, TipoDeCompra.where(ativo: true).order("nome").map{|tc| [tc.nome, tc.id]}, {include_blank: true}, {class:'chosen-select'} %>
   </div>
 
   <div class="form-group">

@@ -45,7 +45,7 @@
         <td><%= item_de_despesa.codigitado %></td>
         <td class="text-center"> <%= link_to 'Mostrar', item_de_despesa , class: 'btn btn-primary active' %></td>
         <td class="text-center"> <%= link_to 'Editar', edit_item_de_despesa_path(item_de_despesa), class: 'btn btn-default' %></td>
-        <td><%= link_to 'Apaagar', item_de_despesa, method: :delete, data: { confirm: 'Tem certeza?' } , class: 'btn btn-danger active' %></td>
+        <td><%= link_to 'Desativar', desativa_item_despesa_path(item_de_despesa),  data: { confirm: 'Tem certeza?' } , class: 'btn btn-danger active' %></td>
       </tr>
     <% end %>
   </tbody>

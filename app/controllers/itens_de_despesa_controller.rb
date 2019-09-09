@@ -1,11 +1,11 @@
 class ItensDeDespesaController < ApplicationController
   before_filter 'autenticado?'
-  before_action :set_item_de_despesa, only: [:show, :edit, :update, :destroy]
+  before_action :set_item_de_despesa, only: [:show, :edit, :update, :destroy, :desativa_item_despesa]
 
   # GET /itens_de_despesa
   # GET /itens_de_despesa.json
   def index
-    @itens_de_despesa = ItemDeDespesa.all
+    @itens_de_despesa = ItemDeDespesa.where(ativo:  true)
   end
 
   # GET /itens_de_despesa/1
@@ -61,6 +61,17 @@ class ItensDeDespesaController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def desativa_item_despesa
+    @item_de_despesa.ativo = false
+    @item_de_despesa.save
+    respond_to do |format|
+      format.html { redirect_to itens_de_despesa_path, notice: 'Item de despesa desativado com sucesso'  }
+      format.json { head :no_content }
+    end
+  end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

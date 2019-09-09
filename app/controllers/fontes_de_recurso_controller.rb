@@ -1,11 +1,11 @@
 class FontesDeRecursoController < ApplicationController
   before_filter 'autenticado?'
-  before_action :set_fonte_de_recurso, only: [:show, :edit, :update, :destroy]
+  before_action :set_fonte_de_recurso, only: [:show, :edit, :update, :destroy, :desativa_fontederecurso]
 
   # GET /fontes_de_recurso
   # GET /fontes_de_recurso.json
   def index
-    @fontes_de_recurso = FonteDeRecurso.all
+    @fontes_de_recurso = FonteDeRecurso.where(ativo: true)
   end
 
   # GET /fontes_de_recurso/1
@@ -61,6 +61,16 @@ class FontesDeRecursoController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def desativa_fontederecurso
+    @fonte_de_recurso.ativo = false
+    @fonte_de_recurso.save
+    respond_to do |format|
+      format.html { redirect_to fontes_de_recurso_path, notice: "Fonte de recurso desatuvada com sucesso" }
+      format.json { head :no_content}
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
