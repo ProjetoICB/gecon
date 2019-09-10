@@ -52,8 +52,8 @@ class TransferenciasController < ApplicationController
      if (cred1 == cred2) or (cred1 == cred3) or (cred1 == cred4) or (cred2 == cred3) or (cred2 == cred4) or (cred3 == cred4)
         redirect_to transferencias_path, notice: "Impossivel fazer crédito em duas contas iguais"
      else
-        totalporc = params[:porc1].to_i + params[:porc2].to_i + params[:porc3].to_i + params[:porc4].to_i
-        if totalporc <= 100
+        totalporc = params[:porc1].to_f + params[:porc2].to_f + params[:porc3].to_f + params[:porc4].to_f
+        if totalporc <= 100.00
           @lancamento = Lancamento.new
           @lancamento.tipo = "Débito"
           @lancamento.data = data
