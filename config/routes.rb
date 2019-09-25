@@ -26,6 +26,9 @@ Rails.application.routes.draw do
   get 'transf_multipla' => 'transferencias#transf_multipla', as: 'transf_multipla'
   get 'gera_transf_multipla' => 'transferencias#gera_transf_multipla', as: 'gera_transf_multipla'
 
+  get 'debito_multiplo' => 'lancamentos#debito_multiplo', as: 'debito_multiplo'
+  get 'gera_debito_multiplo' => 'lancamentos#gera_debito_multiplo', as: 'gera_debito_multiplo'
+
 
 
   get 'busca' => 'lancamentos#busca', as: 'busca'
@@ -46,11 +49,6 @@ Rails.application.routes.draw do
   get 'desativa_fornecedor/:id' => 'fornecedores#desativa_fornecedor' , as: 'deativa_fornecedor'
   get 'deativa_item_despesa/:id' => 'itens_de_despesa#desativa_item_despesa', as: 'desativa_item_despesa'
   get 'deativa_item_receita/:id' => 'itens_de_receita#desativa_item_receita', as: 'desativa_item_receita'
-
-
-
-
-
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

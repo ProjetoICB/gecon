@@ -51,6 +51,7 @@
             <li role="presentation">  <%= link_to "Todos os lançamentos", lancamentos_path(:atual => "Nao") %>  </li>
             <li role="presentation">  <%= link_to "Novo crédito" , new_lancamento_path(:tipo => "Crédito")  %> </li>
             <li class="presentation"> <%= link_to "Novo débito",  new_lancamento_path(:tipo => "Débito") %> </li>
+            <li class="presentation"> <%= link_to "Débito multiplo", debito_multiplo_path(:tipo => "Débito") %>  </li>
           </ul>
         </li>
 

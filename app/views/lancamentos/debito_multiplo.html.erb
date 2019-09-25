@@ -1,0 +1,195 @@
+<script type="text/javascript">
+
+
+
+    $('form').submit(function(e) {
+        v1 = $('#valor1').val();
+        v2 = $('#valor2').val();
+        v3 = $('#valor3').val();
+        v4 = $('#valor4').val();
+        v5 = $('#valor5').val();
+        v6 = $('#valor6').val();
+        v7 = $('#valor7').val();
+        v8 = $('#valor8').val();
+        d1 = $('#d1').val();
+        d2 = $('#d2').val();
+        d3 = $('#d3').val();
+        d4 = $('#d4').val();
+        d5 = $('#d5').val();
+        d6 = $('#d6').val();
+        d7 = $('#d7').val();
+        d8 = $('#d8').val();
+
+        if ($('#data').val() == "") {
+            alert("Coloque uma data");
+            e.preventDefault(e);
+            $('#data').focus();
+        } else if ($('#datadocumento').val() == "") {
+            alert("Coloque a data do documento");
+            e.preventDefault(e)
+            $('#datadocumento').focus();
+        } else if ($('#processo').val() == "") {
+            alert("Coloque o processo");
+            e.preventDefault(e);
+            $('#processo').focus();
+        } else if ($('#credito_id').val() == "") {
+            alert("Escolha uma conta de crédito");
+            e.preventDefault(e);
+            $('#credito_id').css({"font-weight": "Bold"});
+        } else if ($('#item_de_despesa_id').val() == "") {
+            alert("Escolha uma item de despesa");
+            e.preventDefault(e);
+            $('#item_de_despesa_id').css({"font-weight": "Bold"});
+        } else if ($('#item_de_receita_id').val() == "") {
+            alert("Escolha uma item de receita");
+            e.preventDefault(e);
+            $('#item_de_receita_id').css({"font-weight": "Bold"});
+        } else if ($('#tipo_de_compra_id').val() == "") {
+            alert("Escolha um tipo de compra");
+            e.preventDefault(e);
+            $('#tipo_de_compra_id').css({"font-weight": "Bold"})
+        } else if ($('#num_notafiscal').val() == "") {
+            alert("Coloque o número da nota fiscal");
+            e.preventDefault(e);
+            $('#num_notafiscal').focus();
+        } else if ($('#empenho').val() == "") {
+            alert("Coloque o valor do empenho");
+            e.preventDefault(e);
+            $('#empenho').focus();
+
+        } else if (d1 == "" || d2 == "" || d3 == "" || d4 == "" || d5 == "" || d6 == "" || d7 == "" || d8 == "") {
+            alert("Conta de débito não escolhida");
+            e.preventDefault(e);
+        } else if (v1 == "" || v2 == "" || v3 == "" || v4 == "" || v5 == "" || v6 == "" || v7 == "" || v8 == "")    {
+            alert("Verifique se algum campo ficou sem valor");
+            e.preventDefault(e);
+        }
+      });
+
+
+
+  $('.chosen-select').chosen({
+        no_results_text: "Nada encontrado:",
+        placeholder_text_single: "Selecione ou digite uma opção",
+        search_contains: true,
+        width: '450px'
+   });
+
+
+
+</script>
+
+
+<h1> Débito múltiplo</h1>
+
+<%= form_tag(gera_debito_multiplo_path, method: :get) do %>
+<!--< %= form_tag("#", method: :get) do %> -->
+
+    <p>
+      Data <br>
+      <%= date_field_tag :data %>
+    </p>
+    <p>
+      Data do documento <br>
+      <%= date_field_tag :datadocumento %>
+    </p>
+
+
+    <p>
+      Processo <br>
+      <%= number_field_tag :processo, nil, class: 'form-control' %>
+    </p>
+
+    <p id="conta_cred">
+      Conta de crédito <br>
+      <%= select_tag :credito_id, options_for_select(Conta.where(ativo: true).map{|ccred| ["#{ccred.numero} - #{ccred.nome}", ccred.id]}), {include_blank: true , class: 'chosen-select'} %>
+    </p>
+
+    <p>
+      Item de despesa <br>
+      <%= select_tag :item_de_despesa_id, options_for_select(ItemDeDespesa.where(ativo: true).order("nome").map{|ides| [ides.nome, ides.id]}), {include_blank: true, class: 'chosen-select'} %>
+    </p>
+
+    <p>
+      Item de receita <br>
+      <%= select_tag :item_de_receita_id, options_for_select(ItemDeReceita.where(ativo: true).order("nome").map{|irec| [irec.nome, irec.id]}), {include_blank: true, class: 'chosen-select'} %>
+    </p>
+
+    <p>
+      Tipo de compra <br>
+      <%= select_tag :tipo_de_compra_id, options_for_select(TipoDeCompra.where(ativo: true).order("nome").map{|tc| [tc.nome, tc.id]}), {include_blank: true, class: 'chosen-select'} %>
+    </p>
+
+    <p>
+      Número da nota fiscal <br>
+      <%= number_field_tag :num_notafiscal, nil, class: 'form-control' %>
+    </p>
+
+    <p>
+      Empenho <br>
+      <%= number_field_tag :empenho, nil, class:'form-control' %>
+    </p>
+
+    <p> Observação <br>
+      <%= text_area_tag :observacao, nil,   class: 'form-control' %>
+    </p>
+
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <td></td>
+        <td class="text-center"> Conta de débito </td>
+        <td class="text-center"> Valor (R$) </td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>1</td>
+        <td id="d1_tit"> <%= select_tag :d1,options_for_select(Conta.where(ativo: true).map{|cdeb| ["#{cdeb.numero} - #{cdeb.nome}",cdeb.id]}),{include_blank: true , class: 'chosen-select'}  %>   </td>
+        <td> <%= number_field_tag :valor1, nil, step: :any %></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td id="d2_tit"> <%= select_tag :d2,options_for_select(Conta.where(ativo: true).map{|cdeb| ["#{cdeb.numero} - #{cdeb.nome}",cdeb.id]}),{include_blank: true , class: 'chosen-select'}  %>   </td>
+        <td> <%= number_field_tag :valor2, nil, step: :any %></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td id="d3_tit"> <%= select_tag :d3,options_for_select(Conta.where(ativo: true).map{|cdeb| ["#{cdeb.numero} - #{cdeb.nome}",cdeb.id]}),{include_blank: true , class: 'chosen-select'}  %>   </td>
+        <td> <%= number_field_tag :valor3, nil, step: :any %></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td id="d4_tit"> <%= select_tag :d4,options_for_select(Conta.where(ativo: true).map{|cdeb| ["#{cdeb.numero} - #{cdeb.nome}",cdeb.id]}),{include_blank: true , class: 'chosen-select'}  %>   </td>
+        <td> <%= number_field_tag :valor4, nil, step: :any %></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td id="d5_tit"> <%= select_tag :d5,options_for_select(Conta.where(ativo: true).map{|cdeb| ["#{cdeb.numero} - #{cdeb.nome}",cdeb.id]}),{include_blank: true , class: 'chosen-select'}  %>   </td>
+        <td> <%= number_field_tag :valor5, nil, step: :any %></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td id="d6_tit"> <%= select_tag :d6,options_for_select(Conta.where(ativo: true).map{|cdeb| ["#{cdeb.numero} - #{cdeb.nome}",cdeb.id]}),{include_blank: true , class: 'chosen-select'}  %>   </td>
+        <td> <%= number_field_tag :valor6, nil, step: :any %></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td id="d7_tit"> <%= select_tag :d7,options_for_select(Conta.where(ativo: true).map{|cdeb| ["#{cdeb.numero} - #{cdeb.nome}",cdeb.id]}),{include_blank: true , class: 'chosen-select'}  %>   </td>
+        <td> <%= number_field_tag :valor7, nil, step: :any %></td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td id="d8_tit"> <%= select_tag :d8,options_for_select(Conta.where(ativo: true).map{|cdeb| ["#{cdeb.numero} - #{cdeb.nome}",cdeb.id]}),{include_blank: true , class: 'chosen-select'}  %>   </td>
+        <td> <%= number_field_tag :valor8, nil, step: :any %></td>
+      </tr>
+      </tbody>
+    </table>
+
+    <%= submit_tag "Enviar", class: 'btn btn-primary active btn-sm' %>
+    <%= link_to "Voltar", :back, class:'btn btn-default btn-sm' %>
+
+
+<% end %>
+
+
