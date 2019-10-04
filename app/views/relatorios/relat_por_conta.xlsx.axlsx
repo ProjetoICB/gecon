@@ -1,0 +1,23 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Por_conta") do |sheet|
+    sheet.add_row ["Data","Data do documento", "Observacao", "Código contábil",  "Fornecedor", "Débito", "Crédito"]
+    @lancamentos.each do |lan|
+        if lan.tipo == "Credito"
+            if lan.item_de_receita_id.nil?
+                sheet.add_row [lan.data, lan.datadocumento, lan.observacao,"Transferência", "", number_to_currency(lan.debito),number_to_currency(lan.credito)]
+            else
+                sheet.add_row [lan.data, lan.datadocumento, lan.observacao,lan.item_de_receita.nome, "", number_to_currency(lan.debito),number_to_currency(lan.credito)]
+            end
+        elsif lan.tipo == "DebitoMult"
+            sheet.add_row [lan.data,lan.datadocumento, lan.observacao, lan.item_de_despesa.nome, "", number_to_currency(lan.debito),number_to_currency(lan.credito)]
+        else
+            if lan.item_de_despesa_id.nil?
+                sheet.add_row [lan.data, lan.datadocumento, lan.observacao,"Transferência", "", number_to_currency(lan.debito),number_to_currency(lan.credito)]
+            elsif !lan.item_de_despesa_id.nil? and lan.fornecedor_id.nil?
+                sheet.add_row [lan.data, lan.datadocumento, lan.observacao,lan.item_de_despesa.nome, "", number_to_currency(lan.debito),number_to_currency(lan.credito)]
+            else
+                sheet.add_row [lan.data, lan.datadocumento, lan.observacao,lan.item_de_despesa.nome, lan.fornecedor.nome, number_to_currency(lan.debito),number_to_currency(lan.credito)]
+            end
+        end
+    end
+end

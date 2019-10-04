@@ -50,6 +50,14 @@ Rails.application.routes.draw do
   get 'deativa_item_despesa/:id' => 'itens_de_despesa#desativa_item_despesa', as: 'desativa_item_despesa'
   get 'deativa_item_receita/:id' => 'itens_de_receita#desativa_item_receita', as: 'desativa_item_receita'
 
+
+  #relatórios
+  get 'por_conta' => 'relatorios#por_conta', as: 'por_conta'
+  get 'relat_por_conta' => 'relatorios#relat_por_conta', as: 'relat_por_conta'
+
+
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

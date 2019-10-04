@@ -109,7 +109,7 @@ class LancamentosController < ApplicationController
         lc.processo = processo
         lc.conta_id = credito_id
         lc.item_de_receita_id = item_de_receita
-        lc.tipo = "Crédito"
+        lc.tipo = "Credito"
         lc.tipo_de_compra_id = tipo_de_compra
         lc.num_notafiscal = nota_fiscal
         lc.empenho = empenho
@@ -126,7 +126,7 @@ class LancamentosController < ApplicationController
       ld.processo = processo
       ld.conta_id = d1
       ld.item_de_despesa_id = item_de_despesa
-      ld.tipo = "Débito"
+      ld.tipo = "DebitoMult"
       ld.tipo_de_compra_id = tipo_de_compra
       ld.num_notafiscal = nota_fiscal
       ld.empenho = empenho
@@ -141,7 +141,7 @@ class LancamentosController < ApplicationController
       ld.processo = processo
       ld.conta_id = d2
       ld.item_de_despesa_id = item_de_despesa
-      ld.tipo = "Débito"
+      ld.tipo = "DebitoMult"
       ld.tipo_de_compra_id = tipo_de_compra
       ld.num_notafiscal = nota_fiscal
       ld.empenho = empenho
@@ -156,7 +156,7 @@ class LancamentosController < ApplicationController
       ld.processo = processo
       ld.conta_id = d3
       ld.item_de_despesa_id = item_de_despesa
-      ld.tipo = "Débito"
+      ld.tipo = "DebitoMult"
       ld.tipo_de_compra_id = tipo_de_compra
       ld.num_notafiscal = nota_fiscal
       ld.empenho = empenho
@@ -171,7 +171,7 @@ class LancamentosController < ApplicationController
       ld.processo = processo
       ld.conta_id = d4
       ld.item_de_despesa_id = item_de_despesa
-      ld.tipo = "Débito"
+      ld.tipo = "DebitoMult"
       ld.tipo_de_compra_id = tipo_de_compra
       ld.num_notafiscal = nota_fiscal
       ld.empenho = empenho
@@ -186,7 +186,7 @@ class LancamentosController < ApplicationController
       ld.processo = processo
       ld.conta_id = d5
       ld.item_de_despesa_id = item_de_despesa
-      ld.tipo = "Débito"
+      ld.tipo = "DebitoMult"
       ld.tipo_de_compra_id = tipo_de_compra
       ld.num_notafiscal = nota_fiscal
       ld.empenho = empenho
@@ -201,7 +201,7 @@ class LancamentosController < ApplicationController
       ld.processo = processo
       ld.conta_id = d6
       ld.item_de_despesa_id = item_de_despesa
-      ld.tipo = "Débito"
+      ld.tipo = "DebitoMult"
       ld.tipo_de_compra_id = tipo_de_compra
       ld.num_notafiscal = nota_fiscal
       ld.empenho = empenho
@@ -216,7 +216,7 @@ class LancamentosController < ApplicationController
       ld.processo = processo
       ld.conta_id = d7
       ld.item_de_despesa_id = item_de_despesa
-      ld.tipo = "Débito"
+      ld.tipo = "DebitoMult"
       ld.tipo_de_compra_id = tipo_de_compra
       ld.num_notafiscal = nota_fiscal
       ld.empenho = empenho
@@ -231,7 +231,7 @@ class LancamentosController < ApplicationController
       ld.processo = processo
       ld.conta_id = d8
       ld.item_de_despesa_id = item_de_despesa
-      ld.tipo = "Débito"
+      ld.tipo = "DebitoMult"
       ld.tipo_de_compra_id = tipo_de_compra
       ld.num_notafiscal = nota_fiscal
       ld.empenho = empenho

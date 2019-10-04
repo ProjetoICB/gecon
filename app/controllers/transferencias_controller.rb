@@ -55,7 +55,7 @@ class TransferenciasController < ApplicationController
         totalporc = params[:porc1].to_f + params[:porc2].to_f + params[:porc3].to_f + params[:porc4].to_f
         if totalporc <= 100.00
           @lancamento = Lancamento.new
-          @lancamento.tipo = "Débito"
+          @lancamento.tipo = "Debito"
           @lancamento.data = data
           @lancamento.datadocumento = datadocumento
           @lancamento.observacao = "Débito de transferência múltipla"
@@ -79,7 +79,7 @@ class TransferenciasController < ApplicationController
             tm.save
 
             @lancamento = Lancamento.new
-            @lancamento.tipo = "Crédito"
+            @lancamento.tipo = "Credito"
             @lancamento.data = data
             @lancamento.datadocumento = datadocumento
             @lancamento.observacao = tm.observacao
@@ -108,7 +108,7 @@ class TransferenciasController < ApplicationController
             tm.save
 
             @lancamento = Lancamento.new
-            @lancamento.tipo = "Crédito"
+            @lancamento.tipo = "Credito"
             @lancamento.data = data
             @lancamento.datadocumento = datadocumento
             @lancamento.observacao = tm.observacao
@@ -137,7 +137,7 @@ class TransferenciasController < ApplicationController
             tm.save
 
             @lancamento = Lancamento.new
-            @lancamento.tipo = "Crédito"
+            @lancamento.tipo = "Credito"
             @lancamento.data = data
             @lancamento.datadocumento = datadocumento
             @lancamento.observacao = tm.observacao
@@ -166,7 +166,7 @@ class TransferenciasController < ApplicationController
             tm.save
 
             @lancamento = Lancamento.new
-            @lancamento.tipo = "Crédito"
+            @lancamento.tipo = "Credito"
             @lancamento.data = data
             @lancamento.datadocumento = datadocumento
             @lancamento.observacao = tm.observacao
@@ -178,7 +178,7 @@ class TransferenciasController < ApplicationController
             tm.credito_id = @lancamento.id
             tm.save
           end
-          @lancamento = Lancamento.where("tipo = ? and transf_multipla_id = ?", "Débito", tmult).take
+          @lancamento = Lancamento.where("tipo = ? and transf_multipla_id = ?", "Debito", tmult).take
           @transferencia = Transferencia.where("transf_multipla_id = ?", @lancamento.transf_multipla_id)
           @transferencia.each do |t|
             t.debito_id = @lancamento.id
@@ -198,7 +198,7 @@ class TransferenciasController < ApplicationController
   def cria_debito
     @transferencia = Transferencia.find(@transferencia.id)
     @lancamento = Lancamento.new
-    @lancamento.tipo = "Débito"
+    @lancamento.tipo = "Debito"
     @lancamento.data = @transferencia.data
     @lancamento.datadocumento = @transferencia.datadocumento
     @lancamento.observacao = @transferencia.observacao
@@ -215,7 +215,7 @@ class TransferenciasController < ApplicationController
   def cria_credito
     @transferencia =  Transferencia.find(@transferencia.id)
     @lancamento = Lancamento.new
-    @lancamento.tipo = "Crédito"
+    @lancamento.tipo = "Credito"
     @lancamento.data = @transferencia.data
     @lancamento.datadocumento = @transferencia.datadocumento
     @lancamento.observacao = @transferencia.observacao

@@ -9,7 +9,16 @@
 </head>
 <body>
 <nav class="navbar navbar-inverse" role="navigation">
-  <h4 class="nav navbar-text"> <span id="tutulo"> Sistema Gecon </span>  </h4>
+  <h4 class="nav navbar-text">
+    <span id="titulo">
+      <% if session[:usuario_id] != nil %>
+          <%= link_to "Sistema Gecon", home_index_path %>
+    <% else %>
+        Sistema Gecon
+    <% end %>
+    </span>
+  </h4>
+
   <ul class="nav navbar-nav">
     <% if session[:usuario_id] != nil %>
         <li> <%= link_to "Usuários", usuarios_path %> </li>
@@ -49,9 +58,9 @@
 
             <li role="presentation">  <%= link_to "Lançamentos atuais", lancamentos_path(:atual => "Sim") %> </li>
             <li role="presentation">  <%= link_to "Todos os lançamentos", lancamentos_path(:atual => "Nao") %>  </li>
-            <li role="presentation">  <%= link_to "Novo crédito" , new_lancamento_path(:tipo => "Crédito")  %> </li>
-            <li class="presentation"> <%= link_to "Novo débito",  new_lancamento_path(:tipo => "Débito") %> </li>
-            <li class="presentation"> <%= link_to "Débito multiplo", debito_multiplo_path(:tipo => "Débito") %>  </li>
+            <li role="presentation">  <%= link_to "Novo crédito" , new_lancamento_path(:tipo => "Credito")  %> </li>
+            <li class="presentation"> <%= link_to "Novo débito",  new_lancamento_path(:tipo => "Debito") %> </li>
+            <li class="presentation"> <%= link_to "Débito multiplo", debito_multiplo_path(:tipo => "DebitoMult") %>  </li>
           </ul>
         </li>
 
@@ -62,6 +71,13 @@
             <li role="presentation">  <%= link_to "Lançamentos", busca_path %> </li>
           </ul>
         </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Relatórios &nbsp; <b class="caret"></b></a>
+          <ul class="dropdown-menu" role="menu">
+            <li role="presentation"> <%= link_to "Por conta",  por_conta_path %> </li>
+          </ul>
+         </li>
 
         <li> <%= link_to "Sair", logout_path %> </li>
         </ul>

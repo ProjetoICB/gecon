@@ -29,9 +29,9 @@
 
 
 
-<%= link_to 'Novo Crédito', new_lancamento_path(:tipo => "Crédito"), class:'btn btn-primary active' %>
-<%= link_to 'Novo Débito', new_lancamento_path(:tipo => "Débito"), class:'btn  btn-danger active' %>
-<%= link_to "Débito multiplo", debito_multiplo_path(:tipo => "Débito"), class: 'btn btn-info active'   %>
+<%= link_to 'Novo Crédito', new_lancamento_path(:tipo => "Credito"), class:'btn btn-primary active' %>
+<%= link_to 'Novo Débito', new_lancamento_path(:tipo => "Debito"), class:'btn  btn-danger active' %>
+<%= link_to "Débito multiplo", debito_multiplo_path(:tipo => "DebitoMult"), class: 'btn btn-info active'   %>
 
 <table id="lancamento" class="table table-striped table-bordered">
   <thead>
@@ -63,9 +63,12 @@
         <td><%= lancamento.data.strftime("%d/%m/%Y") %></td>
         <td style="width: 60%"><%= lancamento.observacao %> </td>
         <td><%= lancamento.fornecedor.nome if !lancamento.fornecedor.nil? %> </td>
+        <!-- corrigir esse pedaço por débito multiplo -->
         <td>
-          <% if lancamento.tipo == "Crédito" %>
+          <% if lancamento.tipo == "Credito" %>
             (R) <%=  lancamento.item_de_receita_id.nil? ? "Transferência" : lancamento.item_de_receita.nome %>
+          <% elsif lancamento.tipo == "DebitoMult" %>
+            (DM) <%= lancamento.item_de_despesa.nome %>
           <% else %>
             (D) <%= lancamento.item_de_despesa_id.nil? ? "Transferência" : lancamento.item_de_despesa.nome %>
           <% end %>
@@ -80,12 +83,13 @@
 
 <br>
 
-<%= link_to 'Novo Crédito', new_lancamento_path(:tipo => "Crédito"), class:'btn btn-primary active' %>
-<%= link_to 'Novo Débito', new_lancamento_path(:tipo => "Débito"), class:'btn  btn-danger active' %>
-<%= link_to "Débito multiplo", debito_multiplo_path(:tipo => "Débito"), class: 'btn btn-info active'   %>
+<%= link_to 'Novo Crédito', new_lancamento_path(:tipo => "Credito"), class:'btn btn-primary active' %>
+<%= link_to 'Novo Débito', new_lancamento_path(:tipo => "Debito"), class:'btn  btn-danger active' %>
+<%= link_to "Débito multiplo", debito_multiplo_path(:tipo => "DebitoMult"), class: 'btn btn-info active'   %>
 <p></p>
 
 <p>
   (R): Receita <br>
-  (D): Despesa
+  (D): Despesa <br>
+  (DM): Débito Múltiplo
 </p>
