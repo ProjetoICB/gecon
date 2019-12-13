@@ -1,0 +1,22 @@
+<h2>Detalhamento por Contas </h2>
+
+  <%= form_tag result_detalhamento_path(format: 'pdf'), method: :get do %>
+
+    <% @contas.each do |conta| %>
+        <p> <%= check_box_tag("contas[]", conta.id) %>
+        <%= conta.id %> - <%= conta.nome %> </p>
+
+    <% end %>
+
+
+      A partir de: <%= date_field_tag :inicio %>
+      Até: <%= date_field_tag :fim %>
+    <p>   <%= submit_tag "Enviar",  class: 'btn btn-primary active' %>  </p>
+
+  <% end %>
+
+
+
+
+
+

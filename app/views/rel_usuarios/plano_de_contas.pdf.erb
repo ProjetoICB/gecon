@@ -1,0 +1,23 @@
+<table class="table">
+  <tr>
+    <td class="text-left"><%= wicked_pdf_image_tag "logo_gecon.png" %> </td>
+    <td></td>
+    <td align="center"><h2 class="text-center"> Plano de contas contábil </h2></td>
+    <td></td>
+    <td class="text-right"><%= wicked_pdf_image_tag "logo_icb_of.jpg", size: "75x75" %> </td>
+  </tr>
+</table>
+<hr>
+
+<table class="table table-bordered table-striped">
+<tr>
+ <th class="text-center">Códigos contábeis</th>
+</tr>
+<tbody>
+<% @itens_de_despesa.each do |ides| %>
+<tr>
+  <td> <%= ides.nomeGecon %> </td>
+</tr>
+<% end %>
+</tbody>
+</table>

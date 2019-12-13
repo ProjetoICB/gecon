@@ -1,0 +1,28 @@
+<table class="table">
+  <tr>
+    <td class="text-left"><%= wicked_pdf_image_tag "logo_gecon.png" %> </td>
+    <td></td>
+    <td align="center"><h4 class="text-center"> Relatório dos gastos por Itens de Despesa<br> -Consolidado-  </h4></td>
+    <td></td>
+    <td class="text-right"><%= wicked_pdf_image_tag "logo_icb_of.jpg", size: "75x75" %> </td>
+  </tr>
+</table>
+<hr>
+<p>A partir de <%= @inicio.strftime("%d/%m/%Y") %> <br>
+Até <%= @fim.strftime("%d/%m/%Y") %> </p>
+
+<table class="table table-bordered table-striped">
+  <tr>
+    <td class="text-center"> Código contábil</td>
+    <td class="text-center"> Débito </td>
+  </tr>
+  <% @result.each do |r| %>
+      <% @total = Lancamento.where("data between ? and ?", @inicio, @fim).where(item_de_despesa_id: r.id).sum(:debito) %>
+      <tr>
+        <td><%= r.nomeGecon if !r.id.nil? %></td>
+        <td><%= number_to_currency(@total) %></td>
+      </tr>
+  <% end %>
+</table>
+
+<p class="text-right"> Débitos totais: <%= number_to_currency(@totalgeral) %>  </p>

@@ -1,4 +1,4 @@
-class Usuario < ActiveRecord::Base
+  class Usuario < ActiveRecord::Base
 
   validates_presence_of :nome, :email, :tipo, :telefone
   validates_uniqueness_of :email, message: "Usuário já cadastrado"

@@ -1,0 +1,31 @@
+<table class="table table-bordered table-striped">
+  <tr>
+    <td> Depto/Centro de custo</td>
+    <% @departamentos.each do |dep| %>
+        <td class="text-center"> <%= dep.sigla %> </td>
+    <% end %>
+    <td> Total </td>
+  </tr>
+  <% @tipos_de_conta.each do |tc| %>
+      <tr>
+        <td> <%= tc.nome %></td>
+        <% @total_tc = 0 %>
+        <% @departamentos.each do |dep| %>
+            <% @total_dep = 0 %>
+            <% @result = Lancamento.joins(:conta).joins("inner join usuarios u on `contas`.usuario_id = u.id").joins("inner join departamentos d on u.departamento_id = d.id").where("conta_id in (select id from contas where tipo_de_conta_id = ?) and d.id = ?", tc,dep).pluck("sum(credito) - sum(debito)") %>
+            <% @result.each do |r| %>
+                <% if r.nil? %>
+                    <td> <%= number_to_currency(0) %> </td>
+                <% else %>
+                    <td> <%= number_to_currency(r) %> </td>
+                    <% @total_tc += r if !r.nil? %>>
+                <% end %>
+            <% end %>
+        <% end %>
+        <td> <%= number_to_currency(@total_tc) %>  </td>
+      </tr>
+  <% end %>
+  <tr>
+    <td> Total</td>
+  </tr>
+</table>

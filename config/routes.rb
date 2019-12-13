@@ -56,6 +56,22 @@ Rails.application.routes.draw do
   get 'relat_por_conta' => 'relatorios#relat_por_conta', as: 'relat_por_conta'
 
 
+  # relatorios de usuarios
+  get 'plano_de_contas' => 'rel_usuarios#plano_de_contas', as: 'plano_de_contas'
+  get 'resumo' => 'rel_usuarios#resumo', as: 'resumo'
+  get 'detalhamento' => 'rel_usuarios#detalhamento', as: 'detalhamento'
+  get 'result_detalhamento' => 'rel_usuarios#result_detalhamento', as: 'result_detalhamento'
+  get 'rel_itens_de_despesa' => 'rel_usuarios#itens_de_despesa', as: 'rel_itens_de_despesa'
+  get 'result_idd' => 'rel_usuarios#result_idd', as: 'result_idd'
+  get 'balancete' => 'rel_usuarios#balancete', as: 'balancete'
+  get 'res_balancete' => 'rel_usuarios#res_balancete', as: 'res_balancete'
+  get 'resumo_icb' => 'rel_usuarios#resumo_icb', as: 'resumo_icb'
+
+
+
+
+
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.

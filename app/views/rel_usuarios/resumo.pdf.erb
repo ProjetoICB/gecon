@@ -1,0 +1,45 @@
+<table class="table">
+  <tr>
+    <td class="text-left"><%= wicked_pdf_image_tag "logo_gecon.png" %> </td>
+    <td></td>
+    <td align="center"><h2 class="text-center"> Relatório Minhas contas </h2></td>
+    <td></td>
+    <td class="text-right"><%= wicked_pdf_image_tag "logo_icb_of.jpg", size: "75x75" %> </td>
+  </tr>
+</table>
+<hr>
+<p> Em <%= @hoje.strftime("%d/%m/%Y") %>  </p>
+<table class="table table-bordered table-striped">
+  <thead class="thead-dark">
+  <tr>
+    <th class="text-center"> Conta atual </th>
+    <th class="text-center"> Descrição </th>
+    <th class="text-center"> Usuário </th>
+    <th class="text-center"> Fonte de recurso </th>
+    <th class="text-center"> Saldo(R$) </th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @contas.each do |conta| %>
+     <% cred = Lancamento.where("credito != ?", nil?).where(conta_id: conta.id).sum(:credito) %>
+     <% deb = Lancamento.where("debito != ?", nil?).where(conta_id: conta.id).sum(:debito) %>
+     <% deb_canc = Lancamento.where(debito_cancelado: true).where(conta_id: conta.id).take %>
+     <%  if !deb_canc.nil? %>
+        <% retorno_deb_canc = Lancamento.where("retorno_debitocanc != ?",nil).where(conta_id: conta.id).sum(:retorno_debitocanc) %>
+        <% @saldo = cred - deb + retorno_deb_canc %>
+      <% else %>
+          <% @saldo = cred - deb %>
+      <% end %>
+      <% @total += @saldo %>
+      <tr>
+        <td> <%= conta.numero %>  </td>
+        <td> <%= conta.nome %> </td>
+        <td> <%= conta.usuario.nome %> </td>
+        <td> <%= conta.fonte_de_recurso.nome %> </td>
+        <td> <%= number_to_currency(@saldo) %> </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<p class="text-right">  Total :  <%= number_to_currency(@total) %> </p>

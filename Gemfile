@@ -60,7 +60,7 @@ gem 'bootstrap-datepicker-rails'
 
 # geração de pdf's
 gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary'
+gem 'wkhtmltopdf-binary', '0.12.3.1'
 
 # datatablles
 gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
@@ -76,3 +76,8 @@ gem 'bcrypt'
 gem 'rubyzip', '>= 1.2.1'
 gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c8ac844'
 gem 'axlsx_rails'
+
+
+
+
+

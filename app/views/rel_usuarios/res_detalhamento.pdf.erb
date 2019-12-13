@@ -1,0 +1,100 @@
+<table class="table">
+  <tr>
+    <td class="text-left"><%= wicked_pdf_image_tag "logo_gecon.png" %> </td>
+    <td></td>
+    <td align="center"><h2 class="text-center"> Relatório de Conta </h2></td>
+    <td></td>
+    <td class="text-right"><%= wicked_pdf_image_tag "logo_icb_of.jpg", size: "75x75" %> </td>
+  </tr>
+</table>
+<hr>
+
+<p> Em <%= @hoje.strftime("%d/%m/%Y") %>  </p>
+
+
+<% @result.each do |conta| %>
+    <% cred_ant = Lancamento.where("conta_id = ? and data <= ?", conta.id, params[:inicio]).sum(:credito) %>
+    <% deb_ant = Lancamento.where("conta_id = ?  and data <= ?", conta.id, params[:inicio]).sum(:debito) %>
+    <% sal_ant = (cred_ant - deb_ant).round(2) %>
+
+    <% valor_inicial = Lancamento.where(conta_id: conta.id).take    %>
+    <% @lancamentos = Lancamento.where("conta_id = ? and data between ? and ?", conta.id, params[:inicio], params[:fim]) %>
+    <% @total_lanc = Lancamento.where("conta_id = ? and data between ? and ?", conta.id, valor_inicial.data, params[:fim]) %>
+
+    <% total_cred =  @total_lanc.sum(:credito) %>
+    <% total_deb = @total_lanc.sum(:debito) %>
+    <% deb_canc = Lancamento.where(debito_cancelado: true).where(conta_id: conta.id).take %>
+    <%  if !deb_canc.nil? %>
+        <% retorno_deb_canc = Lancamento.where("retorno_debitocanc != ?",nil).where(conta_id: conta.id).sum(:retorno_debitocanc) %>
+        <% @saldo = total_cred - total_deb + retorno_deb_canc %>
+    <% else %>
+        <% @saldo = total_cred - total_deb %>
+    <% end %>
+    <table class="table">
+      <tr>
+        <td>
+          Numero da conta: <%= conta.numero %> <br>
+          Nome: <%= conta.nome %> <br>
+          Observacao: <%= conta.observacao %> <br>
+          Usuario: <%= conta.usuario.nome %>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+
+        <td>
+          Centro de custo: <%= conta.centro_de_custo.nome %> <br>
+          Fonte de recurso: <%= conta.fonte_de_recurso.nome %> <br>
+          Saldo anterior: <%= number_to_currency(sal_ant)   %>
+        </td>
+      </tr>
+    </table>
+    <br>
+
+    <% if @lancamentos.count == 0 %>
+        <h3 class="text-center"> Nenhum lançamento encontrado</h3>
+    <% else %>
+        <table class="table table-bordered table-striped">
+          <tr>
+            <td> Data do Lçto</td>
+            <td> Data do doc</td>
+            <td> Observação</td>
+            <td> Cód. Contábil</td>
+            <td> Fornecedor</td>
+            <td> Débito </td>
+            <td> Crédito</td>
+          </tr>
+          <% @lancamentos.each do |lan| %>
+              <tr>
+                <td> <%= lan.data.strftime("%d/%m/%Y") %> </td>
+                <td> <%= lan.datadocumento.strftime("%d/%m/%Y") %> </td>
+                <td> <%= lan.observacao %> </td>
+                <td>
+                  <% if lan.tipo == "Credito" %>
+                      <% if lan.created_at.year >= 2019 %>
+                          <%= lan.item_de_receita_id.nil? ? "Transferencia" : lan.item_de_receita.nome %>
+                      <% else %>
+                          <%= lan.item_de_receita_id.nil? ? "" : lan.item_de_receita.nome %>
+                      <% end %>
+                  <% elsif lan.tipo == "DebitoMult" %>
+                      <%= lan.item_de_despesa.nome %>
+                  <% else %>
+                      <% if lan.created_at.year >= 2019 %>
+                          <%= lan.item_de_despesa_id.nil? ? "Transferência" : lan.item_de_despesa.nome %>
+                      <% else %>
+                          <%= lan.item_de_despesa_id.nil? ? "" : lan.item_de_despesa.nome %>
+                      <% end %>
+                  <% end %>
+                </td>
+                <td> <%= lan.fornecedor.nome if !lan.fornecedor_id.nil? %> </td>
+                <td> <%= number_to_currency(lan.debito) %> </td>
+                <td> <%= number_to_currency(lan.credito) %> </td>
+              </tr>
+          <% end %>
+        </table>
+        <% end %>
+        <p class="text-right">  Total :  <%= number_to_currency(@saldo) %> </p>
+    <p style='page-break-after:always;'></p>
+<% end %>
+
+

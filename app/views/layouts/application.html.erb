@@ -77,24 +77,24 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Minhas contas &nbsp; <b class="caret"></b> </a>
               <ul class="dropdown-menu" role="menu">
-                <li role="presentation"> <%= link_to "Resumo", "#" %> </li>
-                <li role="presentation"> <%= link_to "Detalhamento", "#" %> </li>
+                <li role="presentation"> <%= link_to "Resumo", resumo_path(format: 'pdf') %> </li>
+                <li role="presentation"> <%= link_to "Detalhamento", detalhamento_path %> </li>
               </ul>
             </li>
 
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Departamentos &nbsp; <b class="caret"></b></a>
               <ul class="dropdown-menu" role="menu">
-                <li role="presentation"> <%= link_to "Resumo ICB", "#" %>  </li>
+                <li role="presentation"> <%= link_to "Resumo ICB", resumo_icb_path %>  </li>
               </ul>
             </li>
 
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Institucional &nbsp; <b class="caret"></b></a>
               <ul class="dropdown-menu" role="menu">
-                <li role="presentation"> <%= link_to "Balancete", "#" %> </li>
-                <li role="presentation"> <%= link_to "Itens de despesa", "#" %> </li>
-                <li role="presentation"> <%= link_to "Plano de contas", "#" %> </li>
+                <li role="presentation"> <%= link_to "Balancete", balancete_path %> </li>
+                <li role="presentation"> <%= link_to "Itens de despesa", rel_itens_de_despesa_path %> </li>
+                <li role="presentation"> <%= link_to "Plano de contas", plano_de_contas_path(format: 'pdf') %> </li>
               </ul>
             </li>
 

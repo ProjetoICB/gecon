@@ -8,7 +8,15 @@ class Conta < ActiveRecord::Base
 
   def full_name
     "#{id} - #{nome}"
-
   end
+
+
+=begin
+  def saldo_em(data)
+    value = 0
+    self.lancamentos.select{|lanc| lanc.data <= data}.each{|lanc| value += lanc.credito.to_f - lanc.debito.to_f }
+  end
+
+=end
 
 end
