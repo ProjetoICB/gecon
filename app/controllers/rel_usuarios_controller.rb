@@ -106,8 +106,7 @@ class RelUsuariosController < ApplicationController
                :show_as_html => params[:debug].present?,
                :template => 'rel_usuarios/res_itens_depesa.pdf.erb',
                :page_size => 'A4',
-               #:disposition => 'attachment',
-               :disposition => 'inline',
+               :disposition => 'attachment',
                footer: {
                    left: "Impresso em: " + DateTime.current.strftime("%d/%m/%Y %H:%M"),
                    center: "Seção de Contabilidade",
@@ -150,7 +149,7 @@ class RelUsuariosController < ApplicationController
                :show_as_html => params[:debug].present?,
                :template => 'rel_usuarios/balancete.pdf.erb',
                :page_size => 'A4',
-               :disposition => 'inline',
+               :disposition => 'attachment',
                footer: {
                    left: "Impresso em " + DateTime.current.strftime("%d/%m/%Y"),
                    center: "Seção de Contabilidade",
@@ -174,6 +173,26 @@ class RelUsuariosController < ApplicationController
 
     respond_to do |format|
       format.html
+      format.pdf do
+        render :pdf => 'resumo_icb',
+               :layout => 'layouts/padrao.html.erb',
+               :show_as_html => params[:debug].present?,
+               :template => 'rel_usuarios/resumo_icb.pdf.erb',
+               :page_size => 'A4',
+               :orientation => 'Landscape',
+               :disposition => 'attachment',
+               footer: {
+                   left: "Impresso em " + DateTime.current.strftime("%d/%m/%Y"),
+                   center: "Seção de Contabilidade",
+                   right: '[page] de [topage]'
+               },
+               :margin => {
+                   top: 20,
+                   bottom: 20,
+                   left: 20,
+                   right: 20
+               }
+      end
     end
   end
 

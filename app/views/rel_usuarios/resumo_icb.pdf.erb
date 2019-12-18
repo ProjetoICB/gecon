@@ -1,10 +1,19 @@
+<table class="table">
+  <tr>
+    <td class="text-left"><%= wicked_pdf_image_tag "logo_gecon.png" %> </td>
+    <td></td>
+    <td align="center"><h4 class="text-center"> Resumo dos Saldos das Contas por Departamento <%= Date.today.strftime("%d/%m/%Y") %>   </h4></td>
+    <td></td>
+    <td class="text-right"><%= wicked_pdf_image_tag "logo_icb_of.jpg", size: "75x75" %> </td>
+  </tr>
+</table>
 <table class="table table-bordered table-striped">
   <tr>
     <td> Depto/Centro de custo</td>
     <% @departamentos.each do |dep| %>
         <td class="text-center"> <%= dep.sigla %> </td>
     <% end %>
-    <td> Total </td>
+    <td class="text-center"> Total </td>
   </tr>
   <% @tipos_de_conta.each do |tc| %>
       <tr>
@@ -19,7 +28,7 @@
                 <% else %>
                     <td> <%= number_to_currency(r) %> </td>
                     <% @total_tc += r if !r.nil? %>
-               <% end %>
+                <% end %>
             <% end %>
         <% end %>
         <td> <%= number_to_currency(@total_tc) %>  </td>
@@ -30,11 +39,11 @@
     <% @total_geral = 0 %>
     <% @departamentos.each do |dep|  %>
         <% @tipos_de_conta.each do |tc| %>
-                <% @result = Lancamento.joins(:conta).joins("inner join usuarios u on `contas`.usuario_id = u.id").joins("inner join departamentos d on u.departamento_id = d.id").where("conta_id in (select id from contas where tipo_de_conta_id = ?) and d.id = ?", tc,dep).pluck("sum(credito) - sum(debito)") %>
-                <% @result.each do |r| %>
-                   <%  @total_dep += r if !r.nil? %>
-                <% end %>
+            <% @result = Lancamento.joins(:conta).joins("inner join usuarios u on `contas`.usuario_id = u.id").joins("inner join departamentos d on u.departamento_id = d.id").where("conta_id in (select id from contas where tipo_de_conta_id = ?) and d.id = ?", tc,dep).pluck("sum(credito) - sum(debito)") %>
+            <% @result.each do |r| %>
+                <%  @total_dep += r if !r.nil? %>
             <% end %>
+        <% end %>
         <% @total_geral += @total_dep %>
         <td> <%= number_to_currency(@total_dep) %>  </td>
         <% @total_dep = 0 %>
@@ -42,3 +51,4 @@
     <td> <%= number_to_currency(@total_geral) %> </td>
   </tr>
 </table>
+
