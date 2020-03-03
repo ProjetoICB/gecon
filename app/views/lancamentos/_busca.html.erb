@@ -47,10 +47,11 @@
 
     <tr>
       <td>Item de despesa: <%= select_tag :item_de_despesa_id,options_for_select(ItemDeDespesa.all.order("nome").map{|ides| [ides.nome, ides.id]}), include_blank: true, class: 'chosen-select' %></td>
-      <td>Tipo de Compra <%= select_tag :tipo_de_compra_id, options_for_select(TipoDeCompra.all.order("nome").map{|tc| [tc.nome, tc.id]}), include_blank: true, class: 'chosen-select' %> </td>
+      <td>Tipo de Compra: <%= select_tag :tipo_de_compra_id, options_for_select(TipoDeCompra.all.order("nome").map{|tc| [tc.nome, tc.id]}), include_blank: true, class: 'chosen-select' %> </td>
       <td> <%= check_box_tag :debito_canc, "Sim" %> <%= label_tag(:tudo, "Apenas débitos cancelados") %>  </td>
     </tr>
     <tr>
+      <td>Item de receita:<%= select_tag :item_de_receita_id,options_for_select(ItemDeReceita.all.order("nome").map{|irec| [irec.nome, irec.id]}), include_blank: true, class: 'chosen-select' %></td>
       <td> A partir de: <%= date_field_tag :inicio %> </td>
       <td> Até: <%= date_field_tag :fim %> </td>
     </tr>
@@ -59,4 +60,3 @@
     <%= submit_tag "Enviar", class:'btn btn-primary active' %>
 
 <% end %>
-

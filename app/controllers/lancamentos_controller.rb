@@ -275,6 +275,13 @@ class LancamentosController < ApplicationController
       busca += "item_de_despesa_id = " + params[:item_de_despesa_id].to_s
     end
 
+    if params[:item_de_receita_id] != ""
+      if busca != ""
+        busca += " and "
+      end
+      busca += "item_de_receita_id = " + params[:item_de_receita_id].to_s
+    end
+
     if params[:tipo_de_compra_id] != ""
       if busca != ""
         busca += " and "
@@ -302,10 +309,10 @@ class LancamentosController < ApplicationController
       #if params[:debito_canc] == "Sim"
       #  @lancamentos = Lancamento.where(debito_cancelado: true).where(busca).order("id desc")
       #else
-        @lancamentos = Lancamento.where(busca).order("id desc")
+        @lancamentos = Lancamento.where(busca).includes(:conta).includes(:fornecedor).includes(:item_de_despesa).includes(:item_de_receita).includes(:tipo_de_compra).order("id desc")
       #end
     else
-      @lancamentos =  Lancamento.all.order("id desc")
+      @lancamentos =  Lancamento.includes(:conta).includes(:fornecedor).includes(:item_de_despesa).includes(:item_de_receita).includes(:tipo_de_compra).includes(:transferencia).order("id desc")
     end
 
  end
