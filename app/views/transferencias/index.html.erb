@@ -36,9 +36,12 @@
       <th class="text-center">Valor</th>
       <th class="text-center">Observacao</th>
       <th></th>
-      <th></th>
-      <th></th>
+      <% if session[:usuario_tipo] != "Controladoria" %>
+          <th></th>
+          <th></th>
+      <% end %>
     </tr>
+
   </thead>
 
   <tbody>
@@ -47,21 +50,24 @@
             <td> <%= transferencia.id %> </td>
             <td><%= transferencia.data.strftime("%d/%m/%Y") %></td>
             <td><%= transferencia.datadocumento.strftime("%d/%m/%Y") %></td>
-            <% l= Lancamento.where(id: [transferencia.debito_id, transferencia.credito_id]) %>
-            <% l.each do |l| %>
-                <td> <%= l.conta.nome %> </td>
-            <% end %>
-            <td><%= number_to_currency(transferencia.valor) %></td>
-            <td><%= transferencia.observacao %></td>
-            <td><%= link_to 'Mostrar', transferencia, class: 'btn btn-primary active' %></td>
-            <td>
-              <% if transferencia.transf_multipla == false %>
-                  <%= link_to 'Editar', edit_transferencia_path(transferencia), class:'btn btn-default' %>
-              <% end %>
-            </td>
-            <td>
-              <%= link_to 'Apagar', transferencia, method: :delete, data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %>
-            </td>
+
+          <% l= Lancamento.where(id: [transferencia.debito_id, transferencia.credito_id]) %>
+          <% l.each do |l| %>
+              <td> <%= l.conta.nome %> </td>
+          <% end %>
+          <td><%= number_to_currency(transferencia.valor) %></td>
+          <td><%= transferencia.observacao %></td>
+          <td><%= link_to 'Mostrar', transferencia, class: 'btn btn-primary active' %></td>
+          <% if session[:usuario_tipo] != "Controladoria" %>
+              <td>
+                <% if transferencia.transf_multipla == false %>
+                    <%= link_to 'Editar', edit_transferencia_path(transferencia), class:'btn btn-default' %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to 'Apagar', transferencia, method: :delete, data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %>
+              </td>
+          <% end %>
           </tr>
   <% end %>
   </tbody>
@@ -69,5 +75,5 @@
 
 <br>
 
-<%= link_to 'Nova Transferência', new_transferencia_path, class: 'btn btn-primary active' %>
-<%= link_to "Nova Transferência múltipla", transf_multipla_path, class: 'btn btn-success active' %>
+<%= link_to "Nova Transferência", new_transferencia_path, class: 'btn btn-primary active' if session[:usuario_tipo] != "Controladoria" %>
+<%= link_to "Nova Transferência múltipla", transf_multipla_path, class: 'btn btn-success active' if session[:usuario_tipo] != "Controladoria" %>

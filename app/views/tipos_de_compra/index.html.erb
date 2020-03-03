@@ -30,8 +30,10 @@
     <tr>
       <th class="text-center">Nome</th>
       <th></th>
-      <th></th>
-      <th></th>
+      <% if session[:usuario_tipo] != "Controladoria" %>
+          <th></th>
+          <th></th>
+      <% end %>
     </tr>
   </thead>
 
@@ -40,8 +42,10 @@
       <tr>
         <td><%= tcomp.nome %></td>
         <td class="text-center"><%= link_to 'Mostrar', tcomp, class: 'btn btn-primary active' %></td>
-        <td class="text-center"><%= link_to 'Editar', edit_tipo_de_compra_path(tcomp), class: 'btn btn-default' %></td>
-        <td class="text-center"><%= link_to 'Desativar', desativa_tipodecompra_path(tcomp), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+        <% if session[:usuario_tipo] != "Controladoria" %>
+            <td class="text-center"><%= link_to 'Editar', edit_tipo_de_compra_path(tcomp), class: 'btn btn-default' %></td>
+            <td class="text-center"><%= link_to 'Desativar', desativa_tipodecompra_path(tcomp), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -49,4 +53,4 @@
 
 <br>
 
-<%= link_to 'Novo Tipo de Compra', new_tipo_de_compra_path, class: 'btn btn-primary active' %>
+<%= link_to 'Novo Tipo de Compra', new_tipo_de_compra_path, class: 'btn btn-primary active' if session[:usuario_tipo] != "Controladoria" %>

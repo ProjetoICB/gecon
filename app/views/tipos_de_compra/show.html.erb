@@ -3,5 +3,5 @@
   <%= @tipo_de_compra.nome %>
 </p>
 
-<%= link_to 'Editar', edit_tipo_de_compra_path(@tipo_de_compra), class: 'btn btn-primary active' %> |
+<%= link_to 'Editar', edit_tipo_de_compra_path(@tipo_de_compra), class: 'btn btn-primary active' if session[:usuario_tipo] != "Controladoria" %>
 <%= link_to 'Voltar', tipos_de_compra_path, class: 'btn btn-default' %>

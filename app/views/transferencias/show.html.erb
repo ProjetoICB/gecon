@@ -50,7 +50,9 @@
 </p>
 
 -->
-<% if @transferencia.transf_multipla == false  %>
-    <%= link_to 'Editar', edit_transferencia_path(@transferencia), class: 'btn btn-primary active' %> |
+<%  if session[:usuario_tipo] != "Controladoria" %>
+    <% if @transferencia.transf_multipla == false    %>
+        <%= link_to 'Editar', edit_transferencia_path(@transferencia), class: 'btn btn-primary active' %>
+    <% end %>
 <% end %>
 <%= link_to 'Voltar', transferencias_path, class: 'btn btn-default' %>

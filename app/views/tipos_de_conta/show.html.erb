@@ -8,5 +8,5 @@
   <%= @tipo_de_conta.grupo.nome %>
 </p>
 
-<%= link_to 'Editar', edit_tipo_de_conta_path(@tipo_de_conta), class: 'btn btn-primary active' %> |
+<%= link_to 'Editar', edit_tipo_de_conta_path(@tipo_de_conta), class: 'btn btn-primary active' if session[:usuario_tipo] != "Controladoria" %>
 <%= link_to 'Voltar', tipo_de_contas_path, class: 'btn btn-default' %>

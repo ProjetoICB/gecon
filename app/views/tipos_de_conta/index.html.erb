@@ -32,8 +32,10 @@
       <th class="text-center">Nome</th>
       <th class="text-center">Grupo</th>
       <th></th>
-      <th></th>
-      <th></th>
+      <% if session[:usuario_tipo] != "Controladoria" %>
+          <th></th>
+          <th></th>
+      <% end %>
     </tr>
   </thead>
 
@@ -44,8 +46,10 @@
         <td><%= tipo_de_conta.nome %></td>
         <td><%= tipo_de_conta.grupo.nome %></td>
         <td class="text-center"><%= link_to 'Mostrar', tipo_de_conta, class: 'btn btn-primary active' %></td>
-        <td class="text-center"><%= link_to 'Editar', edit_tipo_de_conta_path(tipo_de_conta), class: 'btn btn-default' %></td>
-        <td class="text-center"><%= link_to 'Desativar', desativa_tipo_conta_path(tipo_de_conta), data: { confirm: 'Tem certeza?' } , class: 'btn btn-danger active' %></td>
+        <% if session[:usuario_tipo] != "Controladoria" %>
+            <td class="text-center"><%= link_to 'Editar', edit_tipo_de_conta_path(tipo_de_conta), class: 'btn btn-default' %></td>
+            <td class="text-center"><%= link_to 'Desativar', desativa_tipo_conta_path(tipo_de_conta), data: { confirm: 'Tem certeza?' } , class: 'btn btn-danger active' %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -53,4 +57,4 @@
 
 <br>
 
-<%= link_to 'Novo Tipo de conta', new_tipo_de_conta_path, class:'btn btn-primary active' %>
+<%= link_to 'Novo Tipo de conta', new_tipo_de_conta_path, class:'btn btn-primary active' if session[:usuario_tipo] != "Controladoria" %>

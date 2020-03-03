@@ -43,7 +43,7 @@
   </div>
   <div class="form-group">
     <%= f.label :tipo,"Tipo"  %><br>
-    <%= f.select :tipo, options_for_select(["Usuario", "Gerente"], selected: f.object.tipo), {include_blank: true}, {class:'chosen-select'} %>
+    <%= f.select :tipo, options_for_select(["Usuario", "Gerente", "Controladoria"], selected: f.object.tipo), {include_blank: true}, {class:'chosen-select'} %>
   </div>
   <div class="form-group">
     <%= f.check_box :ativo  %> <%= f.label :ativo %>

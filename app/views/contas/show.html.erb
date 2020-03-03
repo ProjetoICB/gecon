@@ -39,5 +39,5 @@
 </p>
 
 
-<%= link_to 'Editar', edit_conta_path(@conta), class: 'btn btn-primary active' %> |
+<%= link_to 'Editar', edit_conta_path(@conta), class: 'btn btn-primary active' if session[:usuario_tipo] != "Controladoria"  %>
 <%= link_to 'Voltar', contas_path, class: 'btn btn-default' %>

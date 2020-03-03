@@ -8,5 +8,5 @@
   <%= @grupo.coddigitado %>
 </p>
 
-<%= link_to 'Editar', edit_grupo_path(@grupo), class: 'btn btn-primary active'  %> |
+<%= link_to 'Editar', edit_grupo_path(@grupo), class: 'btn btn-primary active' if session[:usuario_tipo] != "Controladoria"  %>
 <%= link_to 'Voltar', grupos_path, class: 'btn btn-default' %>

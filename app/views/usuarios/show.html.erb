@@ -42,5 +42,5 @@
 
 
 
-<%= link_to 'Editar', edit_usuario_path(@usuario), class: 'btn btn-primary active'  %> |
+<%= link_to 'Editar', edit_usuario_path(@usuario), class: 'btn btn-primary active' if session[:usuario_tipo] != "Controladoria"  %>
 <%= link_to 'Voltar', usuarios_path, class: 'btn btn-default' %>

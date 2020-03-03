@@ -28,10 +28,11 @@
 <h1>Lançamentos</h1>
 
 
-
-<%= link_to 'Novo Crédito', new_lancamento_path(:tipo => "Credito"), class:'btn btn-primary active' %>
-<%= link_to 'Novo Débito', new_lancamento_path(:tipo => "Debito"), class:'btn  btn-danger active' %>
-<%= link_to "Débito multiplo", debito_multiplo_path(:tipo => "DebitoMult"), class: 'btn btn-info active'   %>
+<%  if session[:usuario_tipo] != "Controladoria" %>
+    <%= link_to 'Novo Crédito', new_lancamento_path(:tipo => "Credito"), class:'btn btn-primary active' %>
+    <%= link_to 'Novo Débito', new_lancamento_path(:tipo => "Debito"), class:'btn  btn-danger active' %>
+    <%= link_to "Débito multiplo", debito_multiplo_path(:tipo => "DebitoMult"), class: 'btn btn-info active'   %>
+<% end %>
 
 <table id="lancamento" class="table table-striped table-bordered">
   <thead>
@@ -83,9 +84,11 @@
 
 <br>
 
-<%= link_to 'Novo Crédito', new_lancamento_path(:tipo => "Credito"), class:'btn btn-primary active' %>
-<%= link_to 'Novo Débito', new_lancamento_path(:tipo => "Debito"), class:'btn  btn-danger active' %>
-<%= link_to "Débito multiplo", debito_multiplo_path(:tipo => "DebitoMult"), class: 'btn btn-info active'   %>
+<% if  session[:usuario_tipo] != "Controladoria" %>
+    <%= link_to 'Novo Crédito', new_lancamento_path(:tipo => "Credito"), class:'btn btn-primary active' %>
+    <%= link_to 'Novo Débito', new_lancamento_path(:tipo => "Debito"), class:'btn  btn-danger active' %>
+    <%= link_to "Débito multiplo", debito_multiplo_path(:tipo => "DebitoMult"), class: 'btn btn-info active'   %>
+<% end %>
 <p></p>
 
 <p>

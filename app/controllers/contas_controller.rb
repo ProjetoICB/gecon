@@ -71,7 +71,7 @@ class ContasController < ApplicationController
 
 
   def index
-    @contas = Conta.where(ativo: true)
+    @contas = Conta.where(ativo: true).includes(:lancamentos).includes(:tipo_de_conta).includes(:usuario).includes(:centro_de_custo).includes(:fonte_de_recurso)
   end
 
   # GET /contas/1

@@ -31,8 +31,10 @@
       <th class="text-center">Nome</th>
       <th class="text-center">Sigla</th>
       <th></th>
-      <th></th>
-      <th></th>
+      <% if session[:usuario_tipo] != "Controladoria" %>
+          <th></th>
+          <th></th>
+      <% end %>
     </tr>
   </thead>
 
@@ -42,8 +44,10 @@
         <td><%= departamento.nome %></td>
         <td><%= departamento.sigla %></td>
         <td class="text-center"><%= link_to 'Mostrar', departamento, class: 'btn btn-primary active' %></td>
-        <td class="text-center"><%= link_to 'Editar', edit_departamento_path(departamento), class: 'btn btn-default' %></td>
-        <td class="text-center"><%= link_to 'Desativar', desativar_departamento_path(departamento), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active'  %></td>
+        <% if session[:usuario_tipo] != "Controladoria" %>
+            <td class="text-center"><%= link_to 'Editar', edit_departamento_path(departamento), class: 'btn btn-default' %></td>
+            <td class="text-center"><%= link_to 'Desativar', desativar_departamento_path(departamento), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active'  %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -51,4 +55,4 @@
 
 <br>
 
-<%= link_to 'Novo  Departamento', new_departamento_path, class:'btn btn-primary active' %>
+<%= link_to 'Novo  Departamento', new_departamento_path, class:'btn btn-primary active' if session[:usuario_tipo] != "Controladoria" %>

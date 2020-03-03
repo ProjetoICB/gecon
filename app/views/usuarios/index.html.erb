@@ -35,8 +35,10 @@
       <th class="text-center">Telefone</th>
       <th class="text-center"> Departamento</th>
       <th></th>
-      <th></th>
-      <th></th>
+      <% if session[:usuario_tipo] != "Controladoria" %>
+          <th></th>
+          <th></th>
+      <% end %>
     </tr>
   </thead>
 
@@ -55,8 +57,10 @@
           <% end %>
         </td>
         <td class="text-center"><%= link_to 'Mostrar', usuario, class: 'btn btn-primary active' %></td>
-        <td class="text-center"><%= link_to 'Editar', edit_usuario_path(usuario), class: 'btn btn-default' %></td>
-        <td class="text-center"><%= link_to 'Desativar',desativar_usuario_path(usuario), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+        <% if session[:usuario_tipo] != "Controladoria" %>
+            <td class="text-center"><%= link_to 'Editar', edit_usuario_path(usuario), class: 'btn btn-default'   %></td>
+            <td class="text-center"><%= link_to 'Desativar',desativar_usuario_path(usuario), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -64,4 +68,4 @@
 
 <br>
 
-<%= link_to 'Novo Usuário', new_usuario_path, class: 'btn btn-primary active' %>
+<%= link_to 'Novo Usuário', new_usuario_path, class: 'btn btn-primary active' if session[:usuario_tipo] != "Controladoria" %>

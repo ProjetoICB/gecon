@@ -32,8 +32,10 @@
       <th class="text-center">Nome</th>
       <th class="text-center"> Código digitado</th>
       <th></th>
-      <th></th>
-      <th></th>
+      <% if session[:usuario_tipo] != "Controladoria" %>
+          <th></th>
+          <th></th>
+      <% end %>
     </tr>
   </thead>
 
@@ -44,8 +46,10 @@
         <td><%= item_de_receita.nome %></td>
         <td><%= item_de_receita.coddigitado %></td>
         <td class="text-center"><%= link_to 'Mostrar', item_de_receita, class: 'btn btn-primary active' %></td>
-        <td class="text-center"><%= link_to 'Editar', edit_item_de_receita_path(item_de_receita), class: 'btn btn-default' %></td>
-        <td class="text-center"><%= link_to 'Desativar', desativa_item_receita_path(item_de_receita), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+        <% if session[:usuario_tipo] != "Controladoria" %>
+            <td class="text-center"><%= link_to 'Editar', edit_item_de_receita_path(item_de_receita), class: 'btn btn-default' %></td>
+            <td class="text-center"><%= link_to 'Desativar', desativa_item_receita_path(item_de_receita), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -53,4 +57,4 @@
 
 <br>
 
-<%= link_to 'Novo item de receita', new_item_de_receita_path, class: 'btn btn-primary active' %>
+<%= link_to 'Novo item de receita', new_item_de_receita_path, class: 'btn btn-primary active' if session[:usuario_tipo] != "Controladoria" %>

@@ -31,8 +31,10 @@
       <th class="text-center">Nome</th>
       <th class="text-center">Codigo Digitado </th>
       <th></th>
-      <th></th>
-      <th></th>
+      <% if session[:usuario_tipo] != "Controladoria" %>
+          <th></th>
+          <th></th>
+      <% end %>
     </tr>
   </thead>
 
@@ -42,8 +44,10 @@
         <td><%= grupo.nome %></td>
         <td><%= grupo.coddigitado %></td>
         <td class="text-center"><%= link_to 'Mostrar', grupo, class: 'btn btn-primary active'  %></td>
-        <td class="text-center"><%= link_to 'Editar', edit_grupo_path(grupo), class: 'btn btn-default' %></td>
-        <td class="text-center"><%= link_to 'Desativar',  desativa_grupo_path(grupo), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+        <% if session[:usuario_tipo] != "Controladoria" %>
+            <td class="text-center"><%= link_to 'Editar', edit_grupo_path(grupo), class: 'btn btn-default' %></td>
+            <td class="text-center"><%= link_to 'Desativar',  desativa_grupo_path(grupo), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -51,4 +55,4 @@
 
 <br>
 
-<%= link_to 'Novo Grupo', new_grupo_path, class: 'btn btn-primary active' %>
+<%= link_to 'Novo Grupo', new_grupo_path, class: 'btn btn-primary active' if session[:usuario_tipo] != "Controladoria"  %>

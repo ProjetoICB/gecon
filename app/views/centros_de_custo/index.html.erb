@@ -31,8 +31,10 @@
       <th class="text-center">Nome</th>
       <th class="text-center">Ativo</th>
       <th class="text-center"></th>
-      <th class="text-center"></th>
-      <th></th>
+      <% if session[:usuario_tipo] != "Controladoria" %>
+          <th class="text-center"></th>
+          <th class="text-center"></th>
+      <% end %>
     </tr>
   </thead>
 
@@ -42,8 +44,10 @@
         <td><%= ccusto.nome %></td>
         <td class="text-center"><%= ccusto.ativo == true ? "Sim" : "Não" %></td>
         <td class="text-center"><%= link_to 'Mostrar', ccusto, class: 'btn btn-primary active' %></td>
-        <td class="text-center"><%= link_to 'Editar', edit_centro_de_custo_path(ccusto), class:'btn btn-default' %></td>
-        <td class="text-center"><%= link_to 'Desativar',  desativa_centrodecusto_path(ccusto), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+        <% if session[:usuario_tipo] != "Controladoria" %>
+            <td class="text-center"><%= link_to 'Editar', edit_centro_de_custo_path(ccusto), class:'btn btn-default' %></td>
+            <td class="text-center"><%= link_to 'Desativar',  desativa_centrodecusto_path(ccusto), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -51,4 +55,4 @@
 
 <br>
 
-<%= link_to 'Novo Centro de custo', new_centro_de_custo_path, class: 'btn btn-primary active' %>
+<%= link_to 'Novo Centro de custo', new_centro_de_custo_path, class: 'btn btn-primary active' if session[:usuario_tipo] != "Controladoria" %>

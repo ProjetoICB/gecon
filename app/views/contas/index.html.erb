@@ -44,10 +44,12 @@
       <th class="text-center">Fonte de recurso</th>
       <th class="text-center"> Saldo </th>
       <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <% if session[:usuario_tipo] != "Controladoria" %>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+      <% end %>
     </tr>
   </thead>
 
@@ -77,11 +79,13 @@
             <td> <%= number_to_currency(@saldo) %> </td>
         <% end %>
 
-        <td class="text-center"><%= link_to 'Mostrar', conta, class: 'btn btn-primary active' %></td>
-        <td class="text-center"><%= link_to 'Editar', edit_conta_path(conta), class: 'btn btn-default' %></td>
-        <td class="text-center"> <%= link_to 'Desativar', desativar_conta_path(conta), data: { confirm: 'Tem certeza?' },  class: 'btn btn-danger active'  %> </td>
-        <td class="text-center"><%= link_to "Novo crédito" , new_lancamento_path(:tipo => "Crédito",:conta_id =>  conta.id), class: 'btn btn-primary active'  %></td>
-        <td class="text-center"><%= link_to "Novo débito",  new_lancamento_path(:tipo => "Débito", :conta_id => conta.id), class: 'btn btn-danger active' %></td>
+        <td class="text-center"><%= link_to "Mostrar", conta, class: 'btn btn-primary active' %></td>
+        <% if session[:usuario_tipo] != "Controladoria" %>
+            <td class="text-center"><%= link_to "Editar", edit_conta_path(conta), class: 'btn btn-default' %></td>
+            <td class="text-center"> <%= link_to "Desativar", desativar_conta_path(conta), data: { confirm: 'Tem certeza?' },  class: 'btn btn-danger active'  %> </td>
+            <td class="text-center"><%= link_to "Novo crédito" , new_lancamento_path(:tipo => "Crédito",:conta_id =>  conta.id), class: 'btn btn-primary active'  %></td>
+            <td class="text-center"><%= link_to "Novo débito",  new_lancamento_path(:tipo => "Débito", :conta_id => conta.id), class: 'btn btn-danger active' %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -89,4 +93,4 @@
 
 <br>
 
-<%= link_to 'Nova Conta', new_conta_path, class: 'btn btn-primary active' %>
+<%= link_to 'Nova Conta', new_conta_path, class: 'btn btn-primary active' if session[:usuario_tipo] != "Controladoria" if session[:usuario_tipo] != "Controladoria" %>
