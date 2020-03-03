@@ -22,7 +22,8 @@
   <ul class="nav navbar-nav">
     <% if session[:usuario_id] != nil %>
         <% if session[:usuario_tipo] == "Administrador" or session[:usuario_tipo] == "Controladoria" %>
-             <li> <%= link_to "Usuários", usuarios_path %> </li>
+            <li role="presentation"> <%= link_to "Balancete", balancete_path %> </li>
+            <li> <%= link_to "Usuários", usuarios_path %> </li>
             <li> <%= link_to "Logs", logs_path %> </li>
             <li> <%= link_to "Departamentos", departamentos_path %> </li>
             <li> <%= link_to "Tipos de Compra" , tipos_de_compra_path %> </li>
