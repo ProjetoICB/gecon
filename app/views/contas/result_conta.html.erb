@@ -21,6 +21,7 @@
 <table id="conta" class="table table-striped table-bordered">
   <thead>
   <tr>
+    <th class="text-center"> Ativo?</th>
     <th class="text-center">Numero</th>
     <th class="text-center">Nome</th>
     <th class="text-center">Observacao</th>
@@ -36,6 +37,7 @@
   <tbody>
    <% @contas.each do |conta| %>
       <tr>
+        <td> <%= conta.ativo == true ? "Sim" : "Não" %> </td>
         <td><%= conta.numero %></td>
         <td><%= conta.nome %></td>
         <td><%= conta.observacao %></td>

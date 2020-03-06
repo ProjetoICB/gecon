@@ -49,7 +49,7 @@
       </tr>
       <tr>
         <td></td>
-        <td> <%= check_box_tag :tudo, "Sim" %> <%= label_tag(:tudo, "Incluir contas inativas") %>  </td>
+        <td> Espécie de conta: <%=  select_tag :especie, options_for_select(["Ativas", "Inativas", "Todas"]), include_blank: true, class: 'chosen-select' %>  </td>
         <td></td>
       </tr>
     </table>

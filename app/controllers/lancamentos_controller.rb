@@ -306,17 +306,21 @@ class LancamentosController < ApplicationController
 
 
     if busca != ""
-      #if params[:debito_canc] == "Sim"
-      #  @lancamentos = Lancamento.where(debito_cancelado: true).where(busca).order("id desc")
-      #else
-        @lancamentos = Lancamento.where(busca).includes(:conta).includes(:fornecedor).includes(:item_de_despesa).includes(:item_de_receita).includes(:tipo_de_compra).order("id desc")
-      #end
+      if params[:especie] == "Ativas"
+        @lancamentos =  Lancamento.joins(:conta).where("contas.ativo" => true).where(busca).includes(:fornecedor).includes(:item_de_despesa).includes(:item_de_receita).includes(:tipo_de_compra).includes(:transferencia).order("lancamentos.id desc")
+      elsif params[:especie] ==  "Inativas"
+        @lancamentos =  Lancamento.joins(:conta).where("contas.ativo" => false).where(busca).includes(:fornecedor).includes(:item_de_despesa).includes(:item_de_receita).includes(:tipo_de_compra).includes(:transferencia).order("lancamentos.id desc")
+      else
+        @lancamentos =  Lancamento.where(busca).includes(:conta).includes(:fornecedor).includes(:item_de_despesa).includes(:item_de_receita).includes(:tipo_de_compra).includes(:transferencia).order("lancamentos.id desc")
+      end
     else
-      @lancamentos =  Lancamento.includes(:conta).includes(:fornecedor).includes(:item_de_despesa).includes(:item_de_receita).includes(:tipo_de_compra).includes(:transferencia).order("id desc")
+      if params[:especie] == "Ativas"
+        @lancamentos =  Lancamento.joins(:conta).where("contas.ativo" => true).includes(:fornecedor).includes(:item_de_despesa).includes(:item_de_receita).includes(:tipo_de_compra).includes(:transferencia).order("lancamentos.id desc")
+      elsif params[:especie] ==  "Inativas"
+        @lancamentos =  Lancamento.joins(:conta).where("contas.ativo" => false).includes(:fornecedor).includes(:item_de_despesa).includes(:item_de_receita).includes(:tipo_de_compra).includes(:transferencia).order("lancamentos.id desc")
+      end
     end
-
- end
-
+  end
 
 
   # GET /lancamentos

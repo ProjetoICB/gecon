@@ -53,21 +53,28 @@ class ContasController < ApplicationController
       busca += "tipo_de_conta_id = " + params[:tipo_de_conta_id].to_s
     end
 
-
-    if params[:tudo] == "Sim"
-      if params[:departamento_id] != ""
-        @contas = Conta.joins(:usuario).where(busca).order('id')
-      else
-        @contas = Conta.where(busca).order('id')
-      end
-    else
+    if params[:especie] == "Ativas"
       if params[:departamento_id] != ""
         @contas = Conta.joins(:usuario).where(busca).where(ativo: true).order('id')
       else
-        @contas = Conta.where(busca).where(ativo: true).order('id')
+        @contas = Conta.where(busca).where(ativo: true).includes(:lancamentos).includes(:tipo_de_conta).includes(:usuario).includes(:centro_de_custo).includes(:fonte_de_recurso).order('id')
+      end
+    elsif params[:especie] == "Inativas"
+      if params[:departamento_id] != ""
+        @contas = Conta.joins(:usuario).where(busca).where(ativo: false).order('id')
+      else
+        @contas = Conta.where(busca).where(ativo: false).includes(:lancamentos).includes(:tipo_de_conta).includes(:usuario).includes(:centro_de_custo).includes(:fonte_de_recurso).order('id')
+      end
+    else
+      if params[:departamento_id] != ""
+        @contas = Conta.joins(:usuario).where(busca).order('id')
+      else
+        @contas = Conta.where(busca).includes(:lancamentos).includes(:tipo_de_conta).includes(:usuario).includes(:centro_de_custo).includes(:fonte_de_recurso).order('id')
       end
     end
   end
+
+
 
 
   def index
@@ -159,3 +166,5 @@ class ContasController < ApplicationController
       params.require(:conta).permit(:numero, :nome, :observacao, :ativo, :tipo_de_conta_id, :usuario_id, :centro_de_custo_id, :fonte_de_recurso_id)
     end
 end
+
+

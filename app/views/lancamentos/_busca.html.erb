@@ -36,7 +36,7 @@
 </script>
 
 
-<h3> Busca </h3>
+<h3> Busca de Lançamentos </h3>
 <%= form_tag result_path, method: :get do %>
     <table class="table">
     <tr>
@@ -52,8 +52,8 @@
     </tr>
     <tr>
       <td>Item de receita:<%= select_tag :item_de_receita_id,options_for_select(ItemDeReceita.all.order("nome").map{|irec| [irec.nome, irec.id]}), include_blank: true, class: 'chosen-select' %></td>
-      <td> A partir de: <%= date_field_tag :inicio %> </td>
-      <td> Até: <%= date_field_tag :fim %> </td>
+      <td> A partir de: <%= date_field_tag :inicio %>  até: <%= date_field_tag :fim %> </td>
+      <td> Espécie de conta: <%=  select_tag :especie, options_for_select(["Ativas", "Inativas"]), include_blank: true, class: 'chosen-select' %>   </td>
     </tr>
     </table>
 
