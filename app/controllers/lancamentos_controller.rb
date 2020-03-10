@@ -328,7 +328,7 @@ class LancamentosController < ApplicationController
   def index
     at = params[:atual]
     if session[:usuario_tipo] == "Diretor"
-      @lancamentos = Lancamento.where("year(created_at) >= ?", 2017).includes(:conta).includes(:fornecedor).includes(:item_de_despesa).includes(:item_de_receita).includes(:tipo_de_compra).includes(:transferencia).order("id desc")
+      @lancamentos = Lancamento.where("created_at >= ?" , '2017-01-01').includes(:conta).includes(:fornecedor).includes(:item_de_despesa).includes(:item_de_receita).includes(:tipo_de_compra).includes(:transferencia).order("id desc")
     elsif at == "Sim"
       @lancamentos = Lancamento.where("year(created_at) = ?", Date.today.year).includes(:conta).includes(:fornecedor).includes(:item_de_despesa).includes(:item_de_receita).includes(:tipo_de_compra).includes(:transferencia).order("id desc")
     else
