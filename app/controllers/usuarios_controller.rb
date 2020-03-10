@@ -45,11 +45,13 @@ class UsuariosController < ApplicationController
   def update
     respond_to do |format|
       if @usuario.update(usuario_params)
-
-        if !@usuario.departamentos.empty?
-          @usuario.tipo = "Gerente"
-          @usuario.save
+        if @usuario.tipo != "Diretor"
+          if !@usuario.departamentos.empty?
+            @usuario.tipo = "Gerente"
+            @usuario.save
+          end
         end
+
         format.html { redirect_to @usuario, notice: 'Usuario atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @usuario }
       else

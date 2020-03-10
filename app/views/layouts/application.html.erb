@@ -74,7 +74,7 @@
                 <li role="presentation"> <%= link_to "Por conta",  por_conta_path %> </li>
               </ul>
             </li>
-        <% elsif session[:usuario_tipo] == "Usuario" %>
+        <% elsif session[:usuario_tipo] == "Gerente" %>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Minhas contas &nbsp; <b class="caret"></b> </a>
               <ul class="dropdown-menu" role="menu">
@@ -99,9 +99,17 @@
               </ul>
             </li>
 
+        <% elsif session[:usuario_tipo] == "Diretor" %>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Lançamentos &nbsp; <b class="caret"></b> </a>
+                <ul class="dropdown-menu" role="menu">
+                  <li role="presentation">  <%= link_to "Lançamentos", lancamentos_path %>  </li>
+                  <li role="presentation">  <%= link_to "Novo crédito" , new_lancamento_path(:tipo => "Credito") if  session[:usuario_tipo] != "Controladoria"  %> </li>
+                  <li class="presentation"> <%= link_to "Novo débito",  new_lancamento_path(:tipo => "Debito")  if session[:usuario_tipo] != "Controladoria" %> </li>
+                  <li class="presentation"> <%= link_to "Débito multiplo", debito_multiplo_path(:tipo => "DebitoMult") if  session[:usuario_tipo] != "Controladoria" %>  </li>
+                </ul>
+              </li>
         <% end %>
-
-
         <li> <%= link_to "Sair", logout_path %> </li>
         </ul>
     <% end %>
