@@ -5,7 +5,7 @@ class GruposController < ApplicationController
   # GET /grupos
   # GET /grupos.json
   def index
-    @grupos = Grupo.where(ativo: true)
+    @grupos = Grupo.where(ativo: true).order("coddigitado")
   end
 
   # GET /grupos/1
