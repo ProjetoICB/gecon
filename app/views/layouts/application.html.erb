@@ -22,7 +22,6 @@
   <ul class="nav navbar-nav">
     <% if session[:usuario_id] != nil %>
         <% if session[:usuario_tipo] == "Administrador" or session[:usuario_tipo] == "Controladoria" %>
-            <li role="presentation"> <%= link_to "Balancete", balancete_path %> </li>
             <li> <%= link_to "Usuários", usuarios_path %> </li>
             <li> <%= link_to "Logs", logs_path %> </li>
             <li> <%= link_to "Departamentos", departamentos_path %> </li>
@@ -72,6 +71,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Relatórios &nbsp; <b class="caret"></b></a>
               <ul class="dropdown-menu" role="menu">
                 <li role="presentation"> <%= link_to "Por conta",  por_conta_path %> </li>
+                <li role="presentation"> <%= link_to "Balancete", balancete_path %> </li>
               </ul>
             </li>
         <% elsif session[:usuario_tipo] == "Gerente" %>
