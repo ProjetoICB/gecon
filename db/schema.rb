@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190909192610) do
+ActiveRecord::Schema.define(version: 20200311135905) do
+
+  create_table "categorias", force: :cascade do |t|
+    t.string   "nome",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "centros_de_custo", force: :cascade do |t|
     t.string   "nome",       limit: 255
@@ -74,12 +80,13 @@ ActiveRecord::Schema.define(version: 20190909192610) do
   end
 
   create_table "itens_de_despesa", force: :cascade do |t|
-    t.string   "nomeGecon",  limit: 255
-    t.string   "nome",       limit: 255
-    t.string   "codigitado", limit: 255
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.boolean  "ativo",                  default: true
+    t.string   "nomeGecon",    limit: 255
+    t.string   "nome",         limit: 255
+    t.string   "codigitado",   limit: 255
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.boolean  "ativo",                    default: true
+    t.integer  "categoria_id", limit: 4
   end
 
   create_table "itens_de_receita", force: :cascade do |t|

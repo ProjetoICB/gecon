@@ -81,6 +81,6 @@ class ItensDeDespesaController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_de_despesa_params
-      params.require(:item_de_despesa).permit(:nomeGecon, :nome, :codigitado)
+      params.require(:item_de_despesa).permit(:nomeGecon, :nome, :codigitado, :categoria_id)
     end
 end

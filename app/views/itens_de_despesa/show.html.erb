@@ -13,5 +13,13 @@
   <%= @item_de_despesa.codigitado %>
 </p>
 
+
+<% if !@item_de_despesa.categoria_id.nil? %>
+    <p>
+      <strong> Categoria: </strong>
+      <%= @item_de_despesa.categoria.nome  %>
+    </p>
+<% end  %>
+
 <%= link_to 'Editar', edit_item_de_despesa_path(@item_de_despesa), class: 'btn btn-primary active' if session[:usuario_tipo] != "Controladoria" %>
 <%= link_to 'Voltar', itens_de_despesa_path, class: 'btn btn-default' %>

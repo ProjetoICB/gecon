@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
 
 
+  resources :categorias
   resources :transferencias
   resources :lancamentos
   resources :contas

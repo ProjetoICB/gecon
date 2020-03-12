@@ -1,6 +1,6 @@
 <script type="text/javascript">
     $(function() {
-        $('#item_despesa').dataTable({
+        $('#categoria').dataTable({
             "iDisplayLength": 10,
             "ordering":  false,
             "aaSorting": [],
@@ -22,15 +22,13 @@
 
     });
 </script>
-<h1>Itens De Despesa</h1>
 
-<table id="item_despesa" class="table table-striped table-bordered">
+<h1>Categorias</h1>
+
+<table id="categoria" class="table table-stripped table-bordered">
   <thead>
     <tr>
-      <th class="text-center">Nome Gecon</th>
       <th class="text-center">Nome</th>
-      <th class="text-center">Código digitado</th>
-      <th class="text-center">Categoria </th>
       <th></th>
       <% if session[:usuario_tipo] != "Controladoria" %>
           <th></th>
@@ -40,16 +38,13 @@
   </thead>
 
   <tbody>
-    <% @itens_de_despesa.each do |item_de_despesa| %>
+    <% @categorias.each do |categoria| %>
       <tr>
-        <td><%= item_de_despesa.nomeGecon %></td>
-        <td><%= item_de_despesa.nome %></td>
-        <td><%= item_de_despesa.codigitado %></td>
-        <td><%= item_de_despesa.categoria.nome if !item_de_despesa.categoria_id.nil? %> </td>
-        <td class="text-center"> <%= link_to 'Mostrar', item_de_despesa , class: 'btn btn-primary active' %></td>
+        <td><%= categoria.nome %></td>
+        <td class="text-center"><%= link_to 'Mostrar', categoria, class: 'btn btn-primary active' %></td>
         <% if session[:usuario_tipo] != "Controladoria" %>
-            <td class="text-center"> <%= link_to 'Editar', edit_item_de_despesa_path(item_de_despesa), class: 'btn btn-default' %></td>
-            <td><%= link_to 'Desativar', desativa_item_despesa_path(item_de_despesa),  data: { confirm: 'Tem certeza?' } , class: 'btn btn-danger active' %></td>
+            <td class="text-center"><%= link_to 'Editar', edit_categoria_path(categoria), class: 'btn btn-default' %></td>
+            <td class="text-center"><%= link_to 'Apagar', categoria, method: :delete, data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
         <% end %>
       </tr>
     <% end %>
@@ -58,4 +53,4 @@
 
 <br>
 
-<%= link_to 'Novo item de despesa', new_item_de_despesa_path, class:'btn btn-primary active' if session[:usuario_tipo] != "Controladoria" %>
+<%= link_to 'Nova  Categoria', new_categoria_path, class: 'btn btn-primary active' if session[:usuario_tipo] != "Controladoria" %>

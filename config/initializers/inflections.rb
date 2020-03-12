@@ -20,6 +20,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
     inflect.irregular 'lancamento', 'lancamentos'
     inflect.irregular 'transferencia', 'transferencias'
     inflect.irregular   'tansf_multipla', 'transfs_multiplas'
+    inflect.irregular 'categoria', 'categorias'
 
 
 end
