@@ -15,12 +15,13 @@
     <td class="text-center">Saldo (R$) </td>
   </tr>
   <% @result.each do |r| %>
-    <tr>
-      <td> <%= r[0] %> </td>
-      <td>
-        <%= number_to_currency(calculaSaldo(r[1], r[2])) %>
-      </td>
-    </tr>
+      <% valor =  calculaSaldo(r[1], r[2]).round(2)  %>
+      <% if valor != 0.00 %>
+      <tr>
+        <td> <%= r[0] %> </td>
+        <td> <%= number_to_currency(valor) %> </td>
+      </tr>
+      <% end %>
   <% end %>
 </table>
 

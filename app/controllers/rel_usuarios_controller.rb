@@ -131,15 +131,15 @@ class RelUsuariosController < ApplicationController
     @hoje = Date.today
     @result = Lancamento.joins(:conta)
                   .joins("inner join centros_de_custo on centros_de_custo.id = contas.centro_de_custo_id ")
-                  .where("lancamentos.data <= ?", params[:fim])
+                  .where("lancamentos.data <= ? and centros_de_custo.ativo = ?" , params[:fim], true)
                   .group("centros_de_custo.nome")
                   .pluck('centros_de_custo.nome','sum(credito)', 'sum(debito)')
     cred = Lancamento.joins(:conta)
         .joins("inner join centros_de_custo on centros_de_custo.id = contas.centro_de_custo_id ")
-        .where("lancamentos.data <= ?", params[:fim]).sum(:credito)
+        .where("lancamentos.data <= ? and centros_de_custo.ativo = ?", params[:fim], true).sum(:credito)
     deb = Lancamento.joins(:conta)
               .joins("inner join centros_de_custo on centros_de_custo.id = contas.centro_de_custo_id ")
-              .where("lancamentos.data <= ?", params[:fim]).sum(:debito)
+              .where("lancamentos.data <= ? and centros_de_custo.ativo = ?", params[:fim], true).sum(:debito)
     @total = cred - deb
 
     respond_to do |format|
@@ -149,6 +149,7 @@ class RelUsuariosController < ApplicationController
                :show_as_html => params[:debug].present?,
                :template => 'rel_usuarios/balancete.pdf.erb',
                :page_size => 'A4',
+               #:disposition => 'attachment',
                :disposition => 'attachment',
                footer: {
                    left: "Impresso em " + DateTime.current.strftime("%d/%m/%Y"),
