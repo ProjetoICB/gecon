@@ -127,19 +127,29 @@ class RelUsuariosController < ApplicationController
   end
 
   def res_balancete
+    @grupo = Grupo.find(params[:grupo_id])
     @fim = params[:fim].to_date
     @hoje = Date.today
     @result = Lancamento.joins(:conta)
                   .joins("inner join centros_de_custo on centros_de_custo.id = contas.centro_de_custo_id ")
-                  .where("lancamentos.data <= ? and centros_de_custo.ativo = ?" , params[:fim], true)
+                  .joins("inner join tipo_de_contas on tipo_de_contas.id = contas.tipo_de_conta_id")
+                  .joins("inner join grupos on tipo_de_contas.grupo_id = grupos.id")
+                  .where("lancamentos.data <= ? and centros_de_custo.ativo = ? and tipo_de_contas.grupo_id = ?" , params[:fim], true, params[:grupo_id])
                   .group("centros_de_custo.nome")
                   .pluck('centros_de_custo.nome','sum(credito)', 'sum(debito)')
+
     cred = Lancamento.joins(:conta)
-        .joins("inner join centros_de_custo on centros_de_custo.id = contas.centro_de_custo_id ")
-        .where("lancamentos.data <= ? and centros_de_custo.ativo = ?", params[:fim], true).sum(:credito)
+               .joins("inner join centros_de_custo on centros_de_custo.id = contas.centro_de_custo_id ")
+               .joins("inner join tipo_de_contas on tipo_de_contas.id = contas.tipo_de_conta_id")
+               .joins("inner join grupos on tipo_de_contas.grupo_id = grupos.id")
+               .where("lancamentos.data <= ? and centros_de_custo.ativo = ? and tipo_de_contas.grupo_id = ?", params[:fim], true, params[:grupo_id]).sum(:credito)
+
     deb = Lancamento.joins(:conta)
               .joins("inner join centros_de_custo on centros_de_custo.id = contas.centro_de_custo_id ")
-              .where("lancamentos.data <= ? and centros_de_custo.ativo = ?", params[:fim], true).sum(:debito)
+              .joins("inner join tipo_de_contas on tipo_de_contas.id = contas.tipo_de_conta_id")
+              .joins("inner join grupos on tipo_de_contas.grupo_id = grupos.id")
+              .where("lancamentos.data <= ? and centros_de_custo.ativo = ? and tipo_de_contas.grupo_id = ?", params[:fim], true, params[:grupo_id]).sum(:debito)
+
     @total = cred - deb
 
     respond_to do |format|
@@ -150,7 +160,7 @@ class RelUsuariosController < ApplicationController
                :template => 'rel_usuarios/balancete.pdf.erb',
                :page_size => 'A4',
                #:disposition => 'attachment',
-               :disposition => 'attachment',
+               :disposition => 'inline',
                footer: {
                    left: "Impresso em " + DateTime.current.strftime("%d/%m/%Y"),
                    center: "Seção de Contabilidade",
