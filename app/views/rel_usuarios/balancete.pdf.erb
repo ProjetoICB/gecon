@@ -8,23 +8,33 @@
   </tr>
 </table>
 <hr>
-<p> Grupo: <%= @grupo.nome %> </p>
 <p>  Até <%= @fim.strftime("%d/%m/%Y") %> </p>
+<% if !params[:grupo_id].empty? %>
+    <p> Grupo: <%= @grupo.nome %> </p>
+ <% end %>
+
 <table class="table table-bordered table-striped">
   <tr>
-    <td class="text-center">Centro de Custo</td>
-    <td class="text-center">Saldo (R$) </td>
+    <th class="text-center">Centro de Custo</th>
+    <th class="text-center">Saldo (R$) </th>
+    <% if params[:grupo_id].empty? %>
+        <th class="text-center"> Grupo</th>
+    <% end %>
   </tr>
   <% @result.each do |r| %>
-      <% valor =  calculaSaldo(r[1], r[2]).round(2)  %>
-      <% if valor != 0.00 %>
+  <% valor =  calculaSaldo(r[1], r[2]).round(2)  %>
+  <% if valor != 0.00 %>
       <tr>
         <td> <%= r[0] %> </td>
         <td> <%= number_to_currency(valor) %> </td>
+        <% if params[:grupo_id].empty? %>
+            <td> <%= r[3]  %> </td>
+        <% end %>
       </tr>
       <% end %>
-  <% end %>
+      <% end %>
 </table>
+
 
 <p class="text-right"> Saldo Total: <%= number_to_currency(@total) %>  </p>
 <p class="text-center"> <%= wicked_pdf_image_tag "ass_jorge.png"  %> </p>
