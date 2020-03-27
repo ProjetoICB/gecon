@@ -186,8 +186,7 @@ class RelUsuariosController < ApplicationController
                :show_as_html => params[:debug].present?,
                :template => 'rel_usuarios/balancete.pdf.erb',
                :page_size => 'A4',
-               #:disposition => 'attachment',
-               :disposition => 'inline',
+               :disposition => 'attachment',
                footer: {
                    left: "Impresso em " + DateTime.current.strftime("%d/%m/%Y"),
                    center: "Seção de Contabilidade",
