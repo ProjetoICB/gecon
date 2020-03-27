@@ -73,6 +73,12 @@
             <% @saldo =  cred_conta - deb_conta %>
          <% end %>
 
+        <% if (@saldo <= -0.0000000000000000000000001 and @saldo >= -0.99999999999999999999999999) or (@saldo >= 0.0000000000000000000000001 and @saldo <= 0.9999999999999999999999999) %>
+            <% @saldo = 0 %>
+        <%  end %>
+
+
+
         <% if @saldo <= -1 %>
             <td style="color: red">  <%= number_to_currency(@saldo) %> </td>
          <% else %>
