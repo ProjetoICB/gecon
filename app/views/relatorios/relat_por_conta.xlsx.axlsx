@@ -5,7 +5,7 @@ wb.add_worksheet(name: "Por_conta") do |sheet|
         if lan.tipo == "Credito"
             if lan.item_de_receita_id.nil?
                 sheet.add_row [lan.data, lan.datadocumento, lan.observacao,"Transferência", "", number_to_currency(lan.debito),number_to_currency(lan.credito)]
-            else
+             else
                 sheet.add_row [lan.data, lan.datadocumento, lan.observacao,lan.item_de_receita.nome, "", number_to_currency(lan.debito),number_to_currency(lan.credito)]
             end
         elsif lan.tipo == "DebitoMult"

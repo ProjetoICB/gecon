@@ -72,8 +72,10 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Relatórios &nbsp; <b class="caret"></b></a>
               <ul class="dropdown-menu" role="menu">
                 <li role="presentation"> <%= link_to "Por conta",  por_conta_path %> </li>
-                <li role="presentation"> <%= link_to "Balancete", balancete_path %> </li>
                 <li role="presentation"> <%= link_to "Por itens de despesa", rel_itens_de_despesa_path %> </li>
+                <li role="presentation"> <%= link_to "Por lançamentos",  por_lanc_path  %>  </li>
+                <li role="presentation"> <%= link_to "Balancete", balancete_path %> </li>
+
               </ul>
             </li>
         <% elsif session[:usuario_tipo] == "Gerente" %>

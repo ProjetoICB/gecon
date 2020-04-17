@@ -1,0 +1,96 @@
+<script type="text/javascript">
+    $(function() {
+        $('#mostra_relat').dataTable({
+            "iDisplayLength": 20,
+            "ordering":  false,
+            "aaSorting": [],
+            "bLengthChange":false,
+            "oLanguage":{
+                "sInfo":                "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                "sInfoFiltered":        "Filtrado de _MAX_ registros no total",
+                "sZeroRecords":         "Sem resultados",
+                "sInfoEmpty":           "",
+                "sSearch":              "Buscar",
+                "oPaginate": {
+                    "sFirst":           "Primeiro",
+                    "sPrevious":        "Anterior",
+                    "sNext":            "Próximo",
+                    "sLast":            "Ultimo"
+                }
+            }
+        });
+    });
+</script>
+
+<% if params[:centro_de_custo_id] != "" %>
+     <% cc = CentroDeCusto.find(params[:centro_de_custo_id]) %>
+     <p> Centro de Custo: <%= cc.nome %> </p>
+<% end %>
+<% if params[:conta_id] != "" %>
+     <% conta = Conta.find(params[:conta_id]) %>
+    <p> Conta: <%= conta.nome %> </p>
+<% end %>
+<% if params[:inicio] != "" %>
+   <%  inicio = params[:inicio].to_date %>
+    <p> De: <%= inicio.strftime("%d/%m/%Y") %> </p>
+<% end %>
+<% if params[:fim] != "" %>
+    <% fim = params[:fim].to_date %>
+    <p> Até: <%= fim.strftime("%d/%m/%Y") %> </p>
+<% end %>
+
+<table id="mostra_relat" class="table table table-striped table_bordered">
+  <thead>
+  <tr>
+    <th> Id </th>
+    <th> Data</th>
+    <th> Data documento</th>
+    <th> Observação</th>
+    <th> Código Contábil</th>
+    <th> Fornecedor </th>
+    <th> Débito</th>
+    <th> Crédito</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @lancamentos.each do |lancamento| %>
+      <tr>
+        <td> <%= lancamento.id %> </td>
+        <td> <%= lancamento.data.strftime("%d/%m/%Y") %></td>
+        <td> <%= lancamento.datadocumento.strftime("%d/%m/%Y") %></td>
+        <td> <%= lancamento.observacao %> </td>
+        <td>
+          <% if lancamento.tipo == "Credito"  %>
+              <%=  lancamento.item_de_receita_id.nil? ? "Transferência" : lancamento.item_de_receita.nome %>
+          <% elsif lancamento.tipo == "DebitoMult" %>
+              <%= lancamento.item_de_despesa.nome %>
+          <% else %>
+              <%= lancamento.item_de_despesa_id.nil? ? "Transferência" : lancamento.item_de_despesa.nome %>
+          <% end %>
+        </td>
+        <td> <%= lancamento.fornecedor.nome if !lancamento.fornecedor.nil? %></td>
+        <td> <%= number_to_currency(lancamento.debito) %> </td>
+        <td> <%= number_to_currency(lancamento.credito) %> </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<div align="right">
+
+  <h4> Saldo:
+  <% if @total < 0 %>
+       <h4  class="text-danger font-weight-bold"> <%= number_to_currency(@total)  %> </h4>
+  <% else %>
+        <h4 class="text-success font-weight-bold"> <%= number_to_currency(@total)  %> </h4>
+    <% end %>
+    </h4>
+</div>
+
+
+<%= link_to "Gerar XLS", relat_por_lanc_path(centro_de_custo_id: params[:centro_de_custo_id], conta_id: params[:conta_id],inicio: params[:inicio], fim: params[:fim], format: :xlsx), class: 'btn btn-success active btn-sm' %>
+<%= link_to "Voltar", :back, class: 'btn btn-default btn-sm' %>
+

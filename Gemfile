@@ -78,6 +78,11 @@ gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c8ac844'
 gem 'axlsx_rails'
 
 
+# select dinâmico de preenchimento de segundo campo
+gem 'dynamic_selectable', git: 'https://github.com/mattantonelli/dynamic_selectable.git'
+
+
+
 
 
 

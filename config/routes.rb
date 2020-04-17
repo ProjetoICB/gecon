@@ -2,6 +2,9 @@ Rails.application.routes.draw do
 
 
 
+
+
+
   resources :categorias
   resources :transferencias
   resources :lancamentos
@@ -55,6 +58,8 @@ Rails.application.routes.draw do
   #relatórios
   get 'por_conta' => 'relatorios#por_conta', as: 'por_conta'
   get 'relat_por_conta' => 'relatorios#relat_por_conta', as: 'relat_por_conta'
+  get 'por_lanc' => 'relatorios#por_lanc' , as: 'por_lanc'
+  get 'relat_por_lanc' => 'relatorios#relat_por_lanc', as: 'relat_por_lanc'
 
 
   # relatorios de usuarios

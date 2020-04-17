@@ -18,6 +18,7 @@
 //= require turbolinks
 //= require cocoon
 //= require dataTables/jquery.dataTables
+//= require jquery-dynamic-selectable
 //= require_tree .
 
 $(document).on('turbolinks:load',function(){chosen_init()});
