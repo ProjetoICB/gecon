@@ -81,6 +81,39 @@ class RelatoriosController < ApplicationController
     end
   end
 
+  def gastos_por_idd
+
+  end
+
+  def relat_gastos_por_idd
+    @inicio = params[:inicio].to_date
+    @fim = params[:fim].to_date
+    @totalgeral = 0
+    @hoje = Date.today
+    @tot_por_cat = Lancamento.joins(:item_de_despesa).joins("inner join categorias on categorias.id = itens_de_despesa.categoria_id").where("data between ? and ?", @inicio, @fim).group("categorias.nome").order('categorias.nome').pluck('categorias.id', 'categorias.nome','sum(debito)')
+    respond_to do |format|
+      format.pdf do
+        render :pdf => 'gastos_itens_de_despesa',
+               :layout => 'layouts/padrao.html.erb',
+               :show_as_html => params[:debug].present?,
+               :template => 'relatorios/relat_gastos_por_idd.pdf.erb',
+               :page_size => 'A4',
+               :disposition => 'attachment',
+               footer: {
+                   left: "Impresso em: " + DateTime.current.strftime("%d/%m/%Y %H:%M"),
+                   center: "Seção de Contabilidade",
+                   right: '[page] de [topage]'
+               },
+               :margin => {
+                   top: 20,
+                   bottom: 20,
+                   left: 20,
+                   right: 20
+               }
+      end
+    end
+  end
+
 
 
 

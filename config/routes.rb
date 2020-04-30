@@ -60,6 +60,11 @@ Rails.application.routes.draw do
   get 'relat_por_conta' => 'relatorios#relat_por_conta', as: 'relat_por_conta'
   get 'por_lanc' => 'relatorios#por_lanc' , as: 'por_lanc'
   get 'relat_por_lanc' => 'relatorios#relat_por_lanc', as: 'relat_por_lanc'
+  get 'gastos_por_idd' => 'relatorios#gastos_por_idd', as: 'gastos_por_idd'
+  get 'relat_gastos_por_idd' => 'relatorios#relat_gastos_por_idd' , as: 'relat_gastos_por_idd'
+
+
+
 
 
   # relatorios de usuarios
