@@ -11,7 +11,7 @@
 
 <h2> Balancete </h2>
 
-<%= form_tag res_balancete_path(format: 'pdf'), method: :get do %>
+<%= form_tag res_balancete_path, method: :get do %>
     Grupo: <%= select_tag :grupo_id, options_for_select(Grupo.where(ativo: true).map{|gr| [gr.nome, gr.id]}), include_blank: true, class: 'chosen-select' %>
     Até: <%= date_field_tag :fim %>
     <p>   <%= submit_tag "Enviar",  class: 'btn btn-primary active' %>  </p>

@@ -26,8 +26,28 @@ class RelatoriosController < ApplicationController
         format.html
         format.xlsx {
           response.headers[
-              'Content-Disposition'] = "attachment; filename=relat_conta.xlsx"
+              'Content-Disposition'] = "attachment; filename=por_conta.xlsx"
         }
+        format.pdf do
+          render :pdf => 'por_conta',
+                 :layout => 'layouts/padrao.html.erb',
+                 :show_as_html => params[:debug].present?,
+                 :template => 'relatorios/relat_por_conta.pdf.erb',
+                 :page_size => 'A4',
+                 :disposition => 'attachment',
+                 :orientation => 'Landscape',
+                 footer: {
+                     left: "Impresso em: " + DateTime.current.strftime("%d/%m/%Y %H:%M"),
+                     center: "Seção de Contabilidade",
+                     right: '[page] de [topage]'
+                 },
+                 :margin => {
+                     top: 20,
+                     bottom: 20,
+                     left: 20,
+                     right: 20
+                 }
+        end
       end
     end
   end
@@ -43,7 +63,6 @@ class RelatoriosController < ApplicationController
 
     if params[:centro_de_custo_id] != ""
       result = "centro_de_custo_id =  " + params[:centro_de_custo_id].to_s
-      puts result
     end
 
 
@@ -52,8 +71,6 @@ class RelatoriosController < ApplicationController
         result += " and "
       end
       result += "data between '" + params[:inicio] + "' and '" + params[:fim] + "'"
-      puts result
-
     end
 
     if params[:conta_id] != ""
@@ -61,7 +78,6 @@ class RelatoriosController < ApplicationController
         result += " and "
       end
       result += "conta_id = " + params[:conta_id]
-      puts result
     end
 
     if result != ""
@@ -75,11 +91,32 @@ class RelatoriosController < ApplicationController
         format.html
         format.xlsx {
           response.headers[
-              'Content-Disposition'] = "attachment; filename=relat_porlanc.xlsx"
+              'Content-Disposition'] = "attachment; filename=por_lancamento.xlsx"
         }
-      end
+        format.pdf do
+          render :pdf => 'por_lancamento',
+                 :layout => 'layouts/padrao.html.erb',
+                 :show_as_html => params[:debug].present?,
+                 :template => 'relatorios/relat_por_lanc.pdf.erb',
+                 :page_size => 'A4',
+                 :disposition => 'attachment',
+                 :orientation => 'Landscape',
+                 footer: {
+                     left: "Impresso em: " + DateTime.current.strftime("%d/%m/%Y %H:%M"),
+                     center: "Seção de Contabilidade",
+                     right: '[page] de [topage]'
+                 },
+                 :margin => {
+                     top: 20,
+                     bottom: 20,
+                     left: 20,
+                     right: 20
+                 }
+        end
+    end
     end
   end
+
 
   def gastos_por_idd
 
@@ -113,8 +150,4 @@ class RelatoriosController < ApplicationController
       end
     end
   end
-
-
-
-
 end

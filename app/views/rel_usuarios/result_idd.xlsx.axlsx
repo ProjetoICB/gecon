@@ -1,0 +1,8 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "itens_de_despesa") do |sheet|
+    sheet.add_row ["Código Contábil", "Débito"]
+    @result.each do |r|
+        @total = Lancamento.where("data between ? and ?", @inicio, @fim).where(item_de_despesa_id: r.id).sum(:debito)
+        sheet.add_row [r.nomeGecon,  @total.round(2)]
+    end
+end

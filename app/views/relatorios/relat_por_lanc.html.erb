@@ -85,12 +85,12 @@
   <% if @total < 0 %>
        <h4  class="text-danger font-weight-bold"> <%= number_to_currency(@total)  %> </h4>
   <% else %>
-        <h4 class="text-success font-weight-bold"> <%= number_to_currency(@total)  %> </h4>
+        <h4 class="text-primary font-weight-bold"> <%= number_to_currency(@total)  %> </h4>
     <% end %>
     </h4>
 </div>
 
-
-<%= link_to "Gerar XLS", relat_por_lanc_path(centro_de_custo_id: params[:centro_de_custo_id], conta_id: params[:conta_id],inicio: params[:inicio], fim: params[:fim], format: :xlsx), class: 'btn btn-success active btn-sm' %>
-<%= link_to "Voltar", :back, class: 'btn btn-default btn-sm' %>
+<%= link_to "Gerar PDF", relat_por_lanc_path(centro_de_custo_id: params[:centro_de_custo_id], conta_id: params[:conta_id],inicio: params[:inicio], fim: params[:fim], format: :pdf), class: 'btn btn-primary active' %>
+<%= link_to "Gerar XLS", relat_por_lanc_path(centro_de_custo_id: params[:centro_de_custo_id], conta_id: params[:conta_id],inicio: params[:inicio], fim: params[:fim], format: :xlsx), class: 'btn btn-success active' %>
+<%= link_to "Voltar", :back, class: 'btn btn-default' %>
 

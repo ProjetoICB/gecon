@@ -1,0 +1,36 @@
+<p>  Até <%= @fim.strftime("%d/%m/%Y") %> </p>
+<% if !params[:grupo_id].empty? %>
+    <p> Grupo: <%= @grupo.nome %> </p>
+<% end %>
+
+<table class="table table-bordered table-striped">
+  <tr>
+    <th class="text-center">Centro de Custo</th>
+    <th class="text-center">Saldo (R$) </th>
+    <% if params[:grupo_id].empty? %>
+        <th class="text-center"> Grupo</th>
+    <% end %>
+  </tr>
+  <% @result.each do |r| %>
+      <% valor =  calculaSaldo(r[1], r[2]).round(2)  %>
+      <% if valor != 0.00 %>
+          <tr>
+            <td> <%= r[0] %> </td>
+            <td> <%= number_to_currency(valor) %> </td>
+            <% if params[:grupo_id].empty? %>
+                <td> <%= r[3]  %> </td>
+            <% end %>
+          </tr>
+      <% end %>
+  <% end %>
+</table>
+
+<div>
+<h4 class="text-right"> Saldo Total: <%= number_to_currency(@total) %>  </h4>
+</div>
+
+<%= link_to "Gerar PDF", res_balancete_path(grupo_id: params[:grupo_id], fim: params[:fim],  format:'pdf' ), class: 'btn btn-primary active' %>
+<% if session[:usuario_tipo] == "Administrador" %>
+     <%= link_to "Gerar XLS", res_balancete_path(grupo_id: params[:grupo_id], fim: params[:fim],  format: 'xlsx' ), class: 'btn btn-success active' %>
+<% end %>
+<%= link_to "Voltar", :back, class: 'btn btn-default' %>

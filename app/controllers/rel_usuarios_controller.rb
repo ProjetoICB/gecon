@@ -100,11 +100,16 @@ class RelUsuariosController < ApplicationController
     @result = ItemDeDespesa.joins(:lancamentos).distinct.where("data between ?  and ?", @inicio, @fim).order('id')
     @totalgeral = Lancamento.joins(:item_de_despesa).where("data between ? and ?", @inicio, @fim).sum(:debito)
     respond_to do |format|
+      format.html
+      format.xlsx {
+        response.headers[
+            'Content-Disposition'] = "attachment; filename=itens_de_despesa.xlsx"
+      }
       format.pdf do
         render :pdf => 'itens_de_despesa',
                :layout => 'layouts/padrao.html.erb',
                :show_as_html => params[:debug].present?,
-               :template => 'rel_usuarios/res_itens_depesa.pdf.erb',
+               :template => 'rel_usuarios/result_idd.pdf.erb',
                :page_size => 'A4',
                :disposition => 'attachment',
                footer: {
@@ -180,11 +185,16 @@ class RelUsuariosController < ApplicationController
 
 
     respond_to do |format|
+      format.html
+      format.xlsx {
+        response.headers[
+            'Content-Disposition'] = "attachment; filename=res_balancete.xlsx"
+      }
       format.pdf do
-        render :pdf => 'balancete',
+        render :pdf => 'res_balancete',
                :layout => 'layouts/padrao.html.erb',
                :show_as_html => params[:debug].present?,
-               :template => 'rel_usuarios/balancete.pdf.erb',
+               :template => 'rel_usuarios/res_balancete.pdf.erb',
                :page_size => 'A4',
                :disposition => 'attachment',
                footer: {

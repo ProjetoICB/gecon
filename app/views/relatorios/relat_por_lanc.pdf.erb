@@ -1,0 +1,44 @@
+<table class="table">
+  <tr>
+    <td class="text-left"><%= wicked_pdf_image_tag "logo_gecon.png" %> </td>
+    <td></td>
+    <td align="center"><h4 class="text-center"> Relatório por lançamentos  </h4></td>
+    <td></td>
+    <td class="text-right"><%= wicked_pdf_image_tag "logo_icb_of.jpg", size: "75x75" %> </td>
+  </tr>
+</table>
+<hr>
+
+<table  class="table table table-striped table_bordered">
+  <tr>
+    <td> Id </td>
+    <td> Data</td>
+    <td> Data documento</td>
+    <td> Observação</td>
+    <td> Código Contábil</td>
+    <td> Fornecedor </td>
+    <td> Débito</td>
+    <td> Crédito</td>
+  </tr>
+
+  <% @lancamentos.each do |lancamento| %>
+      <tr>
+        <td> <%= lancamento.id %> </td>
+        <td> <%= lancamento.data.strftime("%d/%m/%Y") %></td>
+        <td> <%= lancamento.datadocumento.strftime("%d/%m/%Y") %></td>
+        <td> <%= lancamento.observacao %> </td>
+        <td>
+          <% if lancamento.tipo == "Credito"  %>
+              <%=  lancamento.item_de_receita_id.nil? ? "Transferência" : lancamento.item_de_receita.nome %>
+          <% elsif lancamento.tipo == "DebitoMult" %>
+              <%= lancamento.item_de_despesa.nome %>
+          <% else %>
+              <%= lancamento.item_de_despesa_id.nil? ? "Transferência" : lancamento.item_de_despesa.nome %>
+          <% end %>
+        </td>
+        <td> <%= lancamento.fornecedor.nome if !lancamento.fornecedor.nil? %></td>
+        <td> <%= number_to_currency(lancamento.debito) %> </td>
+        <td> <%= number_to_currency(lancamento.credito) %> </td>
+      </tr>
+  <% end %>
+</table>

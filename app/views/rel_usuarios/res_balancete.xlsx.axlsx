@@ -1,0 +1,20 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name:"balancelete") do |sheet|
+    if params[:grupo_id].empty?
+        sheet.add_row ["Centro de custo", "Saldo", "Grupo"]
+    else
+        sheet.merge_cells "A1:B1"
+        sheet.add_row [@grupo.nome]
+        sheet.add_row ["Centro de custo", "Saldo"]
+    end
+    @result.each do |r|
+    valor = calculaSaldo(r[1], r[2]).round(2)
+    if valor != 0.00
+        if params[:grupo_id].empty?
+            sheet.add_row [r[0], valor,  r[3]]
+        else
+            sheet.add_row [r[0], valor]
+        end
+    end
+    end
+end

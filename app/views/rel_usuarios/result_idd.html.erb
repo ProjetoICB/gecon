@@ -1,0 +1,54 @@
+<script type="text/javascript">
+    $(function() {
+        $('#result_idd').dataTable({
+            "iDisplayLength": 20,
+            "ordering":  false,
+            "aaSorting": [],
+            "bLengthChange":false,
+            "oLanguage":{
+                "sInfo":                "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                "sInfoFiltered":        "Filtrado de _MAX_ registros no total",
+                "sZeroRecords":         "Sem resultados",
+                "sInfoEmpty":           "",
+                "sSearch":              "Buscar",
+                "oPaginate": {
+                    "sFirst":           "Primeiro",
+                    "sPrevious":        "Anterior",
+                    "sNext":            "Próximo",
+                    "sLast":            "Ultimo"
+                }
+            }
+        });
+    });
+</script>
+
+<p>A partir de <%= @inicio.strftime("%d/%m/%Y") %> <br>
+Até <%= @fim.strftime("%d/%m/%Y") %> </p>
+
+<table id="result_idd" class="table table-bordered table-striped">
+  <thead>
+  <tr>
+    <th class="text-center"> Código contábil</th>
+    <th class="text-center"> Débito </th>
+  </tr>
+  </thead>
+
+  <tbody>
+
+  <% @result.each do |r| %>
+      <% @total = Lancamento.where("data between ? and ?", @inicio, @fim).where(item_de_despesa_id: r.id).sum(:debito) %>
+      <tr>
+        <td><%= r.nomeGecon if !r.id.nil? %></td>
+        <td><%= number_to_currency(@total) %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<h4 class="text-right"> Débitos totais: <%= number_to_currency(@totalgeral) %>  </h4>
+
+<%= link_to "Gerar pdf", result_idd_path(inicio: params[:inicio], fim: params[:fim],  format:'pdf' ), class: 'btn btn-primary active' %>
+<% if session[:usuario_tipo] == "Administrador" %>
+    <%= link_to "Gerar xls", result_idd_path(inicio: params[:inicio], fim:params[:fim], format: 'xlsx'), class: 'btn btn-success active' %>
+<% end %>
+<%= link_to "Voltar", :back, class: 'btn btn-default' %>

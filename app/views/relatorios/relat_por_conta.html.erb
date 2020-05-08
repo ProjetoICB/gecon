@@ -22,7 +22,9 @@
     });
 </script>
 
-<table id="mostra_relat" class="table table table-striped table_bordered">
+<h3> Relatório por conta</h3>
+
+<table id="mostra_relat" class="table table_bordered table-stripped">
   <thead>
   <tr>
     <th> Id </th>
@@ -62,6 +64,6 @@
 
 <br>
 
-<%= link_to "Gerar XLS", relat_por_conta_path(conta_id: params[:conta_id],inicio: params[:inicio], fim: params[:fim], format: :xlsx), class: 'btn btn-success active btn-sm' %> |
-<%= link_to "Voltar", :back, class: 'btn btn-default btn-sm' %>
-
+<%= link_to "Gerar PDF", relat_por_conta_path(conta_id: params[:conta_id], inicio: params[:inicio], fim: params[:fim], format: :pdf),  class: 'btn btn-primary active' %>
+<%= link_to "Gerar XLS", relat_por_conta_path(conta_id: params[:conta_id],inicio: params[:inicio], fim: params[:fim], format: :xlsx), class: 'btn btn-success active' %> |
+<%= link_to "Voltar", :back, class: 'btn btn-default' %>

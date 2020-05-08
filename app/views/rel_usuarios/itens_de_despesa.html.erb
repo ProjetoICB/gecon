@@ -1,7 +1,8 @@
-<h2> Relatório de gastos por itens de despesa </h2>
+<h2> Relatório de itens de despesa </h2>
 
-<%= form_tag result_idd_path(format: 'pdf'), method: :get do %>
+    <%= form_tag result_idd_path, method: :get do %>
+
     A partir de: <%= date_field_tag :inicio %>
     Até: <%= date_field_tag :fim %>
-    <p>   <%= submit_tag "Enviar",  class: 'btn btn-primary active' %>  </p>
+    <p>   <%= submit_tag "Enviar",  class: 'btn btn-primary active' %>   </p>
 <% end %>
