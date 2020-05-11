@@ -1,0 +1,23 @@
+<h4 class="text-center"> <%= @inicio.strftime("%d/%m/%Y") %> a <%= @fim.strftime("%d/%m/%Y") %> </h4>
+<% @tot_por_cat.each do |tpc| %>
+    <% @result = Lancamento.joins(:item_de_despesa).joins("inner join categorias on categorias.id = itens_de_despesa.categoria_id").where("data between ? and ? and categorias.id = ?", @inicio,@fim,tpc[0]).group("itens_de_despesa.nome,categorias.nome").order("categorias.nome").pluck("itens_de_despesa.nome","categorias.nome", "sum(debito)") %>
+    <h5 class="text-center"> <%= tpc[1] %> </h5>
+    <table class="table table-bordered table-striped">
+      <tr>
+        <td class="text-center"> Código contábil</td>
+        <td class="text-center"> Débito </td>
+      </tr>
+      <% @result.each do |r| %>
+      <tr>
+        <td><%= r[0]  %></td>
+        <td><%= number_to_currency(r[2]) %></td>
+      </tr>
+  <% end %>
+</table>
+
+<p class="text-right">  Total: <%= number_to_currency(tpc[2]) %>  </p>
+<% end %>
+
+<%= link_to "Gerar PDF", relat_gastos_por_idd_path(inicio: params[:inicio], fim: params[:fim], format: :pdf), class: 'btn btn-primary active' %>
+<%= link_to "Gerar XLS", relat_gastos_por_idd_path(inicio: params[:inicio], fim: params[:fim], format: :xlsx), class: 'btn btn-success active' %>
+<%= link_to "Voltar", :back, class: 'btn btn-default' %>

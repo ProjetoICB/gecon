@@ -129,6 +129,11 @@ class RelatoriosController < ApplicationController
     @hoje = Date.today
     @tot_por_cat = Lancamento.joins(:item_de_despesa).joins("inner join categorias on categorias.id = itens_de_despesa.categoria_id").where("data between ? and ?", @inicio, @fim).group("categorias.nome").order('categorias.nome').pluck('categorias.id', 'categorias.nome','sum(debito)')
     respond_to do |format|
+      format.html
+      format.xlsx {
+        response.headers[
+            'Content-Disposition'] = "attachment; filename=relat_gastos_por_idd.xlsx"
+      }
       format.pdf do
         render :pdf => 'gastos_itens_de_despesa',
                :layout => 'layouts/padrao.html.erb',

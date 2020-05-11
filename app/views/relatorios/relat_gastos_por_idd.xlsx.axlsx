@@ -1,0 +1,14 @@
+wb = xlsx_package.workbook
+
+@tot_por_cat.each do |tpc|
+        wb.add_worksheet(name: tpc[1][0..25] + "...") do |sheet|
+            sheet.merge_cells "A1:B1"
+            sheet.add_row [@inicio.strftime("%d/%m/%Y") + " a " +  @fim.strftime("%d/%m/%Y")]
+            sheet.add_row ["Código Contábil", "Débito"]
+            @result = Lancamento.joins(:item_de_despesa).joins("inner join categorias on categorias.id = itens_de_despesa.categoria_id").where("data between ? and ? and categorias.id = ?", @inicio,@fim,tpc[0]).group("itens_de_despesa.nome,categorias.nome").order("categorias.nome").pluck("itens_de_despesa.nome","categorias.nome", "sum(debito)")
+            @result.each do |r|
+                sheet.add_row [r[0], r[2].round(2)]
+            end
+            sheet.add_row ["Total", tpc[2].round(2)]
+        end
+end
