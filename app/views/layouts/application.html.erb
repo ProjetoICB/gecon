@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Gecon</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= csrf_meta_tags %>
@@ -25,7 +25,7 @@
             <li> <%= link_to "Usuários", usuarios_path %> </li>
             <li> <%= link_to "Logs", logs_path %> </li>
             <li> <%= link_to "Departamentos", departamentos_path %> </li>
-            <li> <%= link_to "Tipos de Compra" , tipos_de_compra_path %> </li>
+            <li> <%= link_to "Tipos de Compra", tipos_de_compra_path %> </li>
             <li> <%= link_to "Fontes de Recursos", fontes_de_recurso_path %> </li>
             <li> <%= link_to "Centros de Custo", centros_de_custo_path %> </li>
             <li> <%= link_to "Grupos", grupos_path %> </li>
@@ -45,7 +45,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Contas &nbsp; <b class="caret"></b> </a>
               <ul class="dropdown-menu" role="menu">
-                <li class="presentation"> <%= link_to "Contas", contas_path  %>  </li>
+                <li class="presentation"> <%= link_to "Contas", contas_path %>  </li>
                 <li class="presentation"> <%= link_to "Transferências", transferencias_path %> </li>
               </ul>
               <!-- Lançamentos (credito e débito) -->
@@ -54,9 +54,9 @@
               <ul class="dropdown-menu" role="menu">
                 <li role="presentation">  <%= link_to "Lançamentos atuais", lancamentos_path(:atual => "Sim") %> </li>
                 <li role="presentation">  <%= link_to "Todos os lançamentos", lancamentos_path(:atual => "Nao") %>  </li>
-                <li role="presentation">  <%= link_to "Novo crédito" , new_lancamento_path(:tipo => "Credito") if  session[:usuario_tipo] != "Controladoria"  %> </li>
-                <li class="presentation"> <%= link_to "Novo débito",  new_lancamento_path(:tipo => "Debito")  if session[:usuario_tipo] != "Controladoria" %> </li>
-                <li class="presentation"> <%= link_to "Débito multiplo", debito_multiplo_path(:tipo => "DebitoMult") if  session[:usuario_tipo] != "Controladoria" %>  </li>
+                <li role="presentation">  <%= link_to "Novo crédito", new_lancamento_path(:tipo => "Credito") if session[:usuario_tipo] != "Controladoria" %> </li>
+                <li class="presentation"> <%= link_to "Novo débito", new_lancamento_path(:tipo => "Debito") if session[:usuario_tipo] != "Controladoria" %> </li>
+                <li class="presentation"> <%= link_to "Débito multiplo", debito_multiplo_path(:tipo => "DebitoMult") if session[:usuario_tipo] != "Controladoria" %>  </li>
               </ul>
             </li>
 
@@ -71,17 +71,18 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Relatórios &nbsp; <b class="caret"></b></a>
               <ul class="dropdown-menu" role="menu">
-                <li role="presentation"> <%= link_to "Por conta",  por_conta_path %> </li>
+                <li role="presentation"> <%= link_to "Por conta", por_conta_path %> </li>
                 <li role="presentation"> <%= link_to "Por itens de despesa", rel_itens_de_despesa_path %> </li>
                 <li role="presentation"> <%= link_to "Gastos por itens de despesa", gastos_por_idd_path %>  </li>
-                <li role="presentation"> <%= link_to "Por lançamentos",  por_lanc_path  %>  </li>
+                <li role="presentation"> <%= link_to "Por lançamentos", por_lanc_path %>  </li>
                 <li role="presentation"> <%= link_to "Balancete", balancete_path %> </li>
 
               </ul>
             </li>
         <% elsif session[:usuario_tipo] == "Gerente" %>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Minhas contas &nbsp; <b class="caret"></b> </a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Minhas contas &nbsp; <b class="caret"></b>
+              </a>
               <ul class="dropdown-menu" role="menu">
                 <li role="presentation"> <%= link_to "Resumo", resumo_path(format: 'pdf') %> </li>
                 <li role="presentation"> <%= link_to "Detalhamento", detalhamento_path %> </li>
@@ -92,6 +93,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Departamentos &nbsp; <b class="caret"></b></a>
               <ul class="dropdown-menu" role="menu">
                 <li role="presentation"> <%= link_to "Resumo ICB", resumo_icb_path(format: 'pdf') %>  </li>
+                <!-- < li role="presentation"> <%= link_to "Resumo ICB", resumo_icb_path %>  </li> -->
               </ul>
             </li>
 
@@ -105,20 +107,20 @@
             </li>
 
         <% elsif session[:usuario_tipo] == "Diretor" %>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Lançamentos &nbsp; <b class="caret"></b> </a>
-                <ul class="dropdown-menu" role="menu">
-                  <li role="presentation">  <%= link_to "Lançamentos", lancamentos_path %>  </li>
-                  <li role="presentation">  <%= link_to "Novo crédito" , new_lancamento_path(:tipo => "Credito") if  session[:usuario_tipo] != "Controladoria"  %> </li>
-                  <li class="presentation"> <%= link_to "Novo débito",  new_lancamento_path(:tipo => "Debito")  if session[:usuario_tipo] != "Controladoria" %> </li>
-                  <li class="presentation"> <%= link_to "Débito multiplo", debito_multiplo_path(:tipo => "DebitoMult") if  session[:usuario_tipo] != "Controladoria" %>  </li>
-                </ul>
-              </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Lançamentos &nbsp; <b class="caret"></b> </a>
+              <ul class="dropdown-menu" role="menu">
+                <li role="presentation">  <%= link_to "Lançamentos", lancamentos_path %>  </li>
+                <li role="presentation">  <%= link_to "Novo crédito", new_lancamento_path(:tipo => "Credito") if session[:usuario_tipo] != "Controladoria" %> </li>
+                <li class="presentation"> <%= link_to "Novo débito", new_lancamento_path(:tipo => "Debito") if session[:usuario_tipo] != "Controladoria" %> </li>
+                <li class="presentation"> <%= link_to "Débito multiplo", debito_multiplo_path(:tipo => "DebitoMult") if session[:usuario_tipo] != "Controladoria" %>  </li>
+              </ul>
+            </li>
         <% end %>
         <li> <%= link_to "Sair", logout_path %> </li>
         </ul>
     <% end %>
-</nav>
+    </nav>
 
 
 <% if notice.present? %>

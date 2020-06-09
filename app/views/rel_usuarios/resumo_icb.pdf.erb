@@ -2,53 +2,50 @@
   <tr>
     <td class="text-left"><%= wicked_pdf_image_tag "logo_gecon.png" %> </td>
     <td></td>
-    <td align="center"><h4 class="text-center"> Resumo dos Saldos das Contas por Departamento <%= Date.today.strftime("%d/%m/%Y") %>   </h4></td>
+    <td align="center"><h4 class="text-center"> Resumo dos Saldos das Contas por
+      Departamento <%= Date.today.strftime("%d/%m/%Y") %>   </h4></td>
     <td></td>
     <td class="text-right"><%= wicked_pdf_image_tag "logo_icb_of.jpg", size: "75x75" %> </td>
   </tr>
 </table>
+
+
 <table class="table table-bordered table-striped">
   <tr>
     <td> Depto/Centro de custo</td>
     <% @departamentos.each do |dep| %>
         <td class="text-center"> <%= dep.sigla %> </td>
     <% end %>
-    <td class="text-center"> Total </td>
+    <td> Total</td>
   </tr>
-  <% @tipos_de_conta.each do |tc| %>
+  <% @linhas.each do |l| %>
       <tr>
-        <td> <%= tc.nome %></td>
-        <% @total_tc = 0 %>
-        <% @departamentos.each do |dep| %>
-            <% @total_dep = 0 %>
-            <% @result = Lancamento.joins(:conta).joins("inner join usuarios u on `contas`.usuario_id = u.id").joins("inner join departamentos d on u.departamento_id = d.id").where("conta_id in (select id from contas where tipo_de_conta_id = ?) and d.id = ?", tc,dep).pluck("sum(credito) - sum(debito)") %>
-            <% @result.each do |r| %>
-                <% if r.nil? %>
-                    <td> <%= number_to_currency(0) %> </td>
-                <% else %>
-                    <td> <%= number_to_currency(r) %> </td>
-                    <% @total_tc += r if !r.nil? %>
-                <% end %>
-            <% end %>
-        <% end %>
-        <td> <%= number_to_currency(@total_tc) %>  </td>
+        <td> <%= l[0]%> </td>
+        <td> <%= number_to_currency(l[1]) %> </td>
+        <td> <%= number_to_currency(l[2]) %> </td>
+        <td> <%= number_to_currency(l[3]) %> </td>
+        <td> <%= number_to_currency(l[4]) %> </td>
+        <td> <%= number_to_currency(l[5]) %> </td>
+        <td> <%= number_to_currency(l[6]) %> </td>
+        <td> <%= number_to_currency(l[7]) %> </td>
+        <td> <%= number_to_currency(l[8]) %> </td>
       </tr>
   <% end %>
-  <tr>
-    <td> Total</td>
-    <% @total_geral = 0 %>
-    <% @departamentos.each do |dep|  %>
-        <% @tipos_de_conta.each do |tc| %>
-            <% @result = Lancamento.joins(:conta).joins("inner join usuarios u on `contas`.usuario_id = u.id").joins("inner join departamentos d on u.departamento_id = d.id").where("conta_id in (select id from contas where tipo_de_conta_id = ?) and d.id = ?", tc,dep).pluck("sum(credito) - sum(debito)") %>
-            <% @result.each do |r| %>
-                <%  @total_dep += r if !r.nil? %>
-            <% end %>
-        <% end %>
-        <% @total_geral += @total_dep %>
-        <td> <%= number_to_currency(@total_dep) %>  </td>
-        <% @total_dep = 0 %>
-    <% end %>
-    <td> <%= number_to_currency(@total_geral) %> </td>
+
+  <td> Total</td>
+  <% @total_geral = 0 %>
+  <% @total_dep = 0  %>
+  <%  @departamentos.each do |dep| %>
+      <% @tipos_de_conta.each do |tc| %>
+          <% @result2 = Lancamento.joins(:conta).joins("inner join usuarios u on `contas`.usuario_id = u.id").joins("inner join departamentos d on u.departamento_id = d.id").where("conta_id in (select id from contas where tipo_de_conta_id = ?) and d.id = ?", tc, dep).pluck("sum(credito) - sum(debito)") %>
+          <% @result2.each do |r| %>
+              <% @total_dep += r if !r.nil? %>
+          <% end %>
+      <% end %>
+       <% @total_geral += @total_dep %>
+      <td> <%= number_to_currency(@total_dep) %>  </td>
+      <% @total_dep = 0 %>
+  <% end %>
+  <td> <%= number_to_currency(@total_geral) %> </td>
   </tr>
 </table>
-
