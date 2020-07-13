@@ -143,7 +143,7 @@ class RelatoriosController < ApplicationController
       format.xlsx {
         response.headers[
             'Content-Disposition'] = "attachment; filename=relat_gastos_por_idd.xlsx"
-        addlog("Gerado um rlatório por gastos de itens de despesa em xls")
+        addlog("Gerado um relatório por gastos de itens de despesa em xls")
       }
       format.pdf do
         render :pdf => 'gastos_itens_de_despesa',
@@ -163,7 +163,7 @@ class RelatoriosController < ApplicationController
                    left: 20,
                    right: 20
                }
-        addlog("Gerado um rlatório por gastos de itens de despesa em pdf")
+        addlog("Gerado um relatório por gastos de itens de despesa em pdf")
       end
     end
   end
