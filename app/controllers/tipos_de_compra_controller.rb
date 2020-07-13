@@ -5,7 +5,7 @@ class TiposDeCompraController < ApplicationController
   # GET /tipos_de_compra
   # GET /tipos_de_compra.json
   def index
-    @tipos_de_compra = TipoDeCompra.where(ativo: true)
+    @tipos_de_compra = TipoDeCompra.all
   end
 
   # GET /tipos_de_compra/1
@@ -29,7 +29,8 @@ class TiposDeCompraController < ApplicationController
 
     respond_to do |format|
       if @tipo_de_compra.save
-        format.html { redirect_to @tipos_de_compra, notice: 'Tipo de compra criado com sucesso.' }
+        addlog("Tipo de compra criado")
+        format.html { redirect_to @tipo_de_compra, notice: 'Tipo de compra criado com sucesso.' }
         format.json { render :show, status: :created, location: @tipo_de_compra }
       else
         format.html { render :new }
@@ -43,6 +44,7 @@ class TiposDeCompraController < ApplicationController
   def update
     respond_to do |format|
       if @tipo_de_compra.update(tipo_de_compra_params)
+        addlog("Tipo de compra atualizado")
         format.html { redirect_to @tipo_de_compra, notice: 'Tipo de compra atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @tipo_de_compra }
       else
@@ -56,6 +58,7 @@ class TiposDeCompraController < ApplicationController
   # DELETE /tipos_de_compra/1.json
   def destroy
     @tipo_de_compra.destroy
+    addlog("Tipo de compra apagado")
     respond_to do |format|
       format.html { redirect_to tipos_de_compra_url, notice: 'Tipo de compra apagado com sucesso.' }
       format.json { head :no_content }
@@ -65,11 +68,24 @@ class TiposDeCompraController < ApplicationController
   def desativa_tipodecompra
     @tipo_de_compra.ativo = false
     @tipo_de_compra.save
+    addlog("Tipo de compra desativado")
     respond_to do |format|
-      format.html { redirect_to tipos_de_compra_path, notice: "Tipo de compra desativada com sucesso" }
+      format.html { redirect_to tipos_de_compra_path, notice: "Tipo de compra desativado com sucesso" }
       format.json { head :no_content }
     end
   end
+
+  def ativa_tipodecompra
+    set_tipo_de_compra
+    @tipo_de_compra.ativo = true
+    @tipo_de_compra.save
+    addlog("Tipo de compra ativado")
+    respond_to do |format|
+      format.html { redirect_to tipos_de_compra_path, notice: "Tipo de compra ativado com sucesso" }
+      format.json { head :no_content }
+    end
+  end
+
 
 
   private

@@ -44,7 +44,13 @@
         <td class="text-center"><%= link_to 'Mostrar', tcomp, class: 'btn btn-primary active' %></td>
         <% if session[:usuario_tipo] != "Controladoria" %>
             <td class="text-center"><%= link_to 'Editar', edit_tipo_de_compra_path(tcomp), class: 'btn btn-default' %></td>
-            <td class="text-center"><%= link_to 'Desativar', desativa_tipodecompra_path(tcomp), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+            <td class="text-center">
+              <% if tcomp.ativo == true %>
+                  <%= link_to 'Desativar', desativa_tipodecompra_path(tcomp), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %>
+              <% else %>
+                  <%= link_to 'Ativar', ativa_tipodecompra_path(tcomp), data: { confirm: 'Tem certeza?' }, class: 'btn btn-success active' %>
+              <% end %>
+            </td>
         <% end %>
       </tr>
     <% end %>

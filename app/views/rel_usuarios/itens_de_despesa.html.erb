@@ -1,3 +1,18 @@
+<script type="text/javascript">
+
+    $('form').submit(function(e) {
+        inicio = $('#inicio').val();
+        fim = $('#fim').val();
+        if (fim < inicio) {
+            alert('Escolha uma data válida');
+            e.preventDefault(e);
+        }
+    });
+
+</script>
+
+
+
 <h2> Relatório de itens de despesa </h2>
 
     <%= form_tag result_idd_path, method: :get do %>

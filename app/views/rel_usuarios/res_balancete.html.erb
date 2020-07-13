@@ -25,8 +25,17 @@
   <% end %>
 </table>
 
-<div>
-<h4 class="text-right"> Saldo Total: <%= number_to_currency(@total) %>  </h4>
+
+<div align="right">
+<h4> Saldo Total:
+  <% if @total < 0 %>
+      <h4 class="text-danger font-weight-bold"> <%= number_to_currency(@total)  %> </h4>
+  <% elsif @total > 0 %>
+      <h4 class="text-primary font-weight-bold"> <%= number_to_currency(@total)  %> </h4>
+  <% else %>
+      <h4 class="font-weight-bold"> <%= number_to_currency(@total)  %> </h4>
+  <% end %>
+</h4>
 </div>
 
 <%= link_to "Gerar PDF", res_balancete_path(grupo_id: params[:grupo_id], fim: params[:fim],  format:'pdf' ), class: 'btn btn-primary active' %>

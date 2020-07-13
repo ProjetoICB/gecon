@@ -42,3 +42,15 @@
       </tr>
   <% end %>
 </table>
+
+<div align="right">
+  <h4> Saldo:
+    <% if @total < 0 %>
+        <h4  class="text-danger font-weight-bold"> <%= number_to_currency(@total)  %> </h4>
+    <% elsif @total > 0 %>
+        <h4 class="text-primary font-weight-bold"> <%= number_to_currency(@total)  %> </h4>
+    <% else %>
+        <h4 class="font-weight-bold"> <%= number_to_currency(@total)  %> </h4>
+    <% end %>
+  </h4>
+</div>

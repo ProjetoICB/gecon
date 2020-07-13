@@ -1,3 +1,16 @@
+<script type="text/javascript">
+
+    $('form').submit(function(e) {
+        inicio = $('#inicio').val();
+        fim = $('#fim').val();
+        if (fim < inicio || inicio == "" && fim == "") {
+            alert('Escolha uma data válida');
+            e.preventDefault(e);
+        }
+    });
+
+</script>
+
 <h2>Detalhamento por Contas </h2>
 
   <%= form_tag result_detalhamento_path(format: 'pdf'), method: :get do %>

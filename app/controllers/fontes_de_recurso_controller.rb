@@ -5,7 +5,7 @@ class FontesDeRecursoController < ApplicationController
   # GET /fontes_de_recurso
   # GET /fontes_de_recurso.json
   def index
-    @fontes_de_recurso = FonteDeRecurso.where(ativo: true)
+    @fontes_de_recurso = FonteDeRecurso.all
   end
 
   # GET /fontes_de_recurso/1
@@ -29,6 +29,7 @@ class FontesDeRecursoController < ApplicationController
 
     respond_to do |format|
       if @fonte_de_recurso.save
+        addlog("Fonte e recurso criada")
         format.html { redirect_to @fonte_de_recurso, notice: 'Fonte de recurso criado com sucesso.' }
         format.json { render :show, status: :created, location: @fonte_de_recurso }
       else
@@ -43,6 +44,7 @@ class FontesDeRecursoController < ApplicationController
   def update
     respond_to do |format|
       if @fonte_de_recurso.update(fonte_de_recurso_params)
+        addlog("Fonte de recurso atualizada")
         format.html { redirect_to @fonte_de_recurso, notice: 'Fonte de recurso atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @fonte_de_recurso }
       else
@@ -56,6 +58,7 @@ class FontesDeRecursoController < ApplicationController
   # DELETE /fontes_de_recurso/1.json
   def destroy
     @fonte_de_recurso.destroy
+    addlog("Fonte de recurso apagada")
     respond_to do |format|
       format.html { redirect_to fontes_de_recurso_url, notice: 'Fonte de recurso apagado com sucesso.' }
       format.json { head :no_content }
@@ -65,12 +68,24 @@ class FontesDeRecursoController < ApplicationController
   def desativa_fontederecurso
     @fonte_de_recurso.ativo = false
     @fonte_de_recurso.save
+    addlog("Fonte de recurso desativada")
     respond_to do |format|
-      format.html { redirect_to fontes_de_recurso_path, notice: "Fonte de recurso desatuvada com sucesso" }
+      format.html { redirect_to fontes_de_recurso_path, notice: "Fonte de recurso desativada com sucesso" }
       format.json { head :no_content}
     end
   end
 
+
+  def ativa_fontederecurso
+    set_fonte_de_recurso
+    @fonte_de_recurso.ativo = true
+    @fonte_de_recurso.save
+    addlog("Fonte de recurso ativada")
+    respond_to do |format|
+      format.html { redirect_to fontes_de_recurso_path, notice: "Fonte de recurso ativada com sucesso" }
+      format.json { head :no_content}
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

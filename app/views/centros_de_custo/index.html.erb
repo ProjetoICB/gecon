@@ -46,7 +46,13 @@
         <td class="text-center"><%= link_to 'Mostrar', ccusto, class: 'btn btn-primary active' %></td>
         <% if session[:usuario_tipo] != "Controladoria" %>
             <td class="text-center"><%= link_to 'Editar', edit_centro_de_custo_path(ccusto), class:'btn btn-default' %></td>
-            <td class="text-center"><%= link_to 'Desativar',  desativa_centrodecusto_path(ccusto), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+            <td class="text-center">
+              <% if ccusto.ativo == true %>
+                <%= link_to 'Desativar',  desativa_centrodecusto_path(ccusto), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %>
+              <% else %>
+                <%= link_to 'Ativar',  ativa_centrodecusto_path(ccusto), data: { confirm: 'Tem certeza?' }, class: 'btn btn-success active' %>
+            <% end %>
+            </td>
         <% end %>
       </tr>
     <% end %>

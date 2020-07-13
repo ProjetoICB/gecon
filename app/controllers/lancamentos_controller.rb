@@ -97,7 +97,7 @@ class LancamentosController < ApplicationController
       @parar = "S"
     end
 
-    # aqui vai entrar a logica da criação do lançamento multipço
+    # aqui vai entrar a logica da criação do lançamento multiplo
     if @parar == "S"
       redirect_to lancamentos_path(:atual => "Sim"), notice: "Impossível fazer esse lançamento multiplo. Contas de débito e/ou credito repetidas"
     else
@@ -238,6 +238,7 @@ class LancamentosController < ApplicationController
       ld.observacao = observacao
       ld.debito = v8
       ld.save
+      addlog("Criado um débito múltiplo")
       redirect_to lancamentos_path(:atual => "Sim"), notice: "Lançamentos criados com sucesso"
     end
   end
@@ -318,6 +319,8 @@ class LancamentosController < ApplicationController
         @lancamentos =  Lancamento.joins(:conta).where("contas.ativo" => true).includes(:fornecedor).includes(:item_de_despesa).includes(:item_de_receita).includes(:tipo_de_compra).includes(:transferencia).order("lancamentos.id desc")
       elsif params[:especie] ==  "Inativas"
         @lancamentos =  Lancamento.joins(:conta).where("contas.ativo" => false).includes(:fornecedor).includes(:item_de_despesa).includes(:item_de_receita).includes(:tipo_de_compra).includes(:transferencia).order("lancamentos.id desc")
+      else
+        @lancamentos =  Lancamento.joins(:conta).includes(:fornecedor).includes(:item_de_despesa).includes(:item_de_receita).includes(:tipo_de_compra).includes(:transferencia).order("lancamentos.id desc")
       end
     end
   end
@@ -358,6 +361,11 @@ class LancamentosController < ApplicationController
 
     respond_to do |format|
       if @lancamento.save
+        if @lancamento.tipo == "Credito"
+          addlog("Criado um lançamento de crédito")
+        elsif @lancamento.tipo == "Debito"
+          addlog("Criado um lançamento de débito")
+        end
         format.html { redirect_to @lancamento, notice: 'Lançamento criado com sucesso.' }
         format.json { render :show, status: :created, location: @lancamento }
       else
@@ -372,6 +380,11 @@ class LancamentosController < ApplicationController
   def update
     respond_to do |format|
       if @lancamento.update(lancamento_params)
+        if @lancamento.debito_cancelado == true
+          addlog("Débito foi cancelado")
+        else
+          addlog("Lançamento atualizado")
+        end
         format.html { redirect_to @lancamento, notice: 'Lançamento atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @lancamento }
       else

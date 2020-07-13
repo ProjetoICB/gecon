@@ -48,7 +48,15 @@
         <td class="text-center"><%= link_to 'Mostrar', item_de_receita, class: 'btn btn-primary active' %></td>
         <% if session[:usuario_tipo] != "Controladoria" %>
             <td class="text-center"><%= link_to 'Editar', edit_item_de_receita_path(item_de_receita), class: 'btn btn-default' %></td>
-            <td class="text-center"><%= link_to 'Desativar', desativa_item_receita_path(item_de_receita), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+            <td class="text-center">
+              <% if item_de_receita.ativo == true %>
+                  <%= link_to 'Desativar', desativa_item_receita_path(item_de_receita), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %>
+              <% else %>
+                  <%= link_to 'Ativar', ativa_item_receita_path(item_de_receita), data: { confirm: 'Tem certeza?' }, class: 'btn btn-success active' %>
+                <% end %>
+
+            </td>
+
         <% end %>
       </tr>
     <% end %>

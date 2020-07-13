@@ -5,7 +5,7 @@ class CentrosDeCustoController < ApplicationController
   # GET /centros_de_custo
   # GET /centros_de_custo.json
   def index
-    @centros_de_custo = CentroDeCusto.where(ativo: true)
+    @centros_de_custo = CentroDeCusto.all
   end
 
   # GET /centros_de_custo/1
@@ -44,6 +44,7 @@ class CentrosDeCustoController < ApplicationController
   def update
     respond_to do |format|
       if @centro_de_custo.update(centro_de_custo_params)
+        addlog("Atualizou um centro de custo")
         format.html { redirect_to @centro_de_custo, notice: 'Centro de custo foi atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @centro_de_custo }
       else
@@ -57,6 +58,7 @@ class CentrosDeCustoController < ApplicationController
   # DELETE /centros_de_custo/1.json
   def destroy
     @centro_de_custo.destroy
+    addlog("Apagou um centro de custo")
     respond_to do |format|
       format.html { redirect_to centros_de_custo_url, notice: 'Centro de custo foi apaggado com sucesso.' }
       format.json { head :no_content }
@@ -66,12 +68,23 @@ class CentrosDeCustoController < ApplicationController
   def desativa_centrodecusto
     @centro_de_custo.ativo = false
     @centro_de_custo.save
+    addlog("Desativou um centro de custo")
     respond_to do |format|
       format.html { redirect_to centros_de_custo_path, notice:  "Centro de custo desativado com sucesso"}
       format.json { head :no_content }
     end
   end
 
+  def ativa_centrodecusto
+    set_centro_de_custo
+    @centro_de_custo.ativo = true
+    @centro_de_custo.save
+    addlog("Ativou um centro de custo")
+    respond_to do |format|
+      format.html { redirect_to centros_de_custo_path, notice:  "Centro de custo desativado com sucesso"}
+      format.json { head :no_content }
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

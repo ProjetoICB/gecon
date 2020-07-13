@@ -5,7 +5,7 @@ class UsuariosController < ApplicationController
   # GET /usuarios
   # GET /usuarios.json
   def index
-    @usuarios = Usuario.where(ativo: true)
+    @usuarios = Usuario.all
   end
 
   # GET /usuarios/1
@@ -31,6 +31,7 @@ class UsuariosController < ApplicationController
 
     respond_to do |format|
       if @usuario.save
+        addlog("Criou um usuário")
         format.html { redirect_to @usuario, notice: 'Usuário cadastrado com sucesso .' }
         format.json { render :show, status: :created, location: @usuario }
       else
@@ -49,6 +50,7 @@ class UsuariosController < ApplicationController
           if !@usuario.departamentos.empty?
             @usuario.tipo = "Gerente"
             @usuario.save
+            addlog("Editou um usuario")
           end
         end
 
@@ -65,6 +67,7 @@ class UsuariosController < ApplicationController
   # DELETE /usuarios/1.json
   def destroy
     @usuario.destroy
+    addlog("Apagou um usuário")
     respond_to do |format|
       format.html { redirect_to usuarios_url, notice: 'Usuario apagado com sucesso.' }
       format.json { head :no_content }
@@ -75,11 +78,26 @@ class UsuariosController < ApplicationController
   def desativa_usuario
     @usuario.ativo = false
     @usuario.save
+    addlog("Desativou um usuário")
     respond_to do |format|
       format.html { redirect_to usuarios_path, notice: "Usuário desativado com sucesso" }
       format.json { head :no-content }
     end
   end
+
+  def ativa_usuario
+    set_usuario
+    @usuario.ativo = true
+    @usuario.save
+    addlog("Reativou um usuário")
+    respond_to do |format|
+      format.html { redirect_to usuarios_path, notice: "Usuário ativado com sucesso" }
+      format.json { head :no-content }
+    end
+  end
+
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

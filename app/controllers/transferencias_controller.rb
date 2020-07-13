@@ -186,12 +186,13 @@ class TransferenciasController < ApplicationController
           end
           redirect_to transferencias_path, notice: "Transferências realizadas com sucesso"
         else
-          redirect_to transferencias_path, notice: "Transferencias não realizadas! Porcentagens maiores que 100%! "
+          redirect_to transferencias_path, notice: "Transferencias não realizadas! Total de porcentagens maior que 100%! "
         end
       end
     else
       redirect_to transferencias_path, notice: "Impossivel fazer crédito na mesma conta de débito"
     end
+    addlog("Criada uma transferência múltipla")
   end
 
 
@@ -313,7 +314,7 @@ class TransferenciasController < ApplicationController
         else
           cria_debito
           cria_credito
-
+          addlog("Criada uma transferência simples")
 
           format.html { redirect_to @transferencia, notice: 'Transferência criada com sucesso .' }
           format.json { render :show, status: :created, location: @transferencia }
@@ -341,6 +342,7 @@ class TransferenciasController < ApplicationController
           @transferencia.save
           editadebito(contadebito)
           editacredito(contacredito)
+          addlog("Transferência simples alterada")
           format.html { redirect_to @transferencia, notice: 'Transferência atualizada com sucesso.' }
           format.json { render :show, status: :ok, location: @transferencia }
       else
@@ -364,8 +366,10 @@ class TransferenciasController < ApplicationController
       lancs.each do |lan|
         lan.destroy
       end
+      addlog("Transferência múltipla apagada")
     else
       @transferencia.destroy
+      addlog("Transferência simples apagada")
     end
 
     respond_to do |format|

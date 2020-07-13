@@ -6,14 +6,16 @@ class SessionController < ApplicationController
 
   def create
     usuario = Usuario.find_by(email: params[:session][:email].downcase)
-    if usuario.ativo == false
+
+
+    if usuario && usuario.ativo == false
       flash.now[:notice] = "Você não tem permissão para acessar esse sistema"
       render 'new'
     elsif usuario && usuario.authenticate(params[:session][:password])
       log_in usuario
       redirect_to home_index_path
     else
-      flash.now[:notice] = "Tente outra vez"
+      flash.now[:notice] = "Usuário ou senha inválidos"
       render 'new'
     end
   end

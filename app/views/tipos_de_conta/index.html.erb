@@ -48,7 +48,13 @@
         <td class="text-center"><%= link_to 'Mostrar', tipo_de_conta, class: 'btn btn-primary active' %></td>
         <% if session[:usuario_tipo] != "Controladoria" %>
             <td class="text-center"><%= link_to 'Editar', edit_tipo_de_conta_path(tipo_de_conta), class: 'btn btn-default' %></td>
-            <td class="text-center"><%= link_to 'Desativar', desativa_tipo_conta_path(tipo_de_conta), data: { confirm: 'Tem certeza?' } , class: 'btn btn-danger active' %></td>
+            <td class="text-center">
+              <% if tipo_de_conta.ativo == true %>
+                  <%= link_to 'Desativar', desativa_tipo_conta_path(tipo_de_conta), data: { confirm: 'Tem certeza?' } , class: 'btn btn-danger active' %>
+              <% else %>
+                  <%= link_to 'Ativar', ativa_tipo_conta_path(tipo_de_conta), data: { confirm: 'Tem certeza?' } , class: 'btn btn-success active' %>
+              <% end %>
+            </td>
         <% end %>
       </tr>
     <% end %>
