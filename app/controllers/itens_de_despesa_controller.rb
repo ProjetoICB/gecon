@@ -5,7 +5,7 @@ class ItensDeDespesaController < ApplicationController
   # GET /itens_de_despesa
   # GET /itens_de_despesa.json
   def index
-    @itens_de_despesa = ItemDeDespesa.where(ativo:  true)
+    @itens_de_despesa = ItemDeDespesa.all
   end
 
   # GET /itens_de_despesa/1
@@ -29,6 +29,7 @@ class ItensDeDespesaController < ApplicationController
 
     respond_to do |format|
       if @item_de_despesa.save
+        addlog("Item de despesa criado")
         format.html { redirect_to @item_de_despesa, notice: 'Item de despesa criado com sucesso.' }
         format.json { render :show, status: :created, location: @item_de_despesa }
       else
@@ -43,6 +44,7 @@ class ItensDeDespesaController < ApplicationController
   def update
     respond_to do |format|
       if @item_de_despesa.update(item_de_despesa_params)
+        addlog("Item de despesa atualizado")
         format.html { redirect_to @item_de_despesa, notice: 'Item de despesa was alterado com sucesso.' }
         format.json { render :show, status: :ok, location: @item_de_despesa }
       else
@@ -56,6 +58,7 @@ class ItensDeDespesaController < ApplicationController
   # DELETE /itens_de_despesa/1.json
   def destroy
     @item_de_despesa.destroy
+    addlog("Item de despesa apagado")
     respond_to do |format|
       format.html { redirect_to itens_de_despesa_url, notice: 'Item de despesa apagado com sucesso.' }
       format.json { head :no_content }
@@ -65,12 +68,24 @@ class ItensDeDespesaController < ApplicationController
   def desativa_item_despesa
     @item_de_despesa.ativo = false
     @item_de_despesa.save
+    addlog("Item de despesa desativado")
     respond_to do |format|
       format.html { redirect_to itens_de_despesa_path, notice: 'Item de despesa desativado com sucesso'  }
       format.json { head :no_content }
     end
   end
 
+
+  def ativa_item_despesa
+    set_item_de_despesa
+    @item_de_despesa.ativo = true
+    @item_de_despesa.save
+    addlog("Item de despesa ativado")
+    respond_to do |format|
+      format.html { redirect_to itens_de_despesa_path, notice: 'Item de despesa ativado com sucesso'  }
+      format.json { head :no_content }
+    end
+  end
 
 
   private

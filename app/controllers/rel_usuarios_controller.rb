@@ -105,6 +105,7 @@ class RelUsuariosController < ApplicationController
         response.headers[
             'Content-Disposition'] = "attachment; filename=itens_de_despesa.xlsx"
       }
+      addlog("Gerado um relatório de itens de despesa em xls")
       format.pdf do
         render :pdf => 'itens_de_despesa',
                :layout => 'layouts/padrao.html.erb',
@@ -123,6 +124,7 @@ class RelUsuariosController < ApplicationController
                    left: 20,
                    right: 20
                }
+        addlog("Gerado um relatório de itens de despesa em pdf")
       end
     end
   end
@@ -208,6 +210,7 @@ class RelUsuariosController < ApplicationController
                    left: 20,
                    right: 20
                }
+        addlog("Gerado um balancete em pdf")
       end
     end
   end
@@ -307,6 +310,7 @@ class RelUsuariosController < ApplicationController
                    left: 20,
                    right: 20
                }
+        addlog("Gerado um resumo em pdf")
       end
     end
   end

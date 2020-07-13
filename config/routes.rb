@@ -44,15 +44,29 @@ Rails.application.routes.draw do
   #desativações
   get 'desativa_conta/:id' => 'contas#desativa_conta', as: 'desativar_conta'
   get 'desativa_usuario/:id' => 'usuarios#desativa_usuario', as: 'desativar_usuario'
-  get 'desativa_departamento/:id' => 'deparntamentos#desativa_departamento', as: 'desativar_departamento'
+  get 'desativa_departamento/:id' => 'departamentos#desativa_departamento', as: 'desativar_departamento'
   get 'desativa_tipodecompra/:id' => 'tipos_de_compra#desativa_tipodecompra', as: 'desativa_tipodecompra'
   get 'desativa_fontederecurso/:id' => 'fontes_de_recurso#desativa_fontederecurso', as: 'desativa_fontederecurso'
   get 'desativa_centrodecusto/:id' => 'centros_de_custo#desativa_centrodecusto', as: 'desativa_centrodecusto'
   get 'desativa_grupo/:id' => 'grupos#desativa_grupo', as: 'desativa_grupo'
   get 'desativa_tipo_conta/:id' => 'tipos_de_conta#desativa_tipo_conta', as: 'desativa_tipo_conta'
-  get 'desativa_fornecedor/:id' => 'fornecedores#desativa_fornecedor' , as: 'deativa_fornecedor'
-  get 'deativa_item_despesa/:id' => 'itens_de_despesa#desativa_item_despesa', as: 'desativa_item_despesa'
-  get 'deativa_item_receita/:id' => 'itens_de_receita#desativa_item_receita', as: 'desativa_item_receita'
+  get 'desativa_fornecedor/:id' => 'fornecedores#desativa_fornecedor' , as: 'desativa_fornecedor'
+  get 'desativa_item_despesa/:id' => 'itens_de_despesa#desativa_item_despesa', as: 'desativa_item_despesa'
+  get 'desativa_item_receita/:id' => 'itens_de_receita#desativa_item_receita', as: 'desativa_item_receita'
+
+  # ativações
+  get 'ativa_usuario/:id' => 'usuarios#ativa_usuario', as: 'ativar_usuario'
+  get 'ativa_centrodecusto/:id' => 'centros_de_custo#ativa_centrodecusto', as: 'ativa_centrodecusto'
+  get 'ativa_conta/:id' => 'contas#ativa_conta', as: 'ativar_conta'
+  get 'ativa_departamento/:id' => 'departamentos#ativa_departamento', as: 'ativar_departamento'
+  get 'ativa_fontederecurso/:id' => 'fontes_de_recurso#ativa_fontederecurso', as: 'ativa_fontederecurso'
+  get 'ativa_fornecedor/:id' => 'fornecedores#ativa_fornecedor' , as: 'ativa_fornecedor'
+  get 'ativa_grupo/:id' => 'grupos#ativa_grupo', as: 'ativa_grupo'
+  get 'ativa_item_despesa/:id' => 'itens_de_despesa#ativa_item_despesa', as: 'ativa_item_despesa'
+  get 'ativa_item_receita/:id' => 'itens_de_receita#ativa_item_receita', as: 'ativa_item_receita'
+  get 'ativa_tipodecompra/:id' => 'tipos_de_compra#ativa_tipodecompra', as: 'ativa_tipodecompra'
+  get 'ativa_tipo_conta/:id' => 'tipos_de_conta#ativa_tipo_conta', as: 'ativa_tipo_conta'
+
 
 
   #relatórios

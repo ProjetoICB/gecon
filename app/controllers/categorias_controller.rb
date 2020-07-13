@@ -28,6 +28,7 @@ class CategoriasController < ApplicationController
 
     respond_to do |format|
       if @categoria.save
+        addlog("Criou uma categoria")
         format.html { redirect_to @categoria, notice: 'Categoria foi criada com sucesso.' }
         format.json { render :show, status: :created, location: @categoria }
       else
@@ -42,6 +43,7 @@ class CategoriasController < ApplicationController
   def update
     respond_to do |format|
       if @categoria.update(categoria_params)
+        addlog("Atualizou uma categoria")
         format.html { redirect_to @categoria, notice: 'Categoria foi atualizada com sucesso.' }
         format.json { render :show, status: :ok, location: @categoria }
       else
@@ -55,6 +57,7 @@ class CategoriasController < ApplicationController
   # DELETE /categorias/1.json
   def destroy
     @categoria.destroy
+    addlog("Apagou uma categoria")
     respond_to do |format|
       format.html { redirect_to categorias_url, notice: 'Categoria foi apagada com sucessi.' }
       format.json { head :no_content }

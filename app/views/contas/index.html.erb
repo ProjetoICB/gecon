@@ -88,9 +88,15 @@
         <td class="text-center"><%= link_to "Mostrar", conta, class: 'btn btn-primary active' %></td>
         <% if session[:usuario_tipo] != "Controladoria" %>
             <td class="text-center"><%= link_to "Editar", edit_conta_path(conta), class: 'btn btn-default' %></td>
-            <td class="text-center"> <%= link_to "Desativar", desativar_conta_path(conta), data: { confirm: 'Tem certeza?' },  class: 'btn btn-danger active'  %> </td>
-            <td class="text-center"><%= link_to "Novo crédito" , new_lancamento_path(:tipo => "Crédito",:conta_id =>  conta.id), class: 'btn btn-primary active'  %></td>
-            <td class="text-center"><%= link_to "Novo débito",  new_lancamento_path(:tipo => "Débito", :conta_id => conta.id), class: 'btn btn-danger active' %></td>
+            <td class="text-center">
+              <% if conta.ativo == true %>
+                  <%= link_to "Desativar", desativar_conta_path(conta), data: { confirm: 'Tem certeza?' },  class: 'btn btn-danger active'  %>
+              <% else %>
+                  <%= link_to "Ativar", ativar_conta_path(conta), data: { confirm: 'Tem certeza?' },  class: 'btn btn-success active'  %>
+              <% end %>
+            </td>
+            <td class="text-center"><%= link_to "Novo crédito" , new_lancamento_path(:tipo => "Credito",:conta_id =>  conta.id), class: 'btn btn-primary active'  %></td>
+            <td class="text-center"><%= link_to "Novo débito",  new_lancamento_path(:tipo => "Debito", :conta_id => conta.id), class: 'btn btn-danger active' %></td>
         <% end %>
       </tr>
     <% end %>

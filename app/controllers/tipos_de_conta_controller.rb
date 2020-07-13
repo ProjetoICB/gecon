@@ -5,7 +5,7 @@ class TiposDeContaController < ApplicationController
   # GET /tipos_de_conta
   # GET /tipos_de_conta.json
   def index
-    @tipos_de_conta = TipoDeConta.where(ativo:  true)
+    @tipos_de_conta = TipoDeConta.all
   end
 
   # GET /tipos_de_conta/1
@@ -29,6 +29,7 @@ class TiposDeContaController < ApplicationController
 
     respond_to do |format|
       if @tipo_de_conta.save
+        addlog("Tipo de conta criado")
         format.html { redirect_to @tipo_de_conta, notice: 'Tipo de conta criado com sucesso' }
         format.json { render :show, status: :created, location: @tipo_de_conta }
       else
@@ -43,6 +44,7 @@ class TiposDeContaController < ApplicationController
   def update
     respond_to do |format|
       if @tipo_de_conta.update(tipo_de_conta_params)
+        addlog("Tipo de conta atualizado")
         format.html { redirect_to @tipo_de_conta, notice: 'Tipo de atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @tipo_de_conta }
       else
@@ -56,6 +58,7 @@ class TiposDeContaController < ApplicationController
   # DELETE /tipos_de_conta/1.json
   def destroy
     @tipo_de_conta.destroy
+    addlog("Tipo de conta apagado")
     respond_to do |format|
       format.html { redirect_to tipos_de_conta_url, notice: 'Tipo de conta apagado com sucesso' }
       format.json { head :no_content }
@@ -65,11 +68,24 @@ class TiposDeContaController < ApplicationController
   def desativa_tipo_conta
     @tipo_de_conta.ativo = false
     @tipo_de_conta.save
+    addlog("Tipo de conta desativado")
     respond_to do |format|
       format.html { redirect_to tipo_de_contas_path, notice:  "Tipo de conta desativado com sucesso" }
       format.json { head :no_content }
     end
   end
+
+  def ativa_tipo_conta
+    set_tipo_de_conta
+    @tipo_de_conta.ativo = true
+    @tipo_de_conta.save
+    addlog("Tipo de conta ativado")
+    respond_to do |format|
+      format.html { redirect_to tipo_de_contas_path, notice:  "Tipo de conta ativado com sucesso" }
+      format.json { head :no_content }
+    end
+  end
+
 
 
   private

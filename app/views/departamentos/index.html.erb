@@ -46,7 +46,13 @@
         <td class="text-center"><%= link_to 'Mostrar', departamento, class: 'btn btn-primary active' %></td>
         <% if session[:usuario_tipo] != "Controladoria" %>
             <td class="text-center"><%= link_to 'Editar', edit_departamento_path(departamento), class: 'btn btn-default' %></td>
-            <td class="text-center"><%= link_to 'Desativar', desativar_departamento_path(departamento), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active'  %></td>
+            <td class="text-center">
+              <% if departamento.ativo == true %>
+                  <%= link_to 'Desativar', desativar_departamento_path(departamento), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active'  %>
+              <% else %>
+                  <%= link_to 'Ativar', ativar_departamento_path(departamento), data: { confirm: 'Tem certeza?' }, class: 'btn btn-success active'  %>
+              <% end %>
+            </td>
         <% end %>
       </tr>
     <% end %>

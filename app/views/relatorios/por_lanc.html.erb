@@ -6,6 +6,17 @@
         search_contains: true,
         width: '450px'
     });
+
+    $('form').submit(function(e) {
+        inicio = $('#inicio').val();
+        fim = $('#fim').val();
+        if (fim < inicio) {
+            alert('Escolha uma data válida');
+            e.preventDefault(e);
+        }
+    });
+
+
 </script>
 
 <h3> Relatório por lançamentos </h3>

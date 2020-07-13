@@ -93,7 +93,17 @@
           <% end %>
         </table>
         <% end %>
-        <p class="text-right">  Total :  <%= number_to_currency(@saldo) %> </p>
+    <div align="right">
+        <h4>  Total :
+          <% if @saldo < 0 %>
+            <h4 class="text-danger font-weight-bold"> <%= number_to_currency(@saldo) %> </h4>
+          <% elsif @saldo > 0 %>
+              <h4 class="text-primary font-weight-bold"> <%= number_to_currency(@saldo) %> </h4>
+          <% else %>
+              <h4 class="font-weight-bold"> <%= number_to_currency(@saldo) %> </h4>
+          <% end %>
+        </h4>
+    </div>
     <p style='page-break-after:always;'></p>
 <% end %>
 

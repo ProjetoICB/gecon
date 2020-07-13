@@ -49,7 +49,14 @@
         <td class="text-center"> <%= link_to 'Mostrar', item_de_despesa , class: 'btn btn-primary active' %></td>
         <% if session[:usuario_tipo] != "Controladoria" %>
             <td class="text-center"> <%= link_to 'Editar', edit_item_de_despesa_path(item_de_despesa), class: 'btn btn-default' %></td>
-            <td><%= link_to 'Desativar', desativa_item_despesa_path(item_de_despesa),  data: { confirm: 'Tem certeza?' } , class: 'btn btn-danger active' %></td>
+            <td class="text-center">
+              <% if item_de_despesa.ativo == true %>
+                  <%= link_to 'Desativar', desativa_item_despesa_path(item_de_despesa),  data: { confirm: 'Tem certeza?' } , class: 'btn btn-danger active' %>
+              <% else %>
+                  <%= link_to 'Ativar', ativa_item_despesa_path(item_de_despesa),  data: { confirm: 'Tem certeza?' } , class: 'btn btn-success active' %>
+              <% end %>
+            </td>
+
         <% end %>
       </tr>
     <% end %>

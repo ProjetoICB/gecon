@@ -78,7 +78,7 @@ class ContasController < ApplicationController
 
 
   def index
-    @contas = Conta.where(ativo: true).includes(:lancamentos).includes(:tipo_de_conta).includes(:usuario).includes(:centro_de_custo).includes(:fonte_de_recurso)
+    @contas = Conta.all.includes(:lancamentos).includes(:tipo_de_conta).includes(:usuario).includes(:centro_de_custo).includes(:fonte_de_recurso)
   end
 
   # GET /contas/1
@@ -111,6 +111,7 @@ class ContasController < ApplicationController
 
     respond_to do |format|
       if @conta.save
+        addlog("Criou uma conta")
         format.html { redirect_to @conta, notice: 'Conta criada com sucesso.' }
         format.json { render :show, status: :created, location: @conta }
       else
@@ -125,6 +126,7 @@ class ContasController < ApplicationController
   def update
     respond_to do |format|
       if @conta.update(conta_params)
+        addlog("Atualizou uma conta")
         format.html { redirect_to @conta, notice: 'Conta atualizada com sucesso.' }
         format.json { render :show, status: :ok, location: @conta }
       else
@@ -138,6 +140,7 @@ class ContasController < ApplicationController
   # DELETE /contas/1.json
   def destroy
     @conta.destroy
+    addlog("Apagou uma conta")
     respond_to do |format|
       format.html { redirect_to contas_url, notice: 'Conta apagada com sucesso.' }
       format.json { head :no_content }
@@ -147,12 +150,24 @@ class ContasController < ApplicationController
   def desativa_conta
     @conta.ativo = false
     @conta.save
+    addlog("Desativou uma conta")
     respond_to do |format|
       format.html {redirect_to contas_path, notice: 'Conta desativada com sucesso' }
       format.json { head :no-content }
      end
-
   end
+
+  def ativa_conta
+    set_conta
+    @conta.ativo = true
+    @conta.save
+    addlog("Ativou uma conta")
+    respond_to do |format|
+      format.html {redirect_to contas_path, notice: 'Conta ativada com sucesso' }
+      format.json { head :no-content }
+    end
+  end
+
 
 
   private

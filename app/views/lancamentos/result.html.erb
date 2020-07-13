@@ -1,18 +1,9 @@
-<script type="text/javascript">
-
-
-  $('#nova_busca').click(function(event) {
-      $('#painel').show("slow");
-      event.preventDefault();
-  });
-</script>
-
 <div id="painel" style="display: none">
   <%= render partial: "busca" %>
 </div>
 
 
-<%= link_to "Nova busca", "#", id: "nova_busca", class: "btn btn-link" %>
+<%= link_to "Nova busca", busca_path , class: 'btn btn-link' %>
 
 <table id="lancamento" class="table table-striped table-bordered">
   <thead>

@@ -5,7 +5,7 @@ class DepartamentosController < ApplicationController
   # GET /departamentos
   # GET /departamentos.json
   def index
-    @departamentos = Departamento.where(ativo: true)
+    @departamentos = Departamento.all
   end
 
   # GET /departamentos/1
@@ -29,6 +29,7 @@ class DepartamentosController < ApplicationController
 
     respond_to do |format|
       if @departamento.save
+        addlog("Criou um departamento")
         format.html { redirect_to @departamento, notice: 'Departamento criado com sucesso.' }
         format.json { render :show, status: :created, location: @departamento }
       else
@@ -43,6 +44,7 @@ class DepartamentosController < ApplicationController
   def update
     respond_to do |format|
       if @departamento.update(departamento_params)
+        addlog("Atualizou um departamento")
         format.html { redirect_to @departamento, notice: 'Departamento atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @departamento }
       else
@@ -56,6 +58,7 @@ class DepartamentosController < ApplicationController
   # DELETE /departamentos/1.json
   def destroy
     @departamento.destroy
+    addlog("Apagou um departamento")
     respond_to do |format|
       format.html { redirect_to departamentos_url, notice: 'Departamento apagado com sucesso.' }
       format.json { head :no_content }
@@ -65,12 +68,24 @@ class DepartamentosController < ApplicationController
   def desativa_departamento
     @departamento.ativo =  false
     @departamento.save
+    addlog("Desativou um departamento")
     respond_to do |format|
       format.html { redirect_to departamentos_path, notice: "Departamento desativado com sucesso"  }
       format.json { head :no_content }
     end
   end
 
+
+  def ativa_departamento
+    set_departamento
+    @departamento.ativo =  true
+    @departamento.save
+    addlog("Ativou um departamento")
+    respond_to do |format|
+      format.html { redirect_to departamentos_path, notice: "Departamento ativado com sucesso"  }
+      format.json { head :no_content }
+    end
+  end
 
 
   private

@@ -33,7 +33,7 @@
   <%= @lancamento.tipo %>
 </p>
 
-<% if @lancamento.tipo == "Crédito" %>
+<% if @lancamento.tipo == "Credito" %>
     <p>
       <strong>Crédito:</strong>
       <%= number_to_currency(@lancamento.credito) %>
@@ -47,12 +47,8 @@
 
 
 
-<p>
-  <strong>Fornecedor:</strong>
-  <%= @lancamento.fornecedor.nome if !@lancamento.fornecedor_id.nil? %>
-</p>
 
-<% if @lancamento.tipo == "Crédito" %>
+<% if @lancamento.tipo == "Credito" %>
     <p>
       <strong>Item de receita:</strong>
       <%= @lancamento.item_de_receita_id.nil? ? "Transferência" : @lancamento.item_de_receita.nome %>
@@ -62,20 +58,26 @@
       <strong>Item de despesa:</strong>
       <%= @lancamento.item_de_despesa_id.nil? ? "Transferência" : @lancamento.item_de_despesa.nome %>
     </p>
-<% end %>
+    <p>
+      <strong>Fornecedor:</strong>
+      <%= @lancamento.fornecedor.nome if !@lancamento.fornecedor_id.nil? %>
+    </p>
+    <p>
+      <strong>Tipo de compra:</strong>
+      <%= @lancamento.tipo_de_compra.nome if !@lancamento.tipo_de_compra_id.nil? %>
+    </p>
 
-<p>
-  <strong>Tipo de compra:</strong>
-  <%= @lancamento.tipo_de_compra.nome if !@lancamento.tipo_de_compra_id.nil? %>
-</p>
+    <p>
+      <strong>Número da nota fiscal:</strong>
+      <%= @lancamento.num_notafiscal %>
+    </p>
 
-<% if @lancamento.tipo == "Débito" %>
     <p>
       <strong>Débito cancelado:</strong>
       <%= @lancamento.debito_cancelado == true ? "Sim" : "Não"  %>
     </p>
 
-    <% if @lancamento.debito_cancelado ==true %>
+    <% if @lancamento.debito_cancelado == true %>
         <p>
           <strong>Retorno de debito cancelado:</strong>
           <%= number_to_currency(@lancamento.retorno_debitocanc) %>
@@ -83,23 +85,17 @@
     <% end %>
 <% end %>
 
-<p>
-  <strong>Número da nota fiscal:</strong>
-  <%= @lancamento.num_notafiscal %>
-</p>
 
 <p>
   <strong>Empenho:</strong>
   <%= @lancamento.empenho %>
 </p>
 <% if @lancamento.transf_multipla_id.nil? %>
-    <% if @lancamento.tipo == "Crédito" %>
-        <%= link_to 'Editar', edit_lancamento_path(@lancamento, :tipo => "Crédito"), class:'btn btn-primary active' if  session[:usuario_tipo] != "Controladoria" %>
-    <% else %>
+    <% if @lancamento.tipo == "Debito" %>
         <%= link_to 'Editar', edit_lancamento_path(@lancamento, :tipo => "Débito"), class:'btn btn-primary active'  if session[:usuario_tipo] != "Controladoria" %>
     <% end %>
 <% end %>
 <%= link_to "Registros atuais", lancamentos_path(:atual => "Sim"), class: 'btn btn-default' %>
-<%= link_to 'Registros antigos', lancamentos_path(:atual => "Nao"), class: 'btn btn-default' %>
-<%= link_to 'Voltar para contas', contas_path, class: 'btn btn-info active' %>
+<%= link_to "Registros antigos", lancamentos_path(:atual => "Nao"), class: 'btn btn-default' %>
+<%= link_to "Voltar para contas", contas_path, class: 'btn btn-info active' %>
 

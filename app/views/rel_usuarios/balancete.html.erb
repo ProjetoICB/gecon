@@ -7,6 +7,16 @@
         width: '450px'
     });
 
+
+    $('form').submit(function(e) {
+        data_fim = $('#fim').val();
+
+        if (data_fim == "") {
+            alert("Defina a data limite para o balancete.");
+            e.preventDefault(e);
+        }
+    });
+
 </script>
 
 <h2> Balancete </h2>

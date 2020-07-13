@@ -5,7 +5,7 @@ class ItensDeReceitaController < ApplicationController
   # GET /itens_de_receita
   # GET /itens_de_receita.json
   def index
-    @itens_de_receita = ItemDeReceita.where(ativo: true)
+    @itens_de_receita = ItemDeReceita.all
   end
 
   # GET /itens_de_receita/1
@@ -29,6 +29,7 @@ class ItensDeReceitaController < ApplicationController
 
     respond_to do |format|
       if @item_de_receita.save
+        addlog("Criou um item de receita")
         format.html { redirect_to @item_de_receita, notice: 'Item de receita criado com sucesso.' }
         format.json { render :show, status: :created, location: @item_de_receita }
       else
@@ -43,6 +44,7 @@ class ItensDeReceitaController < ApplicationController
   def update
     respond_to do |format|
       if @item_de_receita.update(item_de_receita_params)
+        addlog("Item de despesa atualizado")
         format.html { redirect_to @item_de_receita, notice: 'Item de receita atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @item_de_receita }
       else
@@ -56,6 +58,7 @@ class ItensDeReceitaController < ApplicationController
   # DELETE /itens_de_receita/1.json
   def destroy
     @item_de_receita.destroy
+    addlog("Item de receita apagado")
     respond_to do |format|
       format.html { redirect_to itens_de_receita_url, notice: 'Item de receita apagado com sucesso.' }
       format.json { head :no_content }
@@ -65,11 +68,24 @@ class ItensDeReceitaController < ApplicationController
   def desativa_item_receita
     @item_de_receita.ativo = false
     @item_de_receita.save
+    addlog("Item de receita desativado")
     respond_to do |format|
-      format.html { redirect_to itens_de_despesa_path, notice: 'Item de receita desativado com sucesso'  }
+      format.html { redirect_to itens_de_receita_path, notice: 'Item de receita desativado com sucesso'  }
       format.json { head :no_content }
     end
   end
+
+  def ativa_item_receita
+    set_item_de_receita
+    @item_de_receita.ativo = true
+    @item_de_receita.save
+    addlog("Item de receita ativado")
+    respond_to do |format|
+      format.html { redirect_to itens_de_receita_path, notice: 'Item de receita ativado com sucesso'  }
+      format.json { head :no_content }
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

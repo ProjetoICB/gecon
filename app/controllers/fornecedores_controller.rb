@@ -5,7 +5,7 @@ class FornecedoresController < ApplicationController
   # GET /fornecedores
   # GET /fornecedores.json
   def index
-    @fornecedores = Fornecedor.where(ativo: true).order("nome")
+    @fornecedores = Fornecedor.order("nome")
   end
 
   # GET /fornecedores/1
@@ -29,6 +29,7 @@ class FornecedoresController < ApplicationController
 
     respond_to do |format|
       if @fornecedor.save
+        addlog("Fornecedor criado")
         format.html { redirect_to @fornecedor, notice: 'Fornecedor criado com sucesso.' }
         format.json { render :show, status: :created, location: @fornecedor }
       else
@@ -43,6 +44,7 @@ class FornecedoresController < ApplicationController
   def update
     respond_to do |format|
       if @fornecedor.update(fornecedor_params)
+        addlog("Fornecedor atualizado")
         format.html { redirect_to @fornecedor, notice: 'Fornecedor atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @fornecedor }
       else
@@ -56,6 +58,7 @@ class FornecedoresController < ApplicationController
   # DELETE /fornecedores/1.json
   def destroy
     @fornecedor.destroy
+    addlog("Fornecedor apagado")
     respond_to do |format|
       format.html { redirect_to fornecedores_url, notice: 'Fornecedor apagado com sucesso.' }
       format.json { head :no_content }
@@ -65,12 +68,23 @@ class FornecedoresController < ApplicationController
   def desativa_fornecedor
     @fornecedor.ativo = false
     @fornecedor.save
+    addlog("Fornecedor desativado")
     respond_to do  |format|
       format.html { redirect_to fornecedores_path, notice: "Fornecedor desativado com sucesso"  }
       format.json { head :no_content  }
     end
   end
 
+  def ativa_fornecedor
+    set_fornecedor
+    @fornecedor.ativo = true
+    @fornecedor.save
+    addlog("Fornecedor ativado")
+    respond_to do  |format|
+      format.html { redirect_to fornecedores_path, notice: "Fornecedor ativado com sucesso"  }
+      format.json { head :no_content  }
+    end
+  end
 
 
 

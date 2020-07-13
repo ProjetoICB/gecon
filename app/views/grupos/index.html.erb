@@ -46,7 +46,13 @@
         <td class="text-center"><%= link_to 'Mostrar', grupo, class: 'btn btn-primary active'  %></td>
         <% if session[:usuario_tipo] != "Controladoria" %>
             <td class="text-center"><%= link_to 'Editar', edit_grupo_path(grupo), class: 'btn btn-default' %></td>
-            <td class="text-center"><%= link_to 'Desativar',  desativa_grupo_path(grupo), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %></td>
+            <td class="text-center">
+              <% if grupo.ativo == true %>
+                  <%= link_to 'Desativar',  desativa_grupo_path(grupo), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active' %>
+              <% else %>
+                  <%= link_to 'Ativar',  ativa_grupo_path(grupo), data: { confirm: 'Tem certeza?' }, class: 'btn btn-success active' %>
+              <% end %>
+            </td>
         <% end %>
       </tr>
     <% end %>

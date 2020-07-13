@@ -1,3 +1,18 @@
+<script type="text/javascript">
+
+    $('form').submit(function(e) {
+        inicio = $('#inicio').val();
+        fim = $('#fim').val();
+        if (fim < inicio) {
+            alert('Escolha uma data válida');
+            e.preventDefault(e);
+        }
+    });
+
+</script>
+
+
+
 <h3> Relatório de gastos por itens de despesa </h3>
 
 <%= form_tag relat_gastos_por_idd_path, method: :get do %>

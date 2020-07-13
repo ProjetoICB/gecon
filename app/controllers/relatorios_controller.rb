@@ -7,6 +7,7 @@ class RelatoriosController < ApplicationController
   def relat_por_conta
 
     result = ""
+    @total = 0
 
     if params[:conta_id] != ""
       result = "conta_id = " + params[:conta_id].to_s
@@ -22,11 +23,17 @@ class RelatoriosController < ApplicationController
 
      if result != ""
       @lancamentos = Lancamento.where(result).order('id desc')
+      cred = Lancamento.where(result).order('id desc').sum(:credito)
+      deb = Lancamento.where(result).order('id desc').sum(:debito)
+      @total = cred - deb
+
       respond_to do |format|
         format.html
         format.xlsx {
           response.headers[
               'Content-Disposition'] = "attachment; filename=por_conta.xlsx"
+          addlog("Gerou um relatório por conta em xls")
+
         }
         format.pdf do
           render :pdf => 'por_conta',
@@ -47,6 +54,7 @@ class RelatoriosController < ApplicationController
                      left: 20,
                      right: 20
                  }
+          addlog("Gerou um relatório por conta em pdf")
         end
       end
     end
@@ -92,6 +100,7 @@ class RelatoriosController < ApplicationController
         format.xlsx {
           response.headers[
               'Content-Disposition'] = "attachment; filename=por_lancamento.xlsx"
+          addlog("Gerou um relatório por lançamentos em xls")
         }
         format.pdf do
           render :pdf => 'por_lancamento',
@@ -112,6 +121,7 @@ class RelatoriosController < ApplicationController
                      left: 20,
                      right: 20
                  }
+          addlog("Gerou um relatório por lançamentos em pdf")
         end
     end
     end
@@ -133,6 +143,7 @@ class RelatoriosController < ApplicationController
       format.xlsx {
         response.headers[
             'Content-Disposition'] = "attachment; filename=relat_gastos_por_idd.xlsx"
+        addlog("Gerado um rlatório por gastos de itens de despesa em xls")
       }
       format.pdf do
         render :pdf => 'gastos_itens_de_despesa',
@@ -152,6 +163,7 @@ class RelatoriosController < ApplicationController
                    left: 20,
                    right: 20
                }
+        addlog("Gerado um rlatório por gastos de itens de despesa em pdf")
       end
     end
   end

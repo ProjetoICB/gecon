@@ -2,7 +2,7 @@
   <tr>
     <td class="text-left"><%= wicked_pdf_image_tag "logo_gecon.png" %> </td>
     <td></td>
-    <td align="center"><h4 class="text-center"> Relatório dos gastos por Itens de Despesa<br> -Consolidado-  </h4></td>
+    <td align="center"><h4 class="text-center"> Relatório por Itens de Despesa<br> -Consolidado-  </h4></td>
     <td></td>
     <td class="text-right"><%= wicked_pdf_image_tag "logo_icb_of.jpg", size: "75x75" %> </td>
   </tr>
@@ -25,4 +25,4 @@ Até <%= @fim.strftime("%d/%m/%Y") %> </p>
   <% end %>
 </table>
 
-<p class="text-right"> Débitos totais: <%= number_to_currency(@totalgeral) %>  </p>
+<h4 class="text-right"> Débitos totais: <%= number_to_currency(@totalgeral) %>  </h4>

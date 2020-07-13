@@ -5,7 +5,7 @@ class GruposController < ApplicationController
   # GET /grupos
   # GET /grupos.json
   def index
-    @grupos = Grupo.where(ativo: true).order("coddigitado")
+    @grupos = Grupo.order("coddigitado")
   end
 
   # GET /grupos/1
@@ -29,6 +29,7 @@ class GruposController < ApplicationController
 
     respond_to do |format|
       if @grupo.save
+        addlog("Grupo criado")
         format.html { redirect_to @grupo, notice: 'Grupo foi criado com sucesso.' }
         format.json { render :show, status: :created, location: @grupo }
       else
@@ -43,6 +44,7 @@ class GruposController < ApplicationController
   def update
     respond_to do |format|
       if @grupo.update(grupo_params)
+        addlog("Grupo alterado")
         format.html { redirect_to @grupo, notice: 'Grupo foi atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @grupo }
       else
@@ -56,6 +58,7 @@ class GruposController < ApplicationController
   # DELETE /grupos/1.json
   def destroy
     @grupo.destroy
+    addlog("Grupo apagado")
     respond_to do |format|
       format.html { redirect_to grupos_url, notice: 'Grupo foi apagado com sucesso.' }
       format.json { head :no_content }
@@ -66,11 +69,25 @@ class GruposController < ApplicationController
   def desativa_grupo
     @grupo.ativo = false
     @grupo.save
+    addlog("Grupo desativado")
     respond_to do |format|
       format.html { redirect_to grupos_path, notice: "Grupo desativado com sucesso" }
       format.json { head :no_content }
     end
   end
+
+
+  def ativa_grupo
+    set_grupo
+    @grupo.ativo = true
+    @grupo.save
+    addlog("Grupo ativado")
+    respond_to do |format|
+      format.html { redirect_to grupos_path, notice: "Grupo ativado com sucesso" }
+      format.json { head :no_content }
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -44,7 +44,13 @@
         <td class="text-center"><%= link_to 'Mostrar', frec, class: 'btn btn-primary active' %></td>
         <% if session[:usuario_tipo] != "Controladoria" %>
             <td class="text-center"><%= link_to 'Editar', edit_fonte_de_recurso_path(frec), class: 'btn btn-default' %></td>
-            <td class="text-center"><%= link_to 'Desativar', desativa_fontederecurso_path(frec), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active'  %></td>
+            <td class="text-center">
+              <% if frec.ativo == true %>
+                  <%= link_to 'Desativar', desativa_fontederecurso_path(frec), data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger active'  %>
+              <% else %>
+                  <%= link_to 'Ativar', ativa_fontederecurso_path(frec), data: { confirm: 'Tem certeza?' }, class: 'btn btn-success active'  %>
+              <% end %>
+            </td>
         <% end %>
       </tr>
     <% end %>
